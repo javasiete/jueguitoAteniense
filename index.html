@@ -3,127 +3,165 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Dungeon's Java</title>
+        <title>Caballeros del Zodiaco</title>
 
         <!-- Link a los iconitos -->
-        <script src="https://kit.fontawesome.com/c3d324dd6f.js" crossorigin="anonymous"></script>
-
+        <link rel="icon" href="favicon.ico">
+        
         <!-- Link a los Estilos en CSS -->
-        <link rel="stylesheet" href="./styles/crearJugador.css">
+        <link rel="stylesheet" href="./styles/paginaPrincipal.css"/>
+
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <!--Cormorant-->
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600&display=swap" rel="stylesheet">
 
     </head>
 
     <body>
 
-        <h1>Crear tu Personaje</h1>
     
-        <div class="seccion">
-    
-            <label>Nombra al personaje o seleccione uno ya creado</label>
-            <div id="divNombrePj">
-                <input type="text" id="nombrePJ" placeholder="Escriba aqui...">
-                <button id="seleccionarPj">Pj Creados</button>
-            </div>
-    
-            <!-- SEXO -->
-            <label>Marque su Género</label>
-            <div class="opciones" id="opcionesSexo">
-                <button data-sexo="Masculino">Masculino</button>
-                <button data-sexo="Femenino">Femenino</button>
-            </div>
-    
-            <!-- CLASE -->
-            <label>Seleccione su Clase</label>
-    
-            <div id="opcionesClase">
-    
-                <div class="cartaClase" data-clase="Guerrero">
-                    <h3>
-                        <img src="./imgs/iconos/clases/Guerrero.png" alt="Guerrero" class="iconoClase">
-                        Guerrero
-                    </h3>
-                    <div class="statsClase">
-                        <p><span>PV:</span> 25</p>
-                        <p><span>PM:</span> 10</p>
-                        <p><span>Fuerza:</span> 3</p>
-                        <p><span>Defensa:</span> 2</p>
-                        <p><span>Poder Mágico:</span> 0</p>
-                        <p><span>Def. Mágica:</span> 1</p>
-                        <p><span>Velocidad:</span> 2</p>
-                    </div>
-                </div>
-    
-                <div class="cartaClase" data-clase="Paladin">
-                    <h3>
-                        <img src="./imgs/iconos/clases/Paladin.png" alt="Paladin" class="iconoClase">
-                        Paladin
-                    </h3>
-                    <div class="statsClase">
-                        <p><span>PV:</span> 28</p>
-                        <p><span>PM:</span> 12</p>
-                        <p><span>Fuerza:</span> 2</p>
-                        <p><span>Defensa:</span> 3</p>
-                        <p><span>Poder Mágico:</span> 1</p>
-                        <p><span>Def. Mágica:</span> 2</p>
-                        <p><span>Velocidad:</span> 1</p>
-                    </div>
-                </div>
-    
-                <div class="cartaClase" data-clase="Clerigo">
-                    <h3>
-                        <img src="./imgs/iconos/clases/Clerigo.png" alt="Clerigo" class="iconoClase">
-                        Clérigo
-                    </h3>
-                    <div class="statsClase">
-                        <p><span>PV:</span> 20</p>
-                        <p><span>PM:</span> 15</p>
-                        <p><span>Fuerza:</span> 2</p>
-                        <p><span>Defensa:</span> 1</p>
-                        <p><span>Poder Mágico:</span> 2</p>
-                        <p><span>Def. Mágica:</span> 1</p>
-                        <p><span>Velocidad:</span> 2</p>
-                    </div>
-                </div>
-    
-                <div class="cartaClase" data-clase="Hechicero">
-                    <h3>
-                        <img src="./imgs/iconos/clases/Hechicero.png" alt="Hechicero" class="iconoClase">
-                        Hechicero
-                    </h3>
-                    <div class="statsClase">
-                        <p><span>PV:</span> 15</p>
-                        <p><span>PM:</span> 20</p>
-                        <p><span>Fuerza:</span> 1</p>
-                        <p><span>Defensa:</span> 0</p>
-                        <p><span>Poder Mágico:</span> 3</p>
-                        <p><span>Def. Mágica:</span> 1</p>
-                        <p><span>Velocidad:</span> 1</p>
-                    </div>
-                </div>
-    
-            </div>
-    
-            <button id="btnCrear">Crear Personaje</button>
+        <!-- PAGINA PRINCIPAL -->
+        <div id="paginaPrincipal">
 
-            <!--POPUP ELEGIR PERSONAJE YA CREADO-->
-            <div id="popupElegirPj" style="display:none">
-                <div id="popupVentanaElegirPj">
-                    <div id="mostradoPersonajes"></div>
-                    <div id="cerrarPopupElegirPj">Cerrar</div>
-                </div>
+            <h1>Los Caballeros del Zodiaco</h1>
+            <h2 id="casaActual">Aldebarán de Tauro</h2>
+
+            <div id="divPersonajesActivos">
+                <div id="iconosGuerrerosActivos"></div>
+                <button id="seleccionarGuerreros">Seleccionar Guerreros</button>
+            </div>
+   
+            <div id="divBotones">
+                <button id="btnPaginaInfo" style="display:none">Info. Guerreros</button>
+                <button id="btnPaginaMercado" style="display:none">Mercado</button>
+                <button id="btnPaginaFormacion">Formacion</button>
+                <button id="btnIrALaBatalla">Ir a la Batalla</button>
+                <button id="btnPaginaTestear">Debug</button>
             </div>
 
-            <!--POPUP CONFIRMAR CREACION-->
-            <div id="popupFondoCreacion" style="display:none">
-                <div id="popupVentanaCreacion">
-                    <div id="infoCreacion" class="popupOpcion"></div>
-                </div>
-            </div>
-    
         </div>
-    
-        <script src="./javascript/crearJugador.js"></script>
-    
+
+        <!-- PAGINA_SELECCIONAR_GUERREROS -->
+        <div id="paginaSeleccionarGuerreros" style="display:none">
+
+            <div class="slotGuerrero" data-slot="1">
+                <input type="text" placeholder="Vacío" readonly>
+                <button class="btnAgregarGuerrero">Añadir</button>
+            </div>
+
+            <div class="slotGuerrero" data-slot="2">
+                <input type="text" placeholder="Vacío" readonly>
+                <button class="btnAgregarGuerrero">Añadir</button>
+            </div>
+
+            <div class="slotGuerrero" data-slot="3">
+                <input type="text" placeholder="Vacío" readonly>
+                <button class="btnAgregarGuerrero">Añadir</button>
+            </div>
+
+            <div class="slotGuerrero" data-slot="4">
+                <input type="text" placeholder="Vacío" readonly>
+                <button class="btnAgregarGuerrero">Añadir</button>
+            </div>
+
+            <div class="slotGuerrero" data-slot="5">
+                <input type="text" placeholder="Vacío" readonly>
+                <button class="btnAgregarGuerrero">Añadir</button>
+            </div>
+
+            <button id="btnConfirmarSeleccion">Volver</button>
+        </div>
+
+        <!-- PAGINA_FORMACION -->
+        <div id="paginaFormacion" style="display:none">
+            <div id="tableroFormacion"></div>
+            <button id="btnSalirFormacion">Guardar</button>
+        </div>  
+
+        <!-- PAGINA_PRE_CARGA -->
+        <div id="pantallaCarga" style="display:none">
+            <p>Cargando batalla...</p>
+        </div>
+
+        <!-- PAGINA_TABLERO -->
+        <div id="paginaTablero" style="display:none">
+            
+
+            <div id="divImagenFondo">
+                <div id="contenedorTarjetas"></div>
+                <div id="divTablero">
+                    <div id="tableroArmado" class="tableroGuerra"></div>
+                    <div id="capaEntidades" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></div>
+                    <div id="capaEfectos" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></div>
+
+                </div>
+            </div>
+            <div id="consolaBatalla">
+                <div id="panelIzq">
+                    <div class="filaBotones">
+                        <button id="btnHabilidades">Habilidades</button>
+                        <button id="btnMoverse">Moverse</button>
+                    </div>
+                    <div class="filaBotones">
+                        <button id="btnOtras">Otras</button>
+                        <button id="btnSalirBatalla">Huir</button>
+                    </div>
+
+                </div>
+        
+                <div id="panelDer">
+                    <div id="infoBatalla"></div>
+                </div>
+        
+            </div>
+        </div>
+        
+
+        <!-- PAGINA_TESTEAR -->
+        <div id="paginaTestear" style="display:none">
+            <button id="slot_2">Slot 2 Habilitado</button>
+            <button id="slot_3">Slot 3 Habilitado</button>
+            <button id="slot_4">Slot 4 Habilitado</button>
+            <button id="slot_5">Slot 5 Habilitado</button>
+            <button id="btnSalirTestear">Salir</button>
+        </div>    
+
+        <!-- POPUP_ELEGIR_GUERRERO -->
+        <div id="overlayPopup" style="display:none">
+            <div id="popupElegirGuerrero">
+                <h3>Elige un Caballero</h3>
+
+                <div id="guerrerosDesbloqueados"></div>
+
+                <button id="btnConfirmarGuerrero">Confirmar</button>
+            </div>
+        </div>
+
+        <!-- POPUP_MOSTRAR_ATAQUES -->
+        <div id="overlayPopupAtaques" style="display:none">
+            <div id="popupMostrarAtaques">
+                <div id="mostrarAtaques"></div>
+            </div>
+        </div>
+
+        <!-- POPUP_MOSTRAR_Otras -->
+        <div id="overlayPopupOtras" style="display:none">
+            <div id="popupMostrarOtras">
+                <div id="mostrarOtras"></div>
+            </div>
+        </div>
+
+        <!-- OVERLAY ROTAR EL DISPOSITIVO -->
+        <div id="overlayRotarDispositivo">
+            <div class="mensajeRotar">
+                Coloque su dispositivo<br>
+                en Horizontal.
+            </div>
+        </div>
+
+        <!-- LINK DEL SCRIPT -->
+        <script src="./javascript/paginaPrincipal.js"></script> <!-- Link al documento JS -->
     </body>
 
 </html>
