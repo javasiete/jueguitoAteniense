@@ -1,0 +1,1135 @@
+/* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+*/
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: monospace;
+    background: rgb(17, 17, 17);
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer; 
+    border-radius: 5px;
+    font-family: "Cinzel", "Georgia", serif;
+
+}
+
+button:hover {
+    background-color: #d3d2d2;
+    transform: scale(1.03);
+}
+
+#paginaPrincipal h1 {
+    font-family: 'Cormorant SC', serif;
+    letter-spacing: 3px;
+    color: #ffd700;
+
+    text-shadow: 2px 2px 0 rgba(80, 60, 0, 0.9);
+}
+
+/*---------------------------------------------------------------------------------------------------------------------*/
+/*PAGINA PRINCIPAL*/
+
+#paginaPrincipal {
+    min-height: 100vh;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: white;
+
+    background-image: url("../imgs/otras/fondo_paginaPrincipal.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#divBotones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 0px;
+}
+
+/* HOVER */
+.bntPagDirecciones:hover {
+    background-color: #d3d2d2;
+    transform: scale(1.03);
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------*/
+/* ============================= */
+/* PAGINA_SELECCIONAR_GUERREROS */
+/* ============================= */
+
+#paginaSeleccionarGuerreros {
+    position: fixed;
+    inset: 0; /* top, right, bottom, left = 0 */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    background-image: url("../imgs/otras/fondo_paginaPrincipal.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.slotGuerrero {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.slotGuerrero button {
+    padding: 6px 10px;
+    width: 110px;          /* ancho fijo */
+    flex-shrink: 0;       /* nunca se achica */
+    text-align: center;
+}
+
+/* INPUT */
+.slotGuerrero input {
+    flex: 1;
+    padding: 6px;
+    font-size: 18px;
+    text-align: center;
+    pointer-events: none;
+}
+
+/* BOTÓN */
+.slotGuerrero button {
+    padding: 6px 10px;
+}
+
+/* ESTADO BLOQUEADO */
+.slotGuerrero.bloqueado {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+#btnConfirmarSeleccion {
+    align-self: center;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------*/
+/* ============================= */
+/* POP UP ELEGIR CABALLERO */
+/* ============================= */
+
+/* OVERLAY */
+#overlayPopup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* POPUP */
+#popupElegirGuerrero {
+    color: white;
+    background-image: url("../imgs/otras/marco.png");
+    background-size: 100% 100%;   /* clave */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #3a3a3a;
+
+    border: none;
+    border-radius: 0;
+    padding: 40px;
+    width: 360px;
+    text-align: center;
+}
+
+
+/* CONTENEDOR DE ICONOS */
+#guerrerosDesbloqueados {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+/* ICONO GUERRERO */
+.iconoGuerrero {
+    width: 60px;
+    height: 60px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.iconoGuerrero img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* SELECCIONADO */
+.iconoGuerrero.seleccionado {
+    border-color: #ffd700;
+    opacity: 1;
+}
+
+/* Guerrero ya usado en otro slot */
+.iconoGuerrero.usado {
+    border: 2px solid #b00000;
+    opacity: 1; /*antes 0.4*/
+    cursor: default;
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------*/
+/* ============================= */
+/* PAGINA_FORMACION */
+/* ============================= */
+
+#paginaFormacion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 40px;
+    gap: 20px;
+}
+
+/* TABLERO DE FORMACION */
+.tableroFormacion {
+    display: grid;
+    grid-template-rows: repeat(4, 90px);
+    grid-template-columns: repeat(3, 90px);
+    gap: 5px;
+    background-color: #1b1b1b;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+/* CASILLEROS DE FORMACION */
+.celdaFormacion {
+    background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+    border: 1px solid #555;
+    border-radius: 6px;
+
+    box-shadow:
+        inset 0 0 6px rgba(255,255,255,0.05),
+        0 0 4px rgba(0,0,0,0.8);
+
+    cursor: pointer;
+
+    /* NUEVO */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.celdaFormacion img.imgCaballeroFormacion {
+    width: 130%;
+    height: 130%;
+    object-fit: contain;
+    pointer-events: none;
+    transform: translateY(-35px);
+}
+
+/*Cuando seleccionamos a un caballero a cambiar de posicion*/
+.celdaFormacion.seleccionada {
+    border: 2px solid #fff; /* borde blanco para marcar */
+    background: linear-gradient(145deg, #3a3a3a, #2a2a2a); /* opcional: cambio de color */
+}
+
+#btnSalirFormacion {
+    align-self: center;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+/*-----------------------------------------------------------------------------------------------------------------------------------------*/
+/* ============================= */
+/* PAGINA_PRE_CARGA */
+/* ============================= */
+
+#pantallaCarga {
+    position: fixed;
+    inset: 0;
+    background: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------*/
+/* ============================= */
+/* PAGINA_TABLERO */
+/* ============================= */
+
+#paginaTablero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    gap: 10px;
+}
+
+#divImagenFondo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 465px;
+    width: 1050px;
+
+    padding-top: 5px;
+
+    background-image: url("../imgs/tablero/fondoTableroSantuario.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    position: relative;
+    z-index: 1;
+}
+
+/* CONTENEDOR GENERAL DEL TABLERO */
+#divTablero {
+    display: flex;
+    justify-content: center;
+    position: relative; /* necesario para que las capas absolutas estén dentro */
+}
+
+#capaEntidades,
+#capaEfectos {
+    z-index: 10; /* por encima del tablero */
+}
+
+#tableroArmado {
+    z-index: 1; /* tablero por debajo */
+}
+
+/* TABLERO DE BATALLA (EFECTO TRAPECIO / 3D) */
+.tableroGuerra {
+    pointer-events: auto;
+    display: grid;
+    grid-template-rows: repeat(4, 90px);
+    grid-template-columns: repeat(7, 90px);
+    gap: 4px;
+
+    /*background-color: #1b1b1b;*/
+    background-color: transparent;
+    padding: 12px;
+    border-radius: 10px;
+
+    transform: rotateX(25deg) scaleY(0.9);
+    transform-origin: top center;
+
+    /*box-shadow: 0 25px 40px rgba(0,0,0,0.7);*/
+
+    overflow: visible; /* ← IMPORTANTE */
+}
+
+/* CASILLEROS (solo suelo, sin profundidad propia) */
+.celdaGuerra {
+    pointer-events: auto;
+    position: relative;
+    overflow: visible;
+
+    /*background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+    border: 1px solid #555;*/
+    background-color: rgba(68, 68, 68, 0.3);
+    border: 2px solid #1f1e1eb6; 
+    border-radius: 6px; 
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /*box-shadow:
+    inset 0 0 6px rgba(255,255,255,0.05),
+    0 0 4px rgba(0,0,0,0.8);*/
+
+    cursor: default;
+}
+
+/* ENTIDADES EN TABLERO (jugadores y enemigos) */
+.imgEntidadBatalla {
+    position: absolute; /* ya estás usando absolute dentro de la celda */
+    width: 170%;
+    height: 170%;
+    object-fit: contain;
+
+    filter: drop-shadow(0 8px 8px rgba(0,0,0,0.75));
+    pointer-events: none;
+}
+
+/* PROFUNDIDAD VISUAL REAL (la fila manda) */
+.celdaGuerra[data-fila="1"] .imgEntidadBatalla {
+    transform: translate(4px, -20px);
+    z-index: 10;
+}
+
+.celdaGuerra[data-fila="2"] .imgEntidadBatalla {
+    transform: translate(4px, -30px);
+    z-index: 20;
+}
+
+.celdaGuerra[data-fila="3"] .imgEntidadBatalla {
+    transform: translate(4px, -40px);
+    z-index: 30;
+}
+
+.celdaGuerra[data-fila="4"] .imgEntidadBatalla {
+    transform: translate(4px, -50px);
+    z-index: 40;
+}
+
+/* ================ CELDAS SELECCIONADAS POR MOVIMIENTO ===================================== */
+.celdaMovible {
+    background: rgba(255, 255, 0, 0.25);
+    cursor: pointer;
+}
+
+/* ================ TARJETAS ===================================== */
+/* CONTENEDOR DE TARJETAS */
+#contenedorTarjetas {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    max-width: 820px;
+}
+
+/* TARJETA INDIVIDUAL */
+.tarjetaPersonaje {
+    flex: 1;
+    display: flex;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.945);/*rgba(0,0,0,0.75)*/
+    border: 2px solid #444;
+    border-radius: 8px;
+    color: #fff;
+    box-sizing: border-box;
+    gap: 6px;
+
+    transition: 
+    filter 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* TURNO ACTIVO */
+.tarjetaActiva {
+    border-color: gold;
+    box-shadow:
+        0 0 6px rgba(255,215,0,0.9),
+        0 0 18px rgba(255,215,0,0.7),
+        0 0 36px rgba(255,215,0,0.4);
+    filter: saturate(1.2);
+    transform: scale(1.04);
+}
+
+/* LADO IZQUIERDO */
+.tarjetaIzq {
+    width: 74px;
+}
+
+.tarjetaNombre {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.tarjetaIcono {
+    width: 74px;
+    height: 74px;
+    margin-top: 2px; /*6px*/
+}
+
+/* LADO DERECHO */
+.tarjetaDer {
+    flex: 1;
+    margin-left: 0px; /*8px*/
+    display: flex;
+    flex-direction: column;
+    width: 74px;
+}
+
+/* ESTADO */
+.tarjetaEstado {
+    font-size: 12px;
+    text-align: right;
+    min-height: 16px;
+}
+
+/* BLOQUES PV / PM / COS */
+.bloqueBarra {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0px; /*6px*/
+    width: 100%;
+}
+
+.bloqueBarra span {
+    font-size: 11px;
+    margin-bottom: 0px; /*2px*/
+}
+
+/* BARRAS */
+.barra {
+    width: 100%;
+    height: 10px;
+    background-color: #333;
+    border: 1px solid #111;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.barraRelleno {
+    height: 100%;
+    width: 100%;
+}
+
+.barraPV { background-color: #b02020; }
+.barraPM { background-color: #2050b0; }
+.barraCOS { background-color: #b09020; }
+
+/* ================ PANELES DE ABAJO ============================= */
+
+#consolaBatalla {
+    display: flex;
+    width: 1050px;
+    margin-top: 0px;
+    gap: 12px;
+    background-color: salmon;
+
+    position: relative;
+    z-index: 10;
+}
+
+/* Panel izquierdo y derecho ocupan lo mismo */
+#panelIzq,
+#panelDer {
+    flex: 1;
+    min-height: 120px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 2px solid #444;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+/* Panel izquierdo */
+#panelIzq {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;    
+}
+
+/* Panel derecho */
+#panelDer {
+    display: flex;
+}
+
+/* Filas de botones */
+.filaBotones {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Botones mismo tamaño */
+.filaBotones button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 130px;
+}
+
+#infoBatalla {
+    width: 100%;
+}
+
+#btnSalirBatalla {
+    display: block;
+    margin: 0 auto; /* fuerza centrado horizontal */
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Casilleros a los cuales se pueden atacar */
+.celda-atacable {
+    background-color: rgba(0, 255, 0, 0.3);
+    cursor: pointer;
+}
+
+.celda-no-atacable {
+    background-color: rgba(255, 0, 0, 0.25);
+}
+
+/*----------------------------------------------------------*/
+/* Recibiendo daño EFECTO */
+
+.efectoDaño {
+    animation: destello 0.3s ease-in-out;
+}
+
+@keyframes destello {
+    0%   { filter: brightness(1); }
+    25%  { filter: brightness(2); }
+    50%  { filter: brightness(1); }
+    75%  { filter: brightness(2); }
+    100% { filter: brightness(1); }
+}
+
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------*/
+/* ============================= */
+/* POPUP_HABILIDADES */
+/* ============================= */
+
+#overlayPopupAtaques {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+#popupMostrarAtaques {
+    background: #fff;
+    padding: 12px;
+    position: relative;
+    z-index: 1001;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.itemAtaque {
+    display: flex;
+    flex-direction: column;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-size: 14px;
+}
+
+.itemAtaque:hover {
+    background: #e0e0e0;
+    color: #000;
+}
+
+.itemAtaque.ataque-no-disponible {
+    color: #888;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.itemAtaque .linea1 {
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+.itemAtaque .linea2 {
+    font-style: italic;
+    font-size: 12px;
+    color: #333;
+    margin-top: 2px;
+}
+
+.itemAtaque .linea3 {
+    font-size: 12px;
+    color: #333;
+    margin-top: 2px;
+}
+
+.itemAtaque:hover {
+    background: #e0e0e0;
+    color: #000;
+}
+
+.itemAtaque.ataque-no-disponible {
+    color: #888;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.itemAtaque .nombreAtaque {
+    font-weight: bold;
+}
+
+.itemAtaque .tipoRango {
+    font-size: 12px;
+    color: #555;
+}
+
+.itemAtaque .infoAtaque {
+    font-size: 12px;
+    font-style: italic;
+    color: #333;
+}
+
+
+/*----------------------------------------------------------*/
+/*POPUP OTRAS*/
+#overlayPopupOtras {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+#popupMostrarOtras {
+    background: #fff;
+    padding: 12px;
+    position: relative;
+    z-index: 1001;
+}
+
+#mostrarOtras {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.opcionOtras {
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.opcionOtras:hover {
+    color: blue;
+    text-decoration: underline;
+}
+
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------*/
+/* ============================= */
+/* PAGINA_TESTEAR */
+/* ============================= */
+#paginaTestear {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 10px;
+}
+
+#btnSalirTestear {
+    display: block;
+    margin: 0 auto; /* fuerza centrado horizontal */
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------*/
+/* ============================= */
+/* MEDIAQUERIE TABLET */
+/* ============================= */
+
+@media screen and (max-width: 768px) {
+
+    body, html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    button {
+        padding: 4px 6px;
+        font-size: 12px;
+        cursor: pointer; 
+        border-radius: 5px;
+        font-family: "Cinzel", "Georgia", serif;
+    }
+
+    /**/
+    #divBotones {
+        /*
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; */
+        gap: 8px;
+        padding: 8px 0px;
+    }
+
+    /*---------------------------------------------------------------------------------------------------------------------*/
+    /* ============================= */
+    /* PAGINA_SELECCIONAR_PERSONAJES */
+    /* ============================= */
+
+    /* INPUT */
+    .slotGuerrero input {
+        flex: 1;
+        padding: 2px;
+        font-size: 18px;
+        text-align: center;
+        pointer-events: none;
+    }
+
+    #btnConfirmarSeleccion {
+        /*align-self: center;
+        font-weight: bold;*/
+        padding: 4px 10px;
+        font-size: 14px;
+    }
+
+    /*---------------------------------------------------------------------------------------------------------------------*/
+    /* ============================= */
+    /* PAGINA_FORMACION */
+    /* ============================= */
+
+    #paginaFormacion {
+        /*display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;*/
+        gap: 10px;
+        padding-top: 12px;
+    }
+
+    /* TABLERO DE FORMACION */
+    .tableroFormacion {
+        grid-template-rows: repeat(4, 70px);
+        grid-template-columns: repeat(3, 70px);
+        gap: 3px;
+
+        /*
+        display: grid;
+        background-color: #1b1b1b;
+        padding: 12px;
+        border-radius: 10px; */
+    }
+
+    /* CASILLEROS DE FORMACION */
+    /*.celdaFormacion {
+    }*/
+
+    .celdaFormacion img.imgCaballeroFormacion {
+        width: 130%;
+        height: 130%;
+        object-fit: contain;
+        pointer-events: none;
+        transform: translateY(-35px);
+    }
+
+    /*Cuando seleccionamos a un caballero a cambiar de posicion*/
+    .celdaFormacion.seleccionada {
+        border: 2px solid #fff; /* borde blanco para marcar */
+        background: linear-gradient(145deg, #3a3a3a, #2a2a2a); /* opcional: cambio de color */
+    }
+
+    #btnSalirFormacion {
+        /*align-self: center;
+        font-weight: bold; */
+        padding: 4px 10px;
+        font-size: 14px;
+    }
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    /* ============================= */
+    /* PAGINA_TABLERO */
+    /* ============================= */
+
+    /* ================ TARJETAS ===================================== */
+    /* CONTENEDOR DE TARJETAS */
+    #contenedorTarjetas {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        max-width: 820px;
+
+        margin-top: 10px;
+    }
+
+    /* TARJETA INDIVIDUAL */
+    .tarjetaPersonaje {
+        flex: 1;
+        display: flex;
+        padding: 5px;
+        background-color: rgba(0, 0, 0, 0.945);
+        border: 2px solid #444;
+        border-radius: 8px;
+        color: #fff;
+        box-sizing: border-box;
+        gap: 6px;
+
+        transition: 
+            filter 0.25s ease,
+            box-shadow 0.25s ease,
+            border-color 0.25s ease,
+            transform 0.25s ease;
+    }
+
+    .tarjetaActiva {
+        border-color: gold;
+        box-shadow:
+            0 0 6px rgba(255,215,0,0.9),
+            0 0 18px rgba(255,215,0,0.7),
+            0 0 36px rgba(255,215,0,0.4);
+        filter: saturate(1.2);
+        transform: scale(1.04);
+    }
+    /* TURNO ACTIVO */
+
+    /* LADO IZQUIERDO */
+    .tarjetaIzq {
+        width: 62px;
+    }
+
+    .tarjetaNombre {
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .tarjetaIcono {
+        width: 60px;
+        height: 60px;
+        margin-top: 2px; /*6px*/
+    }
+
+    /* LADO DERECHO */
+    .tarjetaDer {
+        width: 62px;
+        flex: 1;
+        margin-left: 0px; /*8px*/
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ESTADO */
+    .tarjetaEstado {
+        font-size: 12px;
+        text-align: right;
+        min-height: 16px;
+    }
+
+    /* BLOQUES PV / PM / COS */
+    .bloqueBarra {
+        display: flex;
+        flex-direction: column;
+        margin-top: 0px; /*6px*/
+        width: 100%;
+    }
+
+    .bloqueBarra span {
+        font-size: 9px;
+        margin-bottom: 0px; /*2px*/
+    }
+
+    /* BARRAS */
+    .barra {
+        width: 100%;
+        height: 6px;
+        background-color: #333;
+        border: 1px solid #111;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .barraRelleno {
+        height: 100%;
+        width: 100%;
+    }
+
+
+
+    /* ================ TABLERO ===================================== */
+
+    #paginaTablero {
+        /* display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh; */
+        padding-top: 10px;
+        gap: 0px;
+    }
+
+    /* CONTENEDOR GENERAL DEL TABLERO */
+    /* #divTablero {
+        display: flex;
+        justify-content: center;
+    } */
+
+    /* TABLERO */
+    .tableroGuerra {
+        grid-template-rows: repeat(4, 70px);
+        grid-template-columns: repeat(7, 70px);
+        gap: 3px;
+        margin-top: 10px; /*ACA*/
+        /*
+        display: grid;
+        background-color: #1b1b1b;
+        padding: 12px;
+        border-radius: 10px; */
+    }
+
+    /* CASILLEROS 
+    .celdaGuerra {
+        background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+        border: 1px solid #555;
+        border-radius: 0px;
+
+        box-shadow:
+            inset 0 0 6px rgba(255,255,255,0.05),
+            0 0 4px rgba(0,0,0,0.8);
+
+        cursor: default;
+    } */
+
+    /* ================ PANELES DE ABAJO ============================= */
+
+    #consolaBatalla {
+        display: flex;
+        width: 768px;
+        margin-top: -70px;
+        gap: 0px;
+        background-color: salmon;
+
+        position: relative;
+        z-index: 10;
+    }
+
+    /* Panel izquierdo y derecho ocupan lo mismo */
+    #panelIzq,
+    #panelDer {
+        flex: 1;
+        min-height: 120px;
+        background-color: rgba(0, 0, 0, 0.6);
+        border: 2px solid #444;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    /* Panel izquierdo */
+    #panelIzq {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;        
+    }
+
+    /* Panel derecho */
+    #panelDer {
+        display: flex;
+    }
+
+    /* Filas de botones */
+    .filaBotones {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    /* Botones mismo tamaño */
+    .filaBotones button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 160px;
+        height: 40px;
+    }
+
+    #btnSalirBatalla {
+        /*display: block;
+        font-weight: bold;
+        margin: 0 auto;*/ /* fuerza centrado horizontal */
+        padding: 4px 10px;
+        font-size: 14px;
+    }
+
+    #infoBatalla {
+        width: 100%;
+    }
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    /* ============================= */
+    /* PAGINA_TESTEAR */
+    /* ============================= */
+
+    #btnSalirTestear {
+        /*align-self: center;
+        font-weight: bold;*/
+        padding: 4px 10px;
+        font-size: 14px;
+    }
+
+
+}    
+
+#overlayRotarDispositivo {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    z-index: 99999;
+
+    display: none; /* por defecto oculto */
+
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+#overlayRotarDispositivo .mensajeRotar {
+    font-size: 1.8rem;
+    line-height: 1.4;
+    padding: 20px;
+}
+
+/* Cuando el dispositivo esté en VERTICAL */
+@media screen and (orientation: portrait) {
+    #overlayRotarDispositivo {
+        display: flex;
+    }
+}
+
+
+
+
