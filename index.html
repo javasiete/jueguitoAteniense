@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Caballeros del Zodiaco</title>
+
+        <!-- Link a los iconitos -->
+        <link rel="icon" href="favicon.ico">
+        
+        <!-- Link a los Estilos en CSS -->
+        <link rel="stylesheet" href="./styles/paginaPrincipal.css"/>
+
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <!--Cormorant-->
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600&display=swap" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+    
+        <!-- PAGINA PRINCIPAL -->
+        <div id="paginaPrincipal">
+
+            <h1>Los Caballeros del Zodiaco</h1>
+            <h2 id="casaActual">Aldebarán de Tauro</h2>
+
+            <div id="divPersonajesActivos">
+                <div id="iconosGuerrerosActivos"></div>
+                <button id="seleccionarGuerreros">Seleccionar Guerreros</button>
+            </div>
+   
+            <div id="divBotones">
+                <button id="btnPaginaInfo" style="display:none">Info. Guerreros</button>
+                <button id="btnPaginaMercado" style="display:none">Mercado</button>
+                <button id="btnPaginaFormacion">Formacion</button>
+                <button id="btnIrALaBatalla">Ir a la Batalla</button>
+                <button id="btnPaginaTestear">Debug</button>
+            </div>
+
+        </div>
+
+        <!-- PAGINA_SELECCIONAR_GUERREROS -->
+        <div id="paginaSeleccionarGuerreros" style="display:none">
+
+            <div class="slotGuerrero" data-slot="1">
+                <input type="text" placeholder="Vacío" readonly>
+                <button class="btnAgregarGuerrero">Añadir</button>
+            </div>
+
+            <div class="slotGuerrero" data-slot="2">
+                <input type="text" placeholder="Vacío" readonly>
+                <button class="btnAgregarGuerrero">Añadir</button>
+            </div>
+
+            <div class="slotGuerrero" data-slot="3">
+                <input type="text" placeholder="Vacío" readonly>
+                <button class="btnAgregarGuerrero">Añadir</button>
+            </div>
+
+            <div class="slotGuerrero" data-slot="4">
+                <input type="text" placeholder="Vacío" readonly>
+                <button class="btnAgregarGuerrero">Añadir</button>
+            </div>
+
+            <div class="slotGuerrero" data-slot="5">
+                <input type="text" placeholder="Vacío" readonly>
+                <button class="btnAgregarGuerrero">Añadir</button>
+            </div>
+
+            <button id="btnConfirmarSeleccion">Volver</button>
+        </div>
+
+        <!-- PAGINA_FORMACION -->
+        <div id="paginaFormacion" style="display:none">
+            <div id="tableroFormacion"></div>
+            <button id="btnSalirFormacion">Guardar</button>
+        </div>  
+
+        <!-- PAGINA_PRE_CARGA -->
+        <div id="pantallaCarga" style="display:none">
+            <p>Cargando batalla...</p>
+        </div>
+
+        <!-- PAGINA_TABLERO -->
+        <div id="paginaTablero" style="display:none">
+            
+
+            <div id="divImagenFondo">
+                <div id="contenedorTarjetas"></div>
+                <div id="divTablero">
+                    <div id="tableroArmado" class="tableroGuerra"></div>
+                    <div id="capaEntidades" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></div>
+                    <div id="capaEfectos" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></div>
+
+                </div>
+            </div>
+            <div id="consolaBatalla">
+                <div id="panelIzq">
+                    <div class="filaBotones">
+                        <button id="btnHabilidades">Habilidades</button>
+                        <button id="btnMoverse">Moverse</button>
+                    </div>
+                    <div class="filaBotones">
+                        <button id="btnOtras">Otras</button>
+                        <button id="btnSalirBatalla">Huir</button>
+                    </div>
+
+                </div>
+        
+                <div id="panelDer">
+                    <div id="infoBatalla"></div>
+                </div>
+        
+            </div>
+        </div>
+        
+
+        <!-- PAGINA_TESTEAR -->
+        <div id="paginaTestear" style="display:none">
+            <button id="slot_2">Slot 2 Habilitado</button>
+            <button id="slot_3">Slot 3 Habilitado</button>
+            <button id="slot_4">Slot 4 Habilitado</button>
+            <button id="slot_5">Slot 5 Habilitado</button>
+            <button id="btnSalirTestear">Salir</button>
+        </div>    
+
+        <!-- POPUP_ELEGIR_GUERRERO -->
+        <div id="overlayPopup" style="display:none">
+            <div id="popupElegirGuerrero">
+                <h3>Elige un Caballero</h3>
+
+                <div id="guerrerosDesbloqueados"></div>
+
+                <button id="btnConfirmarGuerrero">Confirmar</button>
+            </div>
+        </div>
+
+        <!-- POPUP_MOSTRAR_ATAQUES -->
+        <div id="overlayPopupAtaques" style="display:none">
+            <div id="popupMostrarAtaques">
+                <div id="mostrarAtaques"></div>
+            </div>
+        </div>
+
+        <!-- POPUP_MOSTRAR_Otras -->
+        <div id="overlayPopupOtras" style="display:none">
+            <div id="popupMostrarOtras">
+                <div id="mostrarOtras"></div>
+            </div>
+        </div>
+
+        <!-- OVERLAY ROTAR EL DISPOSITIVO -->
+        <div id="overlayRotarDispositivo">
+            <div class="mensajeRotar">
+                Coloque su dispositivo<br>
+                en Horizontal.
+            </div>
+        </div>
+
+        <!-- LINK DEL SCRIPT -->
+        <script src="./javascript/paginaPrincipal.js"></script> <!-- Link al documento JS -->
+    </body>
+
+</html>
