@@ -605,7 +605,7 @@ const caballerosBronce = [
         genero: "masculino",
         caballero: "Pegaso",
     
-        imgIcono: "../imgs/iconos/seiya.png",
+        imgIcono: "./imgs/iconos/seiya.png",
         imgBatalla: "../imgs/batalla/seiya.png",
         imgBatallaDefendiendose: "../imgs/batalla/seiya_defendiendose.png",
         imgBatallaDerrotado: "../imgs/batalla/seiya_derrotado.png",
@@ -683,7 +683,7 @@ const caballerosBronce = [
         genero: "masculino",
         caballero: "Cisne",
     
-        imgIcono: "../imgs/iconos/hyoga.png",
+        imgIcono: ".../imgs/iconos/hyoga.png",
         imgBatalla: "../imgs/batalla/hyoga.png",
         imgBatallaDefendiendose: "../imgs/batalla/hyoga_defendiendose.png",
         imgBatallaDerrotado: "../imgs/batalla/hyoga_derrotado.png",
