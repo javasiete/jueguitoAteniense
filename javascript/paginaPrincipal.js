@@ -1,8 +1,8 @@
-const sonidoTurnoJugador = new Audio("../sonidos/turnoJugador.wav");
+const sonidoTurnoJugador = new Audio("./sonidos/turnoJugador.wav");
 sonidoTurnoJugador.volume = 0.6;
 
 const sonidoClick = new Audio("../sonidos/click.wav");
-const sonidoClickPersonaje = new Audio("../sonidos/clickPersonaje.wav");
+const sonidoClickPersonaje = new Audio("./sonidos/clickPersonaje.wav");
 
 // Audios para los Ataques:
 function reproducirAudio(ruta) {
@@ -30,6 +30,7 @@ const ataquesSeiya = [
         rangoMax: 1,
         detalle: "Un golpe rápido y directo.",
         target: "Rival",
+        duracionAudio: 1200,
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
@@ -50,7 +51,7 @@ const ataquesSeiya = [
         detalle: "Un golpe giratorio capaz de aturdir al enemigo.",
         target: "Rival",
         audio: "../audios/seiya/puño_rodante.wav",
-        duracionMs: 1200,
+        duracionAudio: 3000,
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
@@ -76,7 +77,7 @@ const ataquesSeiya = [
         detalle: "Un golpe impulsado por el cosmos que viaja a distancia.",
         target: "Rival",
         audio: "../audios/seiya/puño_meteorico.wav",
-        duracionMs: 1200,
+        duracionAudio: 1800,
         efecto: {
             tipo: "Daño",
             escala: "mixto",
@@ -90,14 +91,14 @@ const ataquesSeiya = [
         tipo: "Cosmos",
         tipoDaño: "Magico",
         pmNecesaria: 0,
-        cosmosNecesario: 40,
+        cosmosNecesario: 40, 
         precision: 80,
         rangoMin: 1,
         rangoMax: 1,
         detalle: "Un golpe devastador concentrado en un solo punto.",
         target: "Rival",
         audio: "../audios/seiya/cometa_pegaso.wav",
-        duracionMs: 1200,
+        duracionAudio: 2500,
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
@@ -119,6 +120,7 @@ const ataquesSeiya = [
         detalle: "Una lluvia imparable de golpes impulsados por el cosmos.",
         target: "Rival",
         audio: "../audios/seiya/meteoro_pegaso.wav",
+        duracionAudio: 1800,
         efecto: {
             tipo: "Daño",
             escala: "mixto",
@@ -142,6 +144,7 @@ const ataquesShiryu = [
         rangoMax: 1,
         detalle: "Un golpe firme y controlado, ejecutado con la fuerza del Dragón.",
         target: "Rival",
+        duracionAudio: 1200,
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
@@ -162,6 +165,7 @@ const ataquesShiryu = [
         rangoMax: 1,
         detalle: "Una patada circular que golpea con el peso y la técnica de Shiryu.",
         target: "Rival",
+        duracionAudio: 1200,
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
@@ -447,6 +451,7 @@ const ataquesGuerrero1 = [
         rangoMax: 1,
         detalle: "Un golpe fuerte pero poco refinado.",
         target: "Rival",
+        duracionAudio: 1200,
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
@@ -466,6 +471,7 @@ const ataquesGuerrero1 = [
         rangoMax: 1,
         detalle: "Se lanza contra el rival usando todo su peso.",
         target: "Rival",
+        duracionAudio: 1200,
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
@@ -485,6 +491,7 @@ const ataquesGuerrero1 = [
         rangoMax: 1,
         detalle: "Un golpe poderoso que deja al rival vulnerable.",
         target: "Rival",
+        duracionAudio: 1200,
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
@@ -606,10 +613,10 @@ const caballerosBronce = [
         caballero: "Pegaso",
     
         imgIcono: "./imgs/iconos/seiya.png",
-        imgBatalla: "../imgs/batalla/seiya.png",
-        imgBatallaDefendiendose: "../imgs/batalla/seiya_defendiendose.png",
-        imgBatallaDerrotado: "../imgs/batalla/seiya_derrotado.png",
-        imgFormacion: "../imgs/formacion/seiya.png",
+        imgBatalla: "./imgs/batalla/seiya.png",
+        imgBatallaDefendiendose: "./imgs/batalla/seiya_defendiendose.png",
+        imgBatallaDerrotado: "./imgs/batalla/seiya_derrotado.png",
+        imgFormacion: "./imgs/formacion/seiya.png",
     
         pv: 35,
         pm: 15,
@@ -627,9 +634,9 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "../audios/seiya/ataqueGenerico.wav",
-        grito: "../audios/seiya/grito.wav",
-        herido: "../audios/seiya/herido.wav"
+        ataqueGenerico: "./audios/seiya/ataqueGenerico.wav",
+        grito: "./audios/seiya/grito.wav",
+        herido: "./audios/seiya/herido.wav"
         },
     
         ataquesDisponibles: ataquesSeiya,
@@ -644,11 +651,11 @@ const caballerosBronce = [
         genero: "masculino",
         caballero: "Dragón",
     
-        imgIcono: "../imgs/iconos/shiryu.png",
-        imgBatalla: "../imgs/batalla/shiryu.png",
-        imgBatallaDefendiendose: "../imgs/batalla/shiryu_defendiendose.png",
-        imgBatallaDerrotado: "../imgs/batalla/shiryu_derrotado.png",
-        imgFormacion: "../imgs/formacion/shiryu.png",
+        imgIcono: "./imgs/iconos/shiryu.png",
+        imgBatalla: "./imgs/batalla/shiryu.png",
+        imgBatallaDefendiendose: "./imgs/batalla/shiryu_defendiendose.png",
+        imgBatallaDerrotado: "./imgs/batalla/shiryu_derrotado.png",
+        imgFormacion: "./imgs/formacion/shiryu.png",
     
         pv: 40,
         pm: 10,
@@ -666,9 +673,9 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "../audios/shiryu/ataqueGenerico.wav",
-        grito: "../audios/shiryu/grito.wav",
-        herido: "../audios/shiryu/herido.wav"
+        ataqueGenerico: "./audios/shiryu/ataqueGenerico.wav",
+        grito: "./audios/shiryu/grito.wav",
+        herido: "./audios/shiryu/herido.wav"
         },
     
         ataquesDisponibles: ataquesShiryu,
@@ -683,11 +690,11 @@ const caballerosBronce = [
         genero: "masculino",
         caballero: "Cisne",
     
-        imgIcono: ".../imgs/iconos/hyoga.png",
-        imgBatalla: "../imgs/batalla/hyoga.png",
-        imgBatallaDefendiendose: "../imgs/batalla/hyoga_defendiendose.png",
-        imgBatallaDerrotado: "../imgs/batalla/hyoga_derrotado.png",
-        imgFormacion: "../imgs/formacion/hyoga.png",
+        imgIcono: "./imgs/iconos/hyoga.png",
+        imgBatalla: "./imgs/batalla/hyoga.png",
+        imgBatallaDefendiendose: "./imgs/batalla/hyoga_defendiendose.png",
+        imgBatallaDerrotado: "./imgs/batalla/hyoga_derrotado.png",
+        imgFormacion: "./imgs/formacion/hyoga.png",
     
         pv: 30,
         pm: 25,
@@ -704,9 +711,9 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "../audios/hyoga/ataqueGenerico.wav",
-        grito: "../audios/hyoga/grito.wav",
-        herido: "../audios/hyoga/herido.wav"
+        ataqueGenerico: "./audios/hyoga/ataqueGenerico.wav",
+        grito: "./audios/hyoga/grito.wav",
+        herido: "./audios/hyoga/herido.wav"
         },
     
         ataquesDisponibles: ataquesHyoga,
@@ -721,11 +728,11 @@ const caballerosBronce = [
         genero: "masculino",
         caballero: "Andrómeda",
     
-        imgIcono: "../imgs/iconos/shun.png",
-        imgBatalla: "../imgs/batalla/shun.png",
-        imgBatallaDefendiendose: "../imgs/batalla/shun_defendiendose.png",
-        imgBatallaDerrotado: "../imgs/batalla/shun_derrotado.png",
-        imgFormacion: "../imgs/formacion/shun.png",
+        imgIcono: "./imgs/iconos/shun.png",
+        imgBatalla: "./imgs/batalla/shun.png",
+        imgBatallaDefendiendose: "./imgs/batalla/shun_defendiendose.png",
+        imgBatallaDerrotado: "./imgs/batalla/shun_derrotado.png",
+        imgFormacion: "./imgs/formacion/shun.png",
     
         pv: 34,
         pm: 30,
@@ -743,9 +750,9 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "../audios/shun/ataqueGenerico.wav",
-        grito: "../audios/shun/grito.wav",
-        herido: "../audios/shun/herido.wav"
+        ataqueGenerico: "./audios/shun/ataqueGenerico.wav",
+        grito: "./audios/shun/grito.wav",
+        herido: "./audios/shun/herido.wav"
         },
     
         ataquesDisponibles: ataquesShun,
@@ -760,11 +767,11 @@ const caballerosBronce = [
         genero: "masculino",
         caballero: "Fénix",
     
-        imgIcono: "../imgs/iconos/ikki.png",
-        imgBatalla: "../imgs/batalla/ikki.png",
-        imgBatallaDefendiendose: "../imgs/batalla/ikki_defendiendose.png",
-        imgBatallaDerrotado: "../imgs/batalla/ikki_derrotado.png",
-        imgFormacion: "../imgs/formacion/ikki.png",
+        imgIcono: "./imgs/iconos/ikki.png",
+        imgBatalla: "./imgs/batalla/ikki.png",
+        imgBatallaDefendiendose: "./imgs/batalla/ikki_defendiendose.png",
+        imgBatallaDerrotado: "./imgs/batalla/ikki_derrotado.png",
+        imgFormacion: "./imgs/formacion/ikki.png",
     
         pv: 38,
         pm: 20,
@@ -782,9 +789,9 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "../audios/ikki/ataqueGenerico.wav",
-        grito: "../audios/ikki/grito.wav",
-        herido: "../audios/ikki/herido.wav"
+        ataqueGenerico: "./audios/ikki/ataqueGenerico.wav",
+        grito: "./audios/ikki/grito.wav",
+        herido: "./audios/ikki/herido.wav"
         },
     
         ataquesDisponibles: ataquesIkki,
@@ -802,11 +809,11 @@ const caballerosPlata = [
         tipo: "jugador",
         genero: "femenino",
 
-        imgIcono: "../imgs/iconos/shaina.png",
-        imgBatalla: "../imgs/batalla/shaina.png",
-        imgBatallaDefendiendose: "../imgs/batalla/shaina_defendiendose.png",
-        imgBatallaDerrotado: "../imgs/batalla/shaina_derrotado.png",
-        imgFormacion: "../imgs/formacion/shaina.png",
+        imgIcono: "./imgs/iconos/shaina.png",
+        imgBatalla: "./imgs/batalla/shaina.png",
+        imgBatallaDefendiendose: "./imgs/batalla/shaina_defendiendose.png",
+        imgBatallaDerrotado: "./imgs/batalla/shaina_derrotado.png",
+        imgFormacion: "./imgs/formacion/shaina.png",
 
         pv: 55,
         pvMax: 55,
@@ -830,9 +837,9 @@ const caballerosPlata = [
         },
 
         audio: {
-        ataqueGenerico: "../audios/shaina/ataqueGenerico.wav",
-        grito: "../audios/shaina/grito.wav",
-        herido: "../audios/shaina/herido.wav"
+        ataqueGenerico: "./audios/shaina/ataqueGenerico.wav",
+        grito: "./audios/shaina/grito.wav",
+        herido: "./audios/shaina/herido.wav"
         },
 
         ataquesDisponibles: ataquesShaina,
@@ -851,8 +858,8 @@ const enemigos = [
         genero: "desconocido",
         caballero: null,
 
-        imgBatalla: "../imgs/batalla/enemigo1.png",
-        imgBatallaDerrotado: "../imgs/batalla/enemigo1_derrotado.png",
+        imgBatalla: "./imgs/batalla/enemigo1.png",
+        imgBatallaDerrotado: "./imgs/batalla/enemigo1_derrotado.png",
 
         pv: 30,
         pm: 10,
@@ -864,9 +871,9 @@ const enemigos = [
         velocidad: 2,
 
         audio: {
-        ataqueGenerico: "../audios/guerrero_1/ataqueGenerico.wav",
-        grito: "../audios/guerrero_1/grito.wav",
-        herido: "../audios/guerrero_1/herido.wav"
+        ataqueGenerico: "./audios/guerrero_1/ataqueGenerico.wav",
+        grito: "./audios/guerrero_1/grito.wav",
+        herido: "./audios/guerrero_1/herido.wav"
         },
 
         ataquesDisponibles: ataquesGuerrero1,
@@ -882,8 +889,8 @@ const enemigos = [
         genero: "desconocido",
         caballero: null,
 
-        imgBatalla: "../imgs/batalla/enemigo2.png",
-        imgBatallaDerrotado: "../imgs/batalla/enemigo2_derrotado.png",
+        imgBatalla: "./imgs/batalla/enemigo2.png",
+        imgBatallaDerrotado: "./imgs/batalla/enemigo2_derrotado.png",
 
         pv: 45,
         pm: 12,
@@ -895,9 +902,9 @@ const enemigos = [
         velocidad: 1,
 
         audio: {
-        ataqueGenerico: "../audios/guerrero_2/ataqueGenerico.wav",
-        grito: "../audios/guerrero_2/grito.wav",
-        herido: "../audios/guerrero_2/herido.wav"
+        ataqueGenerico: "./audios/guerrero_2/ataqueGenerico.wav",
+        grito: "./audios/guerrero_2/grito.wav",
+        herido: "./audios/guerrero_2/herido.wav"
         },
 
         ataquesAprendidosNum: [1, 2],
@@ -1559,8 +1566,6 @@ function obtenerRutasImagenesBatalla() {
     return rutas;
 }
 
-
-
 //------------------------------------------------------------------------------------------------------------------------------------
 // ==========================================================
 // PAGINA_TABLERO
@@ -1916,7 +1921,6 @@ function finalizarTurno() {
     iniciarTurno();
 }
 
-
 // Las tarjetas de turnos se despintan:
 function limpiarTarjetaActiva() {
     document.querySelectorAll(".tarjetaPersonaje").forEach(t => {
@@ -2093,8 +2097,6 @@ function entidadPuedeActuar(entidad) {
     return false;
 }
 
-
-
 // Busca a los caballeros que esten vivos:
 function obtenerCaballerosVivos() {
     return formacionCopiaEnBatalla
@@ -2223,9 +2225,12 @@ async function ejecutarTurnoEnemigo(enemigo) {
     }
 
     if (ataque) {
-        ejecutarAtaqueConAudioSeguro(enemigo, objetivo, ataque);
-        await esperar(ataque.duracionMs ?? 1200);
+        await new Promise(resolve => {
+            ejecutarAtaqueConDelayAudio(enemigo, objetivo, ataque, resolve);
+        });
+
         await esperar(2000);
+
     } else {
         enemigoDefenderse(enemigo);
         await esperar(1500);
@@ -2298,7 +2303,6 @@ function obtenerBonusDañoPorCosmo(personaje) {
 
     return bonus;
 }
-
 
 //-------------------------------------------------------------------------------------------------------
 // ==========================================================
@@ -2423,16 +2427,16 @@ function onClickCeldaAtacable(e) {
         return;
     }
 
-    ejecutarAudioAtaque(atacanteActivo, ataqueSeleccionado);
-    ejecutarAtaqueConAudioSeguro(atacanteActivo, enemigo, ataqueSeleccionado);
+    ejecutarAtaqueConDelayAudio(
+        atacanteActivo,
+        enemigo,
+        ataqueSeleccionado,
+        () => {
+            finalizarSeleccionAtaque();
+        }
+    );
 
-    const delay = ataqueSeleccionado.duracionMs ?? 800;
-
-    setTimeout(() => {
-        finalizarSeleccionAtaque();
-    }, delay);
 }
-
 
 function finalizarSeleccionAtaque() {
 
@@ -2464,7 +2468,6 @@ document.addEventListener("click", (e) => {
     cancelarSeleccionObjetivo();
 });
 
-
 function limpiarMarcadoCeldas() {
     document.querySelectorAll(".celdaGuerra").forEach(celda => {
         celda.classList.remove("celda-atacable", "celda-no-atacable");
@@ -2491,7 +2494,6 @@ function obtenerPersonajePorId(id) {
         return enemigos.find(e => e.id === id);
     }
 }
-
 
 function calcularDistancia(entidadA, entidadB) {
 
@@ -2544,13 +2546,12 @@ function calcularDaño(atacante, defensor, ataque) {
     );
 }
 
-// Nueva funcion que aplica todo lo que sucede durante un ataque:
 function aplicarLogicaAtaque(atacante, objetivo, ataque) {
 
     if (!objetivo || objetivo.estado !== 1) return;
 
     // ==========================
-    // CONSUMO DE RECURSOS INMEDIATO
+    // CONSUMO DE RECURSOS
     // ==========================
     if (ataque.pmNecesaria > 0) atacante.pm = Math.max(0, atacante.pm - ataque.pmNecesaria);
     if (ataque.cosmosNecesario > 0) atacante.cosmosActual = Math.max(0, atacante.cosmosActual - ataque.cosmosNecesario);
@@ -2560,9 +2561,8 @@ function aplicarLogicaAtaque(atacante, objetivo, ataque) {
     // ==========================
     const tirada = Math.random() * 100;
     if (tirada > ataque.precision) {
-        console.log(`${atacante.nombre} falló el ataque ${ataque.nombre}`);
         ganarCosmosPorAccion(atacante, "atacar-fallido");
-        actualizarUIBatalla();
+        actualizarUIBatalla(); // 👈 único refresh en fallo
         return;
     }
 
@@ -2572,33 +2572,13 @@ function aplicarLogicaAtaque(atacante, objetivo, ataque) {
     const daño = calcularDaño(atacante, objetivo, ataque);
     objetivo.pv = Math.max(0, objetivo.pv - daño);
 
-    console.log(
-        `%c${atacante.nombre} → ${objetivo.nombre} | ${ataque.nombre} | Daño: ${daño}`,
-        "color:red;font-weight:bold"
-    );
-
     // ==========================
     // EFECTO VISUAL DE DAÑO
     // ==========================
     if (daño > 0) {
         limpiarMarcadoCeldas();
-        const img = document.querySelector(`.imgEntidadBatalla[data-id="${objetivo.id}"]`);
-        if (img) {
-            // Aplicar clase de destello
-            img.classList.add("efectoDaño");
-
-            // Quitar la clase al terminar la animación
-            img.addEventListener("animationend", () => {
-                img.classList.remove("efectoDaño");
-                actualizarUIBatalla();
-            }, { once: true });
-        } else {
-            actualizarUIBatalla();
-        }
-    } else {
-        actualizarUIBatalla();
+        mostrarEfectoDaño(objetivo);
     }
-
 
     // ==========================
     // ESTADOS
@@ -2608,11 +2588,10 @@ function aplicarLogicaAtaque(atacante, objetivo, ataque) {
     }
 
     // ==========================
-    // SONIDO HERIDO DEL OBJETIVO
+    // SONIDO HERIDO
     // ==========================
     if (objetivo.audio?.herido) {
-        const audioHerido = new Audio(objetivo.audio.herido);
-        audioHerido.play().catch(() => {});
+        new Audio(objetivo.audio.herido).play().catch(() => {});
     }
 
     // ==========================
@@ -2623,28 +2602,14 @@ function aplicarLogicaAtaque(atacante, objetivo, ataque) {
     }
 
     // ==========================
-    // COSMOS + UI
+    // COSMOS
     // ==========================
     ganarCosmosPorAccion(atacante, "atacar");
 
-    // ❌ NO FINALIZAR TURNO AQUÍ
-}
-
-// ================================================
-// Ejecuta el ataque con audio, sin finalizar turno
-// ================================================
-function ejecutarAtaqueConAudioSeguro(atacante, objetivo, ataque) {
-    // Lógica del ataque
-    aplicarLogicaAtaque(atacante, objetivo, ataque);
-
-    // Reproducir audio
-    try {
-        const audioSrc = ataque.audio || atacante.audio?.ataqueGenerico || "/audios/genericos/ataque.wav";
-        const audio = new Audio(audioSrc);
-        audio.play().catch(err => console.warn(`No se pudo reproducir audio: ${audioSrc}`, err));
-    } catch (err) {
-        console.warn("Error creando objeto Audio:", err);
-    }
+    // ==========================
+    // 🔑 REFRESH FINAL ÚNICO
+    // ==========================
+    actualizarUIBatalla();
 }
 
 
@@ -2712,7 +2677,6 @@ function derrotarEntidad(entidad) {
     construirColaTurnos();
 }
 
-
 function ejecutarAudioAtaque(atacante, ataque) {
 
     let audioSrc = null;
@@ -2744,6 +2708,69 @@ function ejecutarAtaqueConAudioSeguro(atacante, objetivo, ataque) {
         console.warn("Error creando objeto Audio:", err);
     }
 }
+
+function ejecutarAtaqueConDelayAudio(atacante, objetivo, ataque, onFinish) {
+
+    // 1. Reproducir audio
+    let audioSrc =
+        ataque.audio ||
+        atacante.audio?.ataqueGenerico ||
+        "/audios/genericos/ataque.wav";
+
+    const audio = new Audio(audioSrc);
+    audio.play().catch(() => {});
+
+    // 2. Duración configurable
+    const delay = ataque.duracionAudio ?? 800;
+
+    // 3. Esperar y aplicar lógica
+    setTimeout(() => {
+
+        aplicarLogicaAtaque(atacante, objetivo, ataque);
+
+        if (typeof onFinish === "function") {
+            onFinish();
+        }
+
+    }, delay);
+}
+
+// Efectos_Daño > Cuando golpeamos al rival:
+function mostrarEfectoDaño(objetivo) {
+    const capa = document.getElementById("capaEfectos");
+    if (!capa) return;
+
+    const imgOriginal = document.querySelector(
+        `.imgEntidadBatalla[data-id="${objetivo.id}"]`
+    );
+    if (!imgOriginal) return;
+
+    const rectImg = imgOriginal.getBoundingClientRect();
+    const rectTablero = document
+        .getElementById("divTablero")
+        .getBoundingClientRect();
+
+    const efectoImg = document.createElement("img");
+    efectoImg.src = imgOriginal.src;
+    efectoImg.className = "efectoDañoSprite";
+
+    efectoImg.style.position = "absolute";
+    efectoImg.style.left = `${rectImg.left - rectTablero.left}px`;
+    efectoImg.style.top = `${rectImg.top - rectTablero.top}px`;
+    efectoImg.style.width = `${rectImg.width}px`;
+    efectoImg.style.height = `${rectImg.height}px`;
+    efectoImg.style.pointerEvents = "none";
+
+    capa.appendChild(efectoImg);
+
+    efectoImg.addEventListener("animationend", () => {
+        efectoImg.remove();
+    });
+}
+
+
+
+
 
 //-------------------------------------------------------------------------------------------------------
 // ==========================================================

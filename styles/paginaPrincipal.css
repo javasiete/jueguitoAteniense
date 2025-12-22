@@ -592,16 +592,15 @@ button:hover {
 /*----------------------------------------------------------*/
 /* Recibiendo daño EFECTO */
 
-.efectoDaño {
-    animation: destello 0.3s ease-in-out;
+.efectoDañoSprite {
+    animation: flashSprite 0.25s ease-in-out 2;
+    filter: brightness(1);
 }
 
-@keyframes destello {
-    0%   { filter: brightness(1); }
-    25%  { filter: brightness(2); }
-    50%  { filter: brightness(1); }
-    75%  { filter: brightness(2); }
-    100% { filter: brightness(1); }
+@keyframes flashSprite {
+    0%   { opacity: 1; filter: brightness(1); }
+    50%  { opacity: 1; filter: brightness(2.5); }
+    100% { opacity: 1; filter: brightness(1); }
 }
 
 
