@@ -756,7 +756,7 @@ button:hover {
 /* MEDIAQUERIE TABLET */
 /* ============================= */
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) { /*NESTHUB*/
 
     body, html {
         margin: 0;
@@ -1135,5 +1135,440 @@ button:hover {
 }
 
 
+@media screen and (max-width: 914px) { /*SAMSUNG GALAXY A51*/
+
+    /* ================ TARJETAS ===================================== */
+    /* CONTENEDOR DE TARJETAS */
+    #contenedorTarjetas {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        max-width: 820px;
+
+        margin-top: 2px;
+    }
+
+    /* TARJETA INDIVIDUAL */
+    .tarjetaPersonaje {
+        flex: 1;
+        display: flex;
+        padding: 5px;
+        background-color: rgba(0, 0, 0, 0.945);
+        border: 2px solid #444;
+        border-radius: 8px;
+        color: #fff;
+        box-sizing: border-box;
+        gap: 6px;
+
+        transition: 
+            filter 0.25s ease,
+            box-shadow 0.25s ease,
+            border-color 0.25s ease,
+            transform 0.25s ease;
+    }
+
+    .tarjetaActiva {
+        border-color: gold;
+        box-shadow:
+            0 0 6px rgba(255,215,0,0.9),
+            0 0 18px rgba(255,215,0,0.7),
+            0 0 36px rgba(255,215,0,0.4);
+        filter: saturate(1.2);
+        transform: scale(1.04);
+    }
+    /* TURNO ACTIVO */
+
+    /* LADO IZQUIERDO */
+    .tarjetaIzq {
+        width: 50px;
+    }
+
+    .tarjetaNombre {
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .tarjetaIcono {
+        width: 44px;
+        height: 44px;
+        margin-top: 2px; /*6px*/
+    }
+
+    /* LADO DERECHO */
+    .tarjetaDer {
+        width: 54px;
+        flex: 1;
+        margin-left: 0px; /*8px*/
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ESTADO */
+    .tarjetaEstado {
+        font-size: 9px;
+        text-align: right;
+        min-height: 16px;
+    }
+
+    /* BLOQUES PV / PM / COS */
+    .bloqueBarra {
+        display: flex;
+        flex-direction: column;
+        margin-top: 0px; /*6px*/
+        width: 100%;
+    }
+
+    .bloqueBarra span {
+        font-size: 9px;
+        margin-bottom: 0px; /*2px*/
+    }
+
+    /* BARRAS */
+    .barra {
+        width: 100%;
+        height: 3px;
+        background-color: #333;
+        border: 1px solid #111;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .barraRelleno {
+        height: 100%;
+        width: 100%;
+    }
+
+    /* ================ TABLERO ===================================== */
+
+    #paginaTablero {
+        /* display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh; */
+        padding-top: 0px;
+        gap: 0px;
+    }
+
+    /* CONTENEDOR GENERAL DEL TABLERO */
+    /* #divTablero {
+        display: flex;
+        justify-content: center;
+    } */
+
+    /* TABLERO */
+    .tableroGuerra {
+        grid-template-rows: repeat(4, 64px);
+        grid-template-columns: repeat(7, 64px);
+        gap: 3px;
+        margin-top: 0px; /*ACA*/
+        /*
+        display: grid;
+        background-color: #1b1b1b;
+        padding: 12px;
+        border-radius: 10px; */
+    }
+
+    /* ENTIDADES EN TABLERO (jugadores y enemigos) */
+    .imgEntidadBatalla {
+        position: absolute;
+        width: 220px;
+        height: 170px;
+        left: 50%;
+        bottom: 220px; /*Movi la imagen hacia arriba desde aca*/
+        transform: translateX(-66%); /*Movi la imagen a la izquierda desde aca*/
+
+        object-fit: contain;
+        pointer-events: none;
+        filter: drop-shadow(0 8px 8px rgba(0,0,0,0.75));
+    }
+
+    /* ================ PANELES DE ABAJO ============================= */
+
+    #consolaBatalla {
+        display: flex;
+        width: 768px;
+        height: 90px;
+        margin-top: -125px;
+        gap: 0px;
+        background-color: salmon;
+
+        position: relative;
+        z-index: 10;
+    }
+
+    /* Panel izquierdo y derecho ocupan lo mismo */
+    #panelIzq,
+    #panelDer {
+        flex: 1;
+        min-height: 120px;
+        background-color: rgba(0, 0, 0, 0.6);
+        border: 2px solid #444;
+        padding: 2px;
+        box-sizing: border-box;
+    }
+
+    /* Panel izquierdo */
+    #panelIzq {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        align-items: center;
+        justify-content: start;
+    }
+
+    /* Panel derecho */
+    #panelDer {
+        display: flex;
+    }
+
+    /* Filas de botones */
+    .filaBotones {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    /* Botones mismo tamaño */
+    .filaBotones button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 160px;
+        height: 30px;
+    }
+
+    #btnSalirBatalla {
+        /*display: block;
+        font-weight: bold;
+        margin: 0 auto;*/ /* fuerza centrado horizontal */
+        padding: 4px 10px;
+        font-size: 14px;
+    }
+
+    #infoBatalla {
+        width: 100%;
+    }
 
 
+}  
+
+@media screen and (max-width: 932px) { /*IPHONE 14*/
+
+    /* ================ TARJETAS ===================================== */
+    /* CONTENEDOR DE TARJETAS */
+    #contenedorTarjetas {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        max-width: 820px;
+
+        margin-top: 2px;
+    }
+
+    /* TARJETA INDIVIDUAL */
+    .tarjetaPersonaje {
+        flex: 1;
+        display: flex;
+        padding: 5px;
+        background-color: rgba(0, 0, 0, 0.945);
+        border: 2px solid #444;
+        border-radius: 8px;
+        color: #fff;
+        box-sizing: border-box;
+        gap: 6px;
+
+        transition: 
+            filter 0.25s ease,
+            box-shadow 0.25s ease,
+            border-color 0.25s ease,
+            transform 0.25s ease;
+    }
+
+    .tarjetaActiva {
+        border-color: gold;
+        box-shadow:
+            0 0 6px rgba(255,215,0,0.9),
+            0 0 18px rgba(255,215,0,0.7),
+            0 0 36px rgba(255,215,0,0.4);
+        filter: saturate(1.2);
+        transform: scale(1.04);
+    }
+    /* TURNO ACTIVO */
+
+    /* LADO IZQUIERDO */
+    .tarjetaIzq {
+        width: 50px;
+    }
+
+    .tarjetaNombre {
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .tarjetaIcono {
+        width: 44px;
+        height: 44px;
+        margin-top: 2px; /*6px*/
+    }
+
+    /* LADO DERECHO */
+    .tarjetaDer {
+        width: 54px;
+        flex: 1;
+        margin-left: 0px; /*8px*/
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ESTADO */
+    .tarjetaEstado {
+        font-size: 9px;
+        text-align: right;
+        min-height: 16px;
+    }
+
+    /* BLOQUES PV / PM / COS */
+    .bloqueBarra {
+        display: flex;
+        flex-direction: column;
+        margin-top: 0px; /*6px*/
+        width: 100%;
+    }
+
+    .bloqueBarra span {
+        font-size: 9px;
+        margin-bottom: 0px; /*2px*/
+    }
+
+    /* BARRAS */
+    .barra {
+        width: 100%;
+        height: 3px;
+        background-color: #333;
+        border: 1px solid #111;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .barraRelleno {
+        height: 100%;
+        width: 100%;
+    }
+
+    /* ================ TABLERO ===================================== */
+
+    #paginaTablero {
+        /* display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh; */
+        padding-top: 0px;
+        gap: 0px;
+    }
+
+    /* CONTENEDOR GENERAL DEL TABLERO */
+    /* #divTablero {
+        display: flex;
+        justify-content: center;
+    } */
+
+    /* TABLERO */
+    .tableroGuerra {
+        grid-template-rows: repeat(4, 64px);
+        grid-template-columns: repeat(7, 64px);
+        gap: 3px;
+        margin-top: 0px; /*ACA*/
+        /*
+        display: grid;
+        background-color: #1b1b1b;
+        padding: 12px;
+        border-radius: 10px; */
+    }
+
+    /* ENTIDADES EN TABLERO (jugadores y enemigos) */
+    .imgEntidadBatalla {
+        position: absolute;
+        width: 220px;
+        height: 170px;
+        left: 50%;
+        bottom: 220px; /*Movi la imagen hacia arriba desde aca*/
+        transform: translateX(-66%); /*Movi la imagen a la izquierda desde aca*/
+
+        object-fit: contain;
+        pointer-events: none;
+        filter: drop-shadow(0 8px 8px rgba(0,0,0,0.75));
+    }
+
+    /* ================ PANELES DE ABAJO ============================= */
+
+    #consolaBatalla {
+        display: flex;
+        width: 768px;
+        height: 90px;
+        margin-top: -125px;
+        gap: 0px;
+        background-color: salmon;
+
+        position: relative;
+        z-index: 10;
+    }
+
+    /* Panel izquierdo y derecho ocupan lo mismo */
+    #panelIzq,
+    #panelDer {
+        flex: 1;
+        min-height: 120px;
+        background-color: rgba(0, 0, 0, 0.6);
+        border: 2px solid #444;
+        padding: 2px;
+        box-sizing: border-box;
+    }
+
+    /* Panel izquierdo */
+    #panelIzq {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        align-items: center;
+        justify-content: start;
+    }
+
+    /* Panel derecho */
+    #panelDer {
+        display: flex;
+    }
+
+    /* Filas de botones */
+    .filaBotones {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    /* Botones mismo tamaño */
+    .filaBotones button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 160px;
+        height: 30px;
+    }
+
+    #btnSalirBatalla {
+        /*display: block;
+        font-weight: bold;
+        margin: 0 auto;*/ /* fuerza centrado horizontal */
+        padding: 4px 10px;
+        font-size: 14px;
+    }
+
+    #infoBatalla {
+        width: 100%;
+    }
+
+
+}  
