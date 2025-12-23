@@ -50,7 +50,7 @@ const ataquesSeiya = [
         rangoMax: 1,
         detalle: "Un golpe giratorio capaz de aturdir al enemigo.",
         target: "Rival",
-        audio: "../audios/seiya/puño_rodante.wav",
+        audio: "./audios/seiya/puño_rodante.wav",
         duracionAudio: 3000,
         efecto: {
             tipo: "Daño",
@@ -76,7 +76,7 @@ const ataquesSeiya = [
         rangoMax: 2,
         detalle: "Un golpe impulsado por el cosmos que viaja a distancia.",
         target: "Rival",
-        audio: "../audios/seiya/puño_meteorico.wav",
+        audio: "./audios/seiya/puño_meteorico.wav",
         duracionAudio: 1800,
         efecto: {
             tipo: "Daño",
@@ -97,7 +97,7 @@ const ataquesSeiya = [
         rangoMax: 1,
         detalle: "Un golpe devastador concentrado en un solo punto.",
         target: "Rival",
-        audio: "../audios/seiya/cometa_pegaso.wav",
+        audio: "./audios/seiya/cometa_pegaso.wav",
         duracionAudio: 2500,
         efecto: {
             tipo: "Daño",
@@ -119,7 +119,7 @@ const ataquesSeiya = [
         rangoMax: 3,
         detalle: "Una lluvia imparable de golpes impulsados por el cosmos.",
         target: "Rival",
-        audio: "../audios/seiya/meteoro_pegaso.wav",
+        audio: "./audios/seiya/meteoro_pegaso.wav",
         duracionAudio: 1800,
         efecto: {
             tipo: "Daño",
@@ -186,7 +186,7 @@ const ataquesShiryu = [
         rangoMax: 2,
         detalle: "Shiryu impulsa su cosmos y avanza como un dragón en pleno vuelo.",
         target: "Rival",
-        audio: "../audios/shiryu/vuelo_del_dragon.wav",
+        audio: "./audios/shiryu/vuelo_del_dragon.wav",
         duracionMs: 1200,
         efecto: {
             tipo: "Daño",
@@ -208,7 +208,7 @@ const ataquesShiryu = [
         rangoMax: 1,
         detalle: "Un ataque ascendente devastador que deja a Shiryu expuesto.",
         target: "Rival",
-        audio: "../audios/shiryu/ascenso_del_dragon.wav",
+        audio: "./audios/shiryu/ascenso_del_dragon.wav",
         duracionMs: 1200,
         efecto: {
             tipo: "Daño",
@@ -235,7 +235,7 @@ const ataquesShiryu = [
         rangoMax: 1,
         detalle: "Shiryu libera todo su cosmos en un ascenso final, poniendo su vida en riesgo.",
         target: "Rival",
-        audio: "../audios/shiryu/ascenso_del_dragon_supremo.wav",
+        audio: "./audios/shiryu/ascenso_del_dragon_supremo.wav",
         duracionMs: 1200,
         efecto: {
             tipo: "Daño",
@@ -612,11 +612,11 @@ const caballerosBronce = [
         genero: "masculino",
         caballero: "Pegaso",
     
-        imgIcono: "../imgs/iconos/seiya.png",
-        imgBatalla: "../imgs/batalla/seiya.png",
+        imgIcono: "./imgs/iconos/seiya.png",
+        imgBatalla: "./imgs/batalla/seiya.png",
         imgBatallaDefendiendose: "../imgs/batalla/seiya_defendiendose.png",
         imgBatallaDerrotado: "../imgs/batalla/seiya_derrotado.png",
-        imgFormacion: "../imgs/formacion/seiya.png",
+        imgFormacion: "./imgs/formacion/seiya.png",
     
         pv: 35,
         pm: 15,
@@ -634,9 +634,9 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "../audios/seiya/ataqueGenerico.wav",
-        grito: "../audios/seiya/grito.wav",
-        herido: "../audios/seiya/herido.wav"
+        ataqueGenerico: "./audios/seiya/ataqueGenerico.wav",
+        grito: "./audios/seiya/grito.wav",
+        herido: "./audios/seiya/herido.wav"
         },
     
         ataquesDisponibles: ataquesSeiya,
@@ -651,11 +651,11 @@ const caballerosBronce = [
         genero: "masculino",
         caballero: "Dragón",
     
-        imgIcono: "../imgs/iconos/shiryu.png",
-        imgBatalla: "../imgs/batalla/shiryu.png",
-        imgBatallaDefendiendose: "../imgs/batalla/shiryu_defendiendose.png",
-        imgBatallaDerrotado: "../imgs/batalla/shiryu_derrotado.png",
-        imgFormacion: "../imgs/formacion/shiryu.png",
+        imgIcono: "./imgs/iconos/shiryu.png",
+        imgBatalla: "./imgs/batalla/shiryu.png",
+        imgBatallaDefendiendose: "./imgs/batalla/shiryu_defendiendose.png",
+        imgBatallaDerrotado: "./imgs/batalla/shiryu_derrotado.png",
+        imgFormacion: "./imgs/formacion/shiryu.png",
     
         pv: 40,
         pm: 10,
@@ -673,9 +673,9 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "../audios/shiryu/ataqueGenerico.wav",
-        grito: "../audios/shiryu/grito.wav",
-        herido: "../audios/shiryu/herido.wav"
+        ataqueGenerico: "./audios/shiryu/ataqueGenerico.wav",
+        grito: "./audios/shiryu/grito.wav",
+        herido: "./audios/shiryu/herido.wav"
         },
     
         ataquesDisponibles: ataquesShiryu,
@@ -690,11 +690,11 @@ const caballerosBronce = [
         genero: "masculino",
         caballero: "Cisne",
     
-        imgIcono: "../imgs/iconos/hyoga.png",
-        imgBatalla: "../imgs/batalla/hyoga.png",
-        imgBatallaDefendiendose: "../imgs/batalla/hyoga_defendiendose.png",
-        imgBatallaDerrotado: "../imgs/batalla/hyoga_derrotado.png",
-        imgFormacion: "../imgs/formacion/hyoga.png",
+        imgIcono: "./imgs/iconos/hyoga.png",
+        imgBatalla: "./imgs/batalla/hyoga.png",
+        imgBatallaDefendiendose: "./imgs/batalla/hyoga_defendiendose.png",
+        imgBatallaDerrotado: "./imgs/batalla/hyoga_derrotado.png",
+        imgFormacion: "./imgs/formacion/hyoga.png",
     
         pv: 30,
         pm: 25,
@@ -711,9 +711,9 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "../audios/hyoga/ataqueGenerico.wav",
-        grito: "../audios/hyoga/grito.wav",
-        herido: "../audios/hyoga/herido.wav"
+        ataqueGenerico: "./audios/hyoga/ataqueGenerico.wav",
+        grito: "./audios/hyoga/grito.wav",
+        herido: "./audios/hyoga/herido.wav"
         },
     
         ataquesDisponibles: ataquesHyoga,
@@ -728,11 +728,11 @@ const caballerosBronce = [
         genero: "masculino",
         caballero: "Andrómeda",
     
-        imgIcono: "../imgs/iconos/shun.png",
-        imgBatalla: "../imgs/batalla/shun.png",
-        imgBatallaDefendiendose: "../imgs/batalla/shun_defendiendose.png",
-        imgBatallaDerrotado: "../imgs/batalla/shun_derrotado.png",
-        imgFormacion: "../imgs/formacion/shun.png",
+        imgIcono: "./imgs/iconos/shun.png",
+        imgBatalla: "./imgs/batalla/shun.png",
+        imgBatallaDefendiendose: "./imgs/batalla/shun_defendiendose.png",
+        imgBatallaDerrotado: "./imgs/batalla/shun_derrotado.png",
+        imgFormacion: "./imgs/formacion/shun.png",
     
         pv: 34,
         pm: 30,
@@ -750,9 +750,9 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "../audios/shun/ataqueGenerico.wav",
-        grito: "../audios/shun/grito.wav",
-        herido: "../audios/shun/herido.wav"
+        ataqueGenerico: "./audios/shun/ataqueGenerico.wav",
+        grito: "./audios/shun/grito.wav",
+        herido: "./audios/shun/herido.wav"
         },
     
         ataquesDisponibles: ataquesShun,
@@ -767,11 +767,11 @@ const caballerosBronce = [
         genero: "masculino",
         caballero: "Fénix",
     
-        imgIcono: "../imgs/iconos/ikki.png",
-        imgBatalla: "../imgs/batalla/ikki.png",
-        imgBatallaDefendiendose: "../imgs/batalla/ikki_defendiendose.png",
-        imgBatallaDerrotado: "../imgs/batalla/ikki_derrotado.png",
-        imgFormacion: "../imgs/formacion/ikki.png",
+        imgIcono: "./imgs/iconos/ikki.png",
+        imgBatalla: "./imgs/batalla/ikki.png",
+        imgBatallaDefendiendose: "./imgs/batalla/ikki_defendiendose.png",
+        imgBatallaDerrotado: "./imgs/batalla/ikki_derrotado.png",
+        imgFormacion: "./imgs/formacion/ikki.png",
     
         pv: 38,
         pm: 20,
@@ -789,9 +789,9 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "../audios/ikki/ataqueGenerico.wav",
-        grito: "../audios/ikki/grito.wav",
-        herido: "../audios/ikki/herido.wav"
+        ataqueGenerico: "./audios/ikki/ataqueGenerico.wav",
+        grito: "./audios/ikki/grito.wav",
+        herido: "./audios/ikki/herido.wav"
         },
     
         ataquesDisponibles: ataquesIkki,
@@ -809,11 +809,11 @@ const caballerosPlata = [
         tipo: "jugador",
         genero: "femenino",
 
-        imgIcono: "../imgs/iconos/shaina.png",
-        imgBatalla: "../imgs/batalla/shaina.png",
-        imgBatallaDefendiendose: "../imgs/batalla/shaina_defendiendose.png",
-        imgBatallaDerrotado: "../imgs/batalla/shaina_derrotado.png",
-        imgFormacion: "../imgs/formacion/shaina.png",
+        imgIcono: "./imgs/iconos/shaina.png",
+        imgBatalla: "./imgs/batalla/shaina.png",
+        imgBatallaDefendiendose: "./imgs/batalla/shaina_defendiendose.png",
+        imgBatallaDerrotado: "./imgs/batalla/shaina_derrotado.png",
+        imgFormacion: "./imgs/formacion/shaina.png",
 
         pv: 55,
         pvMax: 55,
@@ -837,9 +837,9 @@ const caballerosPlata = [
         },
 
         audio: {
-        ataqueGenerico: "../audios/shaina/ataqueGenerico.wav",
-        grito: "../audios/shaina/grito.wav",
-        herido: "../audios/shaina/herido.wav"
+        ataqueGenerico: "./audios/shaina/ataqueGenerico.wav",
+        grito: "./audios/shaina/grito.wav",
+        herido: "./audios/shaina/herido.wav"
         },
 
         ataquesDisponibles: ataquesShaina,
@@ -858,8 +858,8 @@ const enemigos = [
         genero: "desconocido",
         caballero: null,
 
-        imgBatalla: "../imgs/batalla/enemigo1.png",
-        imgBatallaDerrotado: "../imgs/batalla/enemigo1_derrotado.png",
+        imgBatalla: "./imgs/batalla/enemigo1.png",
+        imgBatallaDerrotado: "./imgs/batalla/enemigo1_derrotado.png",
 
         pv: 30,
         pm: 10,
@@ -871,9 +871,9 @@ const enemigos = [
         velocidad: 2,
 
         audio: {
-        ataqueGenerico: "../audios/guerrero_1/ataqueGenerico.wav",
-        grito: "../audios/guerrero_1/grito.wav",
-        herido: "../audios/guerrero_1/herido.wav"
+        ataqueGenerico: "./audios/guerrero_1/ataqueGenerico.wav",
+        grito: "./audios/guerrero_1/grito.wav",
+        herido: "./audios/guerrero_1/herido.wav"
         },
 
         ataquesDisponibles: ataquesGuerrero1,
@@ -889,8 +889,8 @@ const enemigos = [
         genero: "desconocido",
         caballero: null,
 
-        imgBatalla: "../imgs/batalla/enemigo2.png",
-        imgBatallaDerrotado: "../imgs/batalla/enemigo2_derrotado.png",
+        imgBatalla: "./imgs/batalla/enemigo2.png",
+        imgBatallaDerrotado: "./imgs/batalla/enemigo2_derrotado.png",
 
         pv: 45,
         pm: 12,
@@ -902,9 +902,9 @@ const enemigos = [
         velocidad: 1,
 
         audio: {
-        ataqueGenerico: "../audios/guerrero_2/ataqueGenerico.wav",
-        grito: "../audios/guerrero_2/grito.wav",
-        herido: "../audios/guerrero_2/herido.wav"
+        ataqueGenerico: "./audios/guerrero_2/ataqueGenerico.wav",
+        grito: "./audios/guerrero_2/grito.wav",
+        herido: "./audios/guerrero_2/herido.wav"
         },
 
         ataquesAprendidosNum: [1, 2],
