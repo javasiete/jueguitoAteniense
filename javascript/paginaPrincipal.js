@@ -1,8 +1,8 @@
-const sonidoTurnoJugador = new Audio("../sonidos/turnoJugador.wav");
+const sonidoTurnoJugador = new Audio("./sonidos/turnoJugador.wav");
 sonidoTurnoJugador.volume = 0.6;
 
-const sonidoClick = new Audio("../sonidos/click.wav");
-const sonidoClickPersonaje = new Audio("../sonidos/clickPersonaje.wav");
+const sonidoClick = new Audio("./sonidos/click.wav");
+const sonidoClickPersonaje = new Audio("./sonidos/clickPersonaje.wav");
 
 // Audios para los Ataques:
 function reproducirAudio(ruta) {
@@ -12,6 +12,39 @@ function reproducirAudio(ruta) {
     audio.volume = 1;
     audio.play().catch(() => {});
 }
+
+//---------------------------------------------------------------
+function recalcularPosicionesEntidades() {
+    document.querySelectorAll(".imgEntidadBatalla").forEach(img => {
+        const sprite = img.closest(".spriteEntidad");
+        if (!sprite) return;
+
+        const celda = sprite.dataset.celdaId
+            ? document.querySelector(`[data-celda-id="${sprite.dataset.celdaId}"]`)
+            : sprite.closest(".celdaGuerra");
+
+        if (!celda) return;
+
+        const rect = celda.getBoundingClientRect();
+        const tablero = document.getElementById("tableroArmado").getBoundingClientRect();
+
+        const x = rect.left + rect.width / 2 - tablero.left;
+        const y = rect.bottom - tablero.top;
+
+        sprite.style.setProperty("--base-x", `${x}px`);
+        sprite.style.setProperty("--base-y", `${y}px`);
+    });
+}
+
+let timeoutResize = null;
+
+window.addEventListener("resize", () => {
+    clearTimeout(timeoutResize);
+
+    timeoutResize = setTimeout(() => {
+        recalcularPosicionesEntidades();
+    }, 200);
+});
 
 // ==========================================================
 // ATAQUES QUE EXISTEN EN TOTAL
@@ -1567,7 +1600,7 @@ function obtenerRutasImagenesBatalla() {
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // ==========================================================
-// PAGINA_TABLERO
+// PAGINA_TABLERO_BATALLA
 // ==========================================================
 
 let formacionCopiaEnBatalla = [];
@@ -1650,20 +1683,29 @@ function cargarFormacionEnTablero() {
         celda.dataset.id = entidad.id;
         celda.dataset.tipo = item.tipo;
     });
+
+    recalcularPosicionesEntidades(); //No borrar. Segun que monitor usemos, ajusta el diseño UX.
 }
 
-// A pixeles:
 function posicionarSpriteEnCapa(img, fila, columna) {
     const celda = obtenerCelda(fila, columna);
     const rectCelda = celda.getBoundingClientRect();
     const rectTablero = document.getElementById("divTablero").getBoundingClientRect();
 
-    img.style.position = "absolute";
-    img.style.left = `${rectCelda.left - rectTablero.left}px`;
-    //img.style.top  = `${rectCelda.top  - rectTablero.top -100}px`;
-    //img.style.width  = `${rectCelda.width}px`;
-    //img.style.height = `${rectCelda.height}px`;
+    const baseX =
+        rectCelda.left - rectTablero.left + rectCelda.width / 2;
+
+    const baseY =
+        rectCelda.top - rectTablero.top + rectCelda.height;
+
+    img.style.setProperty("--base-x", `${baseX}px`);
+    img.style.setProperty("--base-y", `${baseY}px`);
+
+    img.style.zIndex = fila;
 }
+
+
+
 
 // Se inicializa el tablero en: "CARGA_TABLERO"
 function crearTarjetasCaballeros() {
