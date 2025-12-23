@@ -83,7 +83,7 @@ const ataquesSeiya = [
         rangoMax: 1,
         detalle: "Un golpe giratorio capaz de aturdir al enemigo.",
         target: "Rival",
-        audio: "./audios/seiya/puño_rodante.wav",
+        audio: "../audios/seiya/puño_rodante.wav",
         duracionAudio: 3000,
         efecto: {
             tipo: "Daño",
@@ -109,7 +109,7 @@ const ataquesSeiya = [
         rangoMax: 2,
         detalle: "Un golpe impulsado por el cosmos que viaja a distancia.",
         target: "Rival",
-        audio: "./audios/seiya/puño_meteorico.wav",
+        audio: "../audios/seiya/puño_meteorico.wav",
         duracionAudio: 1800,
         efecto: {
             tipo: "Daño",
@@ -130,7 +130,7 @@ const ataquesSeiya = [
         rangoMax: 1,
         detalle: "Un golpe devastador concentrado en un solo punto.",
         target: "Rival",
-        audio: "./audios/seiya/cometa_pegaso.wav",
+        audio: "../audios/seiya/cometa_pegaso.wav",
         duracionAudio: 2500,
         efecto: {
             tipo: "Daño",
@@ -152,7 +152,7 @@ const ataquesSeiya = [
         rangoMax: 3,
         detalle: "Una lluvia imparable de golpes impulsados por el cosmos.",
         target: "Rival",
-        audio: "./audios/seiya/meteoro_pegaso.wav",
+        audio: "../audios/seiya/meteoro_pegaso.wav",
         duracionAudio: 1800,
         efecto: {
             tipo: "Daño",
@@ -219,7 +219,7 @@ const ataquesShiryu = [
         rangoMax: 2,
         detalle: "Shiryu impulsa su cosmos y avanza como un dragón en pleno vuelo.",
         target: "Rival",
-        audio: "./audios/shiryu/vuelo_del_dragon.wav",
+        audio: "../audios/shiryu/vuelo_del_dragon.wav",
         duracionMs: 1200,
         efecto: {
             tipo: "Daño",
@@ -241,7 +241,7 @@ const ataquesShiryu = [
         rangoMax: 1,
         detalle: "Un ataque ascendente devastador que deja a Shiryu expuesto.",
         target: "Rival",
-        audio: "./audios/shiryu/ascenso_del_dragon.wav",
+        audio: "../audios/shiryu/ascenso_del_dragon.wav",
         duracionMs: 1200,
         efecto: {
             tipo: "Daño",
@@ -268,7 +268,7 @@ const ataquesShiryu = [
         rangoMax: 1,
         detalle: "Shiryu libera todo su cosmos en un ascenso final, poniendo su vida en riesgo.",
         target: "Rival",
-        audio: "./audios/shiryu/ascenso_del_dragon_supremo.wav",
+        audio: "../audios/shiryu/ascenso_del_dragon_supremo.wav",
         duracionMs: 1200,
         efecto: {
             tipo: "Daño",
