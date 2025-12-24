@@ -220,7 +220,7 @@ const ataquesShiryu = [
         detalle: "Shiryu impulsa su cosmos y avanza como un dragón en pleno vuelo.",
         target: "Rival",
         audio: "../audios/shiryu/vuelo_del_dragon.wav",
-        duracionMs: 1200,
+        duracionAudio: 2700,
         efecto: {
             tipo: "Daño",
             escala: "mixto",
@@ -242,7 +242,7 @@ const ataquesShiryu = [
         detalle: "Un ataque ascendente devastador que deja a Shiryu expuesto.",
         target: "Rival",
         audio: "../audios/shiryu/ascenso_del_dragon.wav",
-        duracionMs: 1200,
+        duracionAudio: 3000,
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
@@ -269,7 +269,7 @@ const ataquesShiryu = [
         detalle: "Shiryu libera todo su cosmos en un ascenso final, poniendo su vida en riesgo.",
         target: "Rival",
         audio: "../audios/shiryu/ascenso_del_dragon_supremo.wav",
-        duracionMs: 1200,
+        duracionAudio: 3000,
         efecto: {
             tipo: "Daño",
             escala: "mixto",
@@ -647,7 +647,7 @@ const caballerosBronce = [
     
         imgIcono: "./imgs/iconos/seiya.png",
         imgBatalla: "./imgs/batalla/seiya.png",
-        imgBatallaDefendiendose: "../imgs/batalla/seiya_defendiendose.png",
+        imgBatallaDefendiendose: "./imgs/batalla/seiya_defendiendose.png",
         imgBatallaDerrotado: "../imgs/batalla/seiya_derrotado.png",
         imgFormacion: "./imgs/formacion/seiya.png",
     
@@ -667,9 +667,10 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "./audios/seiya/ataqueGenerico.wav",
-        grito: "./audios/seiya/grito.wav",
-        herido: "./audios/seiya/herido.wav"
+        ataqueGenerico: "./audios/seiya/ataque_generico.wav",
+        herido: "./audios/seiya/herido.wav",
+        concentrandose: "./audios/seiya/concentrandose.wav",
+        defendiendose: "./audios/seiya/defendiendose.wav",
         },
     
         ataquesDisponibles: ataquesSeiya,
@@ -706,9 +707,10 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "./audios/shiryu/ataqueGenerico.wav",
-        grito: "./audios/shiryu/grito.wav",
-        herido: "./audios/shiryu/herido.wav"
+        ataqueGenerico: "./audios/shiryu/ataque_generico.wav",
+        herido: "./audios/shiryu/herido.wav",
+        concentrandose: "./audios/seiya/concentrandose.wav",
+        defendiendose: "./audios/seiya/defendiendose.wav"
         },
     
         ataquesDisponibles: ataquesShiryu,
@@ -744,9 +746,10 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "./audios/hyoga/ataqueGenerico.wav",
-        grito: "./audios/hyoga/grito.wav",
-        herido: "./audios/hyoga/herido.wav"
+        ataqueGenerico: "./audios/hyoga/ataque_generico.wav",
+        herido: "./audios/hyoga/herido.wav",
+        concentrandose: "./audios/seiya/concentrandose.wav",
+        defendiendose: "./audios/seiya/defendiendose.wav"
         },
     
         ataquesDisponibles: ataquesHyoga,
@@ -783,9 +786,10 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "./audios/shun/ataqueGenerico.wav",
-        grito: "./audios/shun/grito.wav",
-        herido: "./audios/shun/herido.wav"
+        ataqueGenerico: "./audios/shun/ataque_generico.wav",
+        herido: "./audios/shun/herido.wav",
+        concentrandose: "./audios/seiya/concentrandose.wav",
+        defendiendose: "./audios/seiya/defendiendose.wav"
         },
     
         ataquesDisponibles: ataquesShun,
@@ -822,9 +826,10 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "./audios/ikki/ataqueGenerico.wav",
-        grito: "./audios/ikki/grito.wav",
-        herido: "./audios/ikki/herido.wav"
+        ataqueGenerico: "./audios/ikki/ataque_generico.wav",
+        herido: "./audios/ikki/herido.wav",
+        concentrandose: "./audios/seiya/concentrandose.wav",
+        defendiendose: "./audios/seiya/defendiendose.wav"
         },
     
         ataquesDisponibles: ataquesIkki,
@@ -870,9 +875,10 @@ const caballerosPlata = [
         },
 
         audio: {
-        ataqueGenerico: "./audios/shaina/ataqueGenerico.wav",
-        grito: "./audios/shaina/grito.wav",
-        herido: "./audios/shaina/herido.wav"
+        ataqueGenerico: "./audios/shaina/ataque_generico.wav",
+        herido: "./audios/shaina/herido.wav",
+        concentrandose: "./audios/seiya/concentrandose.wav",
+        defendiendose: "./audios/seiya/defendiendose.wav"
         },
 
         ataquesDisponibles: ataquesShaina,
@@ -904,9 +910,10 @@ const enemigos = [
         velocidad: 2,
 
         audio: {
-        ataqueGenerico: "./audios/guerrero_1/ataqueGenerico.wav",
-        grito: "./audios/guerrero_1/grito.wav",
-        herido: "./audios/guerrero_1/herido.wav"
+        ataqueGenerico: "./audios/guerrero_1/ataque_generico.wav",
+        herido: "./audios/guerrero_1/herido.wav",
+        concentrandose: "./audios/seiya/concentrandose.wav",
+        defendiendose: "./audios/seiya/defendiendose.wav"
         },
 
         ataquesDisponibles: ataquesGuerrero1,
@@ -935,9 +942,10 @@ const enemigos = [
         velocidad: 1,
 
         audio: {
-        ataqueGenerico: "./audios/guerrero_2/ataqueGenerico.wav",
-        grito: "./audios/guerrero_2/grito.wav",
-        herido: "./audios/guerrero_2/herido.wav"
+        ataqueGenerico: "./audios/guerrero_2/ataque_generico.wav",
+        herido: "./audios/guerrero_2/herido.wav",
+        concentrandose: "./audios/seiya/concentrandose.wav",
+        defendiendose: "./audios/seiya/defendiendose.wav"
         },
 
         ataquesAprendidosNum: [1, 2],
@@ -964,13 +972,13 @@ function obtenerAtaquesDelPersonaje(personaje) {
 // ESTADOS DEL JUGADOR
 // ======================================================================
 const estados = [
-    { id: 1, nombre: "saludable" },
-    { id: 2, nombre: "muerto" },
-    { id: 3, nombre: "envenenado" },
-    { id: 4, nombre: "aturdido" },
-    { id: 5, nombre: "congelado" },
-    { id: 6, nombre: "quemado" },
-    { id: 7, nombre: "dormido" }
+    { id: 1, nombre: "Vivo" },
+    { id: 2, nombre: "Muerto" },
+    { id: 3, nombre: "Envenenar" },
+    { id: 4, nombre: "Aturdir" },
+    { id: 5, nombre: "Congelar" },
+    { id: 6, nombre: "Quemar" },
+    { id: 7, nombre: "Dormir" }
 ];
 
 // Buscar un estado por id
@@ -1047,32 +1055,44 @@ btnIrALaBatalla.addEventListener("click", () => {
     sonidoClick.play().catch(() => {});
     mostrarPantallaCarga();
 
-    const rutas = obtenerRutasImagenesBatalla();
+    const rutasImagenes = obtenerRutasImagenesBatalla();
+    const rutasAudios = obtenerRutasAudiosBatalla();
 
-    precargarImagenes(rutas, () => {
+    // 1️⃣ Precargar imágenes
+    precargarImagenes(rutasImagenes, () => {
 
-        ocultarPantallaCarga();
-        paginaTablero.style.display = "flex";
+        // 2️⃣ Precargar audios
+        precargarAudios(rutasAudios, () => {
 
-        crearTablero();
+            // 3️⃣ Entrar a batalla solo cuando TODO está listo
+            ocultarPantallaCarga();
+            paginaTablero.style.display = "flex";
 
-        recalcularFormacionDesdeSlots();
-        crearFormacionCopiaParaBatalla();
+            crearTablero();
 
-        actualizarUIBatalla();
+            recalcularFormacionDesdeSlots();
+            crearFormacionCopiaParaBatalla();
 
-        construirColaTurnos();
-        iniciarTurno();
+            guardarInfoBackUp(); // BACKUP BASE
+
+            actualizarUIBatalla();
+
+            construirColaTurnos();
+            iniciarTurno();
+        });
     });
-
 });
+
 btnSalirBatalla.addEventListener("click", () => {
+
+    cargarInfoBackUp(); // RESTAURA STATS
+
     paginaTablero.style.display = "none";
     paginaPrincipal.style.display = "flex";
 
-    // Limpio las ubicaciones que hubieron en la batalla antes de salir.
     formacionCopiaEnBatalla = [];
 });
+
 
 // Me lleva a la Pagina de Testeos:
 btnPaginaTestear.addEventListener("click", () => {
@@ -1541,7 +1561,6 @@ btnSalirFormacion.addEventListener("click", () => {
     paginaPrincipal.style.display = "flex";
 });
 
-
 //------------------------------------------------------------------------------------------------------------------------------------
 // ==========================================================
 // PAGINA_PRE_CARGA
@@ -1571,32 +1590,101 @@ function precargarImagenes(rutas, callback) {
 function obtenerRutasImagenesBatalla() {
     const rutas = [];
 
+    function agregarSprites(entidad) {
+        if (!entidad) return;
+
+        if (entidad.imgBatalla) rutas.push(entidad.imgBatalla);
+        if (entidad.imgBatallaDefendiendose) rutas.push(entidad.imgBatallaDefendiendose);
+        if (entidad.imgBatallaDerrotado) rutas.push(entidad.imgBatallaDerrotado);
+    }
+
     // ==========================
     // Caballeros activos
     // ==========================
     obtenerCaballerosUsados().forEach(id => {
-        const cab = caballerosBronce.find(c => c.id === id);
-        if (cab?.imgBatalla) rutas.push(cab.imgBatalla);
+        const cab =
+            caballerosBronce.find(c => c.id === id) ||
+            caballerosPlata?.find(c => c.id === id) ||
+            caballerosOro?.find(c => c.id === id);
+
+        agregarSprites(cab);
     });
 
     // ==========================
     // Enemigos del nivel actual
     // ==========================
     const nivel = nivelesHistoria[nivelActual];
-    if (nivel && nivel.enemigos) {
-        nivel.enemigos.forEach(dataEnemigo => {
-            const enemigo = enemigos.find(e => e.id === dataEnemigo.id);
-            if (enemigo?.imgBatalla) rutas.push(enemigo.imgBatalla);
+    if (nivel?.enemigos) {
+        nivel.enemigos.forEach(data => {
+            const enemigo = enemigos.find(e => e.id === data.id);
+            agregarSprites(enemigo);
         });
     }
 
-    // ==========================
-    // Fondo del tablero (futuro)
-    // ==========================
-    // rutas.push("./imgs/tablero/fondoTablero.png");
-
     return rutas;
 }
+
+function precargarAudios(rutas, callback) {
+    let cargados = 0;
+
+    if (!rutas.length) {
+        callback?.();
+        return;
+    }
+
+    rutas.forEach(src => {
+        const audio = new Audio();
+        audio.src = src;
+
+        audio.oncanplaythrough = audio.onerror = () => {
+            cargados++;
+            if (cargados === rutas.length && callback) {
+                callback();
+            }
+        };
+    });
+}
+
+function obtenerRutasAudiosBatalla() {
+    const rutas = new Set();
+
+    function agregarAudio(src) {
+        if (src) rutas.add(src);
+    }
+
+    function procesarEntidad(entidad) {
+        if (!entidad) return;
+
+        agregarAudio(entidad.audio?.ataqueGenerico);
+        agregarAudio(entidad.audio?.herido);
+
+        entidad.ataquesDisponibles?.forEach(a => {
+            agregarAudio(a.audio);
+        });
+    }
+
+    // Caballeros
+    obtenerCaballerosUsados().forEach(id => {
+        const cab =
+            caballerosBronce.find(c => c.id === id) ||
+            caballerosPlata?.find(c => c.id === id) ||
+            caballerosOro?.find(c => c.id === id);
+
+        procesarEntidad(cab);
+    });
+
+    // Enemigos
+    const nivel = nivelesHistoria[nivelActual];
+    if (nivel?.enemigos) {
+        nivel.enemigos.forEach(data => {
+            const enemigo = enemigos.find(e => e.id === data.id);
+            procesarEntidad(enemigo);
+        });
+    }
+
+    return [...rutas];
+}
+
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // ==========================================================
@@ -1704,9 +1792,6 @@ function posicionarSpriteEnCapa(img, fila, columna) {
     img.style.zIndex = fila;
 }
 
-
-
-
 // Se inicializa el tablero en: "CARGA_TABLERO"
 function crearTarjetasCaballeros() {
     const contenedor = document.getElementById("contenedorTarjetas");
@@ -1758,9 +1843,19 @@ function crearBloqueBarra(texto, actual, max, claseColor) {
 
     const porcentaje = Math.max(0, Math.min(100, (actual / max) * 100));
 
+    let textoMostrado = "";
+
+    if (texto === "PV" || texto === "PM") {
+        textoMostrado = `${texto}: ${actual}/${max}`;
+    } else if (texto === "COS") {
+        textoMostrado = `${texto}: ${actual}`;
+    } else {
+        textoMostrado = texto;
+    }
+
     return `
         <div class="bloqueBarra">
-            <span>${texto}</span>
+            <span class="textoBarra">${textoMostrado}</span>
             <div class="barra">
                 <div class="barraRelleno ${claseColor}" style="width:${porcentaje}%"></div>
             </div>
@@ -1770,30 +1865,43 @@ function crearBloqueBarra(texto, actual, max, claseColor) {
 
 // Funcion que actualiza solamente LAS BARRAS PV,PM y COSMO:
 function actualizarBarrasPersonaje(personaje) {
-    const tarjeta = document.querySelector(`.tarjetaPersonaje img[src="${personaje.imgIcono}"]`)?.closest(".tarjetaPersonaje");
+
+    const tarjeta = document
+        .querySelector(`.tarjetaPersonaje img[src="${personaje.imgIcono}"]`)
+        ?.closest(".tarjetaPersonaje");
+
     if (!tarjeta) return;
 
-    // Actualizamos barraPV
+    // ---------- PV ----------
     const barraPV = tarjeta.querySelector(".barraPV");
-    if (barraPV) {
+    const textoPV = tarjeta.querySelector(".barraPV")?.closest(".bloqueBarra")?.querySelector(".textoBarra");
+
+    if (barraPV && textoPV) {
         const porcentaje = Math.max(0, Math.min(100, (personaje.pv / personaje.pvMax) * 100));
         barraPV.style.width = porcentaje + "%";
+        textoPV.textContent = `PV: ${personaje.pv}/${personaje.pvMax}`;
     }
 
-    // Similar para PM y COS
+    // ---------- PM ----------
     const barraPM = tarjeta.querySelector(".barraPM");
-    if (barraPM) {
+    const textoPM = tarjeta.querySelector(".barraPM")?.closest(".bloqueBarra")?.querySelector(".textoBarra");
+
+    if (barraPM && textoPM) {
         const porcentaje = Math.max(0, Math.min(100, (personaje.pm / personaje.pmMax) * 100));
         barraPM.style.width = porcentaje + "%";
+        textoPM.textContent = `PM: ${personaje.pm}/${personaje.pmMax}`;
     }
 
+    // ---------- COS ----------
     const barraCOS = tarjeta.querySelector(".barraCOS");
-    if (barraCOS) {
+    const textoCOS = tarjeta.querySelector(".barraCOS")?.closest(".bloqueBarra")?.querySelector(".textoBarra");
+
+    if (barraCOS && textoCOS) {
         const porcentaje = Math.max(0, Math.min(100, (personaje.cosmosActual / personaje.cosmosMax) * 100));
         barraCOS.style.width = porcentaje + "%";
+        textoCOS.textContent = `COS: ${personaje.cosmosActual}`;
     }
 }
-
 
 // Cada vez que cambiás cantidad de guerreros o formación:
 function sincronizarTodo() {
@@ -1816,7 +1924,12 @@ function actualizarUIBatalla() {
     cargarFormacionEnTablero();
 }
 
-//Funcion que crea las ubicaciones de los caballeros y enemigos EN BATALLA:
+//------------------------------------------------------------------------------------------------------------
+// ==========================================================
+// BACK de la Batalla
+// ==========================================================
+
+//Funcion que almacena la informacion de los Caballeros y Enemigos y sus respectivas UBICACIONES que estaran en la batalla:
 function crearFormacionCopiaParaBatalla() {
     formacionCopiaEnBatalla = [];
 
@@ -1843,6 +1956,88 @@ function crearFormacionCopiaParaBatalla() {
             });
         });
     }
+}
+
+// Guardamos la info de los que pelearan para despues cargarlos fuera.
+let backupEntidadesBatalla = {
+    jugadores: [],
+    enemigos: []
+};
+
+function guardarInfoBackUp() {
+
+    backupEntidadesBatalla = {
+        jugadores: [],
+        enemigos: []
+    };
+
+    formacionCopiaEnBatalla.forEach(item => {
+
+        let entidad;
+
+        if (item.tipo === "jugador") {
+            entidad =
+                caballerosBronce.find(c => c.id === item.id) ||
+                caballerosPlata?.find(c => c.id === item.id) ||
+                caballerosOro?.find(c => c.id === item.id);
+        } else {
+            entidad = enemigos.find(e => e.id === item.id);
+        }
+
+        if (!entidad) return;
+
+        const copia = {
+            id: entidad.id,
+            pv: entidad.pv,
+            pvMax: entidad.pvMax,
+            pm: entidad.pm,
+            pmMax: entidad.pmMax,
+            cosmosActual: entidad.cosmosActual,
+            cosmosMax: entidad.cosmosMax,
+            estado: entidad.estado
+        };
+
+        if (item.tipo === "jugador") {
+            backupEntidadesBatalla.jugadores.push(copia);
+        } else {
+            backupEntidadesBatalla.enemigos.push(copia);
+        }
+    });
+}
+
+function cargarInfoBackUp() {
+
+    backupEntidadesBatalla.jugadores.forEach(data => {
+
+        const entidad =
+            caballerosBronce.find(c => c.id === data.id) ||
+            caballerosPlata?.find(c => c.id === data.id) ||
+            caballerosOro?.find(c => c.id === data.id);
+
+        if (!entidad) return;
+
+        entidad.pv = data.pv;
+        entidad.pm = data.pm;
+        entidad.cosmosActual = data.cosmosActual;
+        entidad.estado = data.estado;
+    });
+
+    backupEntidadesBatalla.enemigos.forEach(data => {
+
+        const entidad = enemigos.find(e => e.id === data.id);
+        if (!entidad) return;
+
+        entidad.pv = data.pv;
+        entidad.pm = data.pm;
+        entidad.cosmosActual = data.cosmosActual;
+        entidad.estado = data.estado;
+    });
+
+    // Limpieza
+    backupEntidadesBatalla = {
+        jugadores: [],
+        enemigos: []
+    };
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -1894,6 +2089,9 @@ function iniciarTurno() {
         finalizarTurno();
         return;
     }
+
+    // 🔑 ACÁ: al comenzar su turno vuelve a sprite normal
+    restaurarSpriteNormal(entidadTurnoActual);
 
     aplicarEstadosPasivos(entidadTurnoActual);
 
@@ -2376,33 +2574,64 @@ function mostrarPopupAtaques(jugador) {
         if (!usable) div.classList.add("ataque-no-disponible");
 
         // ---------------------
-        // LINEA 1: Nombre + Tipo
+        // LINEA 1: Nombre + Rango
         // ---------------------
         const linea1 = document.createElement("div");
         linea1.classList.add("linea1");
-        linea1.innerHTML = `<span>${ataque.nombre}</span> <span>[${ataque.tipo}]</span>`;
+
+        const textoRango =
+            ataque.rangoMin === ataque.rangoMax
+                ? `Rango: ${ataque.rangoMin}`
+                : `Rango: ${ataque.rangoMin}-${ataque.rangoMax}`;
+
+        linea1.innerHTML = `
+            <span>${ataque.nombre}</span>
+            <span>[${textoRango}]</span>
+        `;
 
         // ---------------------
-        // LINEA 2: Cosmo necesario
+        // LINEA 2: PM / COSMO / DAÑO
         // ---------------------
         const linea2 = document.createElement("div");
         linea2.classList.add("linea2");
-        linea2.textContent = `Necesita ${ataque.cosmosNecesario} COSM.`;
+
+        const enemigoDummy = {
+            defensa: 0,
+            defensaMagica: 0,
+            pv: 0,
+            estadosAlterados: [],
+            estado: 1
+        };
+
+        const danoEstimado = calcularDaño(jugador, enemigoDummy, ataque);
+
+        linea2.textContent = `PM: ${ataque.pmNecesaria} | COSM: ${ataque.cosmosNecesario} | DAÑO: ~${danoEstimado}`;
 
         // ---------------------
-        // LINEA 3: PM / COSMO consumidos / DAÑO
+        // LINEA 3: PREC / Efectos
         // ---------------------
         const linea3 = document.createElement("div");
         linea3.classList.add("linea3");
-        const danoEstimado = calcularDaño(jugador, { defensa: 0, defensaMagica: 0, pv: 0, estadosAlterados: [], estado: 1 }, ataque);
-        linea3.textContent = `PM: ${ataque.pmNecesaria} | COSM: ${ataque.cosmosNecesario} | DAÑO: ~${danoEstimado}`;
 
+        let textoEfecto = "";
+        if (ataque.efecto?.estado) {
+            const estadoInfo = estados.find(e => e.id === ataque.efecto.estado.tipo);
+            if (estadoInfo) {
+                textoEfecto = ` | Prob. de ${estadoInfo.nombre}`;
+            }
+        }
+
+        linea3.textContent = `PREC: ${ataque.precision}${textoEfecto}`;
+
+        // ---------------------
+        // Añadimos al div
+        // ---------------------
         div.appendChild(linea1);
         div.appendChild(linea2);
         div.appendChild(linea3);
 
         if (usable) {
-            div.addEventListener("click", (e) => {
+            div.addEventListener("click", () => {
                 overlay.style.display = "none";
                 ataqueSeleccionado = ataque;
                 atacanteActivo = jugador;
@@ -2416,7 +2645,6 @@ function mostrarPopupAtaques(jugador) {
 
     overlay.style.display = "flex";
 }
-
 
 // Para cerrar el PopUp si se hace click afuera:
 document.getElementById("overlayPopupAtaques").addEventListener("click", (e) => {
@@ -2548,11 +2776,11 @@ function calcularDistancia(entidadA, entidadB) {
 
 // Calcula el daño que hace al enemigo:
 function calcularDaño(atacante, defensor, ataque) {
-
     const efecto = ataque.efecto;
     let ataqueBase = 0;
     let defensaBase = 0;
 
+    // Determinar ataque base según escala
     switch (efecto.escala) {
         case "fuerza":
             ataqueBase = atacante.fuerza;
@@ -2568,12 +2796,13 @@ function calcularDaño(atacante, defensor, ataque) {
     }
 
     const bonusCosmo = obtenerBonusDañoPorCosmo(atacante);
-    ataqueBase = ataqueBase + bonusCosmo;
+    ataqueBase += bonusCosmo;
 
+    // Calcular defensa considerando buff temporal
     if (ataque.tipoDaño === "Fisico") {
-        defensaBase = defensor.defensa;
+        defensaBase = obtenerDefensaConBuff(defensor, "fisico");
     } else if (ataque.tipoDaño === "Magico") {
-        defensaBase = defensor.defensaMagica;
+        defensaBase = obtenerDefensaConBuff(defensor, "magico");
     }
 
     if (efecto.ignoraDefensa) {
@@ -2654,21 +2883,69 @@ function aplicarEstadosPasivos(entidad) {
 
     entidad.estadosAlterados = entidad.estadosAlterados.filter(e => {
 
-        // VENENO, QUEMADO...
+        // Daños por turno
         if (e.tipo === 3 || e.tipo === 6) {
             entidad.pv -= e.danio;
         }
 
-        // ⚡ Solo restar turnos si NO se aplicó este turno
-        if (!e.aplicadoEsteTurno) e.turnos--;
+        // Buff defensa
+        if (e.tipo === "buffDefensa") {
 
-        // Resetear flag
+            if (e.aplicadoEsteTurno) {
+                e.turnos--;
+            }
+
+            // Cuando se termina el buff, restaurar sprite
+            if (e.turnos <= 0) {
+                restaurarSpriteNormal(entidad);
+                return false;
+            }
+        } else {
+            if (!e.aplicadoEsteTurno) e.turnos--;
+        }
+
         e.aplicadoEsteTurno = false;
-
         return e.turnos > 0;
     });
 
     if (entidad.pv <= 0) derrotarEntidad(entidad);
+}
+
+
+// Cuando el jugador/enemigo se defiende se le aplica el Buff de defensa:
+function aplicarBuffDefensaTemporal(entidad, porcentajeDefensa, porcentajeDefensaMagica) {
+    if (!entidad.estadosAlterados) entidad.estadosAlterados = [];
+
+    // Evitar duplicados
+    const yaTiene = entidad.estadosAlterados.find(e => e.tipo === "buffDefensa");
+    if (yaTiene) {
+        yaTiene.turnos = 1; // refrescar duración
+        yaTiene.defensa = porcentajeDefensa;
+        yaTiene.defensaMagica = porcentajeDefensaMagica;
+        return;
+    }
+
+    entidad.estadosAlterados.push({
+        tipo: "buffDefensa",
+        turnos: 1, // dura hasta su próximo turno
+        defensa: porcentajeDefensa,
+        defensaMagica: porcentajeDefensaMagica,
+        aplicadoEsteTurno: false
+    });
+}
+
+// Funcion que esta dentro de Funcion calcularDaño:
+function obtenerDefensaConBuff(entidad, tipo) {
+    let base = tipo === "fisico" ? entidad.defensa : entidad.defensaMagica;
+    if (!entidad.estadosAlterados) return base;
+
+    const buff = entidad.estadosAlterados.find(e => e.tipo === "buffDefensa");
+    if (buff) {
+        if (tipo === "fisico") base = Math.floor(base * (1 + buff.defensa / 100));
+        else base = Math.floor(base * (1 + buff.defensaMagica / 100));
+    }
+
+    return base;
 }
 
 // Cuando vencemos al enemigo:
@@ -2768,6 +3045,40 @@ function mostrarEfectoDaño(objetivo) {
     img.classList.add("efectoDañoSprite");
 }
 
+// Mostrar que el personaje se esta defendiendo:
+function cambiarSpriteEntidad(entidad, tipo) {
+    const img = document.querySelector(
+        `.imgEntidadBatalla[data-id="${entidad.id}"]`
+    );
+    if (!img) return;
+
+    if (tipo === "defensa" && entidad.imgBatallaDefendiendose) {
+        img.src = entidad.imgBatallaDefendiendose;
+        return;
+    }
+
+    // sprite normal
+    if (entidad.imgBatalla) {
+        img.src = entidad.imgBatalla;
+    }
+}
+
+function restaurarSpriteNormal(entidad) {
+    const img = document.querySelector(
+        `.imgEntidadBatalla[data-id="${entidad.id}"]`
+    );
+    if (!img) return;
+
+    // Si está derrotado, no restaurar
+    if (entidad.estado === 2 && entidad.imgBatallaDerrotado) {
+        img.src = entidad.imgBatallaDerrotado;
+        return;
+    }
+
+    img.src = entidad.imgBatalla;
+}
+
+
 //-------------------------------------------------------------------------------------------------------
 // ==========================================================
 // LA IA ATACA:
@@ -2800,9 +3111,14 @@ function obtenerAtaqueUsable(enemigo, objetivo) {
 // Cuando la IA Se defiende:
 function enemigoDefenderse(enemigo) {
     console.log(`${enemigo.nombre} se está defendiendo`);
+
+    aplicarBuffDefensaTemporal(enemigo, 15, 15);
+    cambiarSpriteEntidad(enemigo, "defensa");
+
     ganarCosmosPorAccion(enemigo, "defender");
     actualizarUIBatalla();
 }
+
 
 //-----------------------------------------------------------------------------------------------------------
 // ==========================================================
@@ -2825,36 +3141,76 @@ btnOtras.addEventListener("click", (e) => {
 
     mostrarOtras.innerHTML = "";
 
-    crearOpcionOtras("Concentrarse", () => {
-        console.log(`El ${entidadTurnoActual.nombre} se está concentrando`);
-        ganarCosmosPorAccion(entidadTurnoActual, "concentrar");
+    // ----------------- CONCENTRARSE -----------------
+    crearOpcionOtras(
+        "Concentrarse",
+        ["Otorga COSMO +15"],
+        () => {
+            console.log(`El ${entidadTurnoActual.nombre} se está concentrando`);
 
-        actualizarUIBatalla();
+            // Cierra el popup inmediatamente
+            cerrarPopupOtras();
 
-        cerrarPopupOtras();
-        finalizarTurno();
-    });
+            // Reproducir audio de concentrarse
+            if (entidadTurnoActual.audio?.concentrandose) {
+                new Audio(entidadTurnoActual.audio.concentrandose).play().catch(() => {});
+            }
 
-    crearOpcionOtras("Defenderse", () => {
-        console.log(`El ${entidadTurnoActual.nombre} se está defendiendo`);
-        ganarCosmosPorAccion(entidadTurnoActual, "defender");
+            // Aplicar lógica después del delay
+            setTimeout(() => {
+                ganarCosmosPorAccion(entidadTurnoActual, "concentrar");
+                actualizarBarrasPersonaje(entidadTurnoActual);
+                finalizarTurno();
+            }, 1500);
+        }
+    );
 
-        actualizarUIBatalla();
+    // ----------------- DEFENDERSE -----------------
+    crearOpcionOtras(
+        "Defenderse",
+        ["Otorga DEF +15%", "Otorga COSMO +5"],
+        () => {
+            cerrarPopupOtras();
 
-        cerrarPopupOtras();
-        finalizarTurno();
-    });
+            if (entidadTurnoActual.audio?.defendiendose) {
+                new Audio(entidadTurnoActual.audio.defendiendose).play().catch(() => {});
+            }
 
+            // Aplica buff temporal de defensa
+            aplicarBuffDefensaTemporal(entidadTurnoActual, 15, 15);
+            cambiarSpriteEntidad(entidadTurnoActual, "defensa");
+
+            // Gana cosmos
+            ganarCosmosPorAccion(entidadTurnoActual, "defender");
+            actualizarBarrasPersonaje(entidadTurnoActual);
+
+            finalizarTurno();
+        }
+    );
 
     overlayOtras.style.display = "flex";
 });
 
+
 // Frases Clickeables:
-function crearOpcionOtras(texto, accion) {
+function crearOpcionOtras(titulo, descripciones, accion) {
 
     const div = document.createElement("div");
-    div.textContent = texto;
-    div.classList.add("opcionOtras");
+    div.classList.add("itemOtras");
+
+    // Línea principal (negrita)
+    const linea1 = document.createElement("div");
+    linea1.classList.add("linea1");
+    linea1.textContent = titulo;
+    div.appendChild(linea1);
+
+    // Líneas descriptivas (cursiva)
+    descripciones.forEach(texto => {
+        const linea = document.createElement("div");
+        linea.classList.add("linea2");
+        linea.textContent = texto;
+        div.appendChild(linea);
+    });
 
     div.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -2875,6 +3231,8 @@ function cerrarPopupOtras() {
     overlayOtras.style.display = "none";
     mostrarOtras.innerHTML = "";
 }
+
+
 
 //----------------------------------------------------------------------------------------------------------------------------------
 // ==========================================================
