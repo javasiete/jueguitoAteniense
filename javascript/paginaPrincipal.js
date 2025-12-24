@@ -152,7 +152,7 @@ const ataquesSeiya = [
         rangoMax: 3,
         detalle: "Una lluvia imparable de golpes impulsados por el cosmos.",
         target: "Rival",
-        audio: "./audios/seiya/meteoro_pegaso.wav",
+        audio: "/audios/seiya/meteoro_pegaso.wav",
         duracionAudio: 1800,
         efecto: {
             tipo: "Daño",
@@ -219,7 +219,7 @@ const ataquesShiryu = [
         rangoMax: 2,
         detalle: "Shiryu impulsa su cosmos y avanza como un dragón en pleno vuelo.",
         target: "Rival",
-        audio: "./audios/shiryu/vuelo_del_dragon.wav",
+        audio: "/audios/shiryu/vuelo_del_dragon.wav",
         duracionAudio: 2700,
         efecto: {
             tipo: "Daño",
@@ -241,7 +241,7 @@ const ataquesShiryu = [
         rangoMax: 1,
         detalle: "Un ataque ascendente devastador que deja a Shiryu expuesto.",
         target: "Rival",
-        audio: "./audios/shiryu/ascenso_del_dragon.wav",
+        audio: "/audios/shiryu/ascenso_del_dragon.wav",
         duracionAudio: 3000,
         efecto: {
             tipo: "Daño",
@@ -268,7 +268,7 @@ const ataquesShiryu = [
         rangoMax: 1,
         detalle: "Shiryu libera todo su cosmos en un ascenso final, poniendo su vida en riesgo.",
         target: "Rival",
-        audio: "./audios/shiryu/ascenso_del_dragon_supremo.wav",
+        audio: "/audios/shiryu/ascenso_del_dragon_supremo.wav",
         duracionAudio: 3000,
         efecto: {
             tipo: "Daño",
@@ -667,9 +667,9 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "./audios/seiya/ataque_generico.wav",
-        herido: "./audios/seiya/herido.wav",
-        concentrandose: "./audios/seiya/concentrandose.wav",
+        ataqueGenerico: "/audios/seiya/ataque_generico.wav",
+        herido: "../audios/seiya/herido.wav",
+        concentrandose: ".../audios/seiya/concentrandose.wav",
         defendiendose: "./audios/seiya/defendiendose.wav",
         },
     
@@ -910,10 +910,10 @@ const enemigos = [
         velocidad: 2,
 
         audio: {
-        ataqueGenerico: "./audios/guerrero_1/ataque_generico.wav",
-        herido: "./audios/guerrero_1/herido.wav",
-        concentrandose: "./audios/seiya/concentrandose.wav",
-        defendiendose: "./audios/seiya/defendiendose.wav"
+        ataqueGenerico: "/audios/guerrero_1/ataque_generico.wav",
+        herido: "/audios/guerrero_1/herido.wav",
+        concentrandose: "/audios/seiya/concentrandose.wav",
+        defendiendose: "/audios/seiya/defendiendose.wav"
         },
 
         ataquesDisponibles: ataquesGuerrero1,
@@ -942,10 +942,10 @@ const enemigos = [
         velocidad: 1,
 
         audio: {
-        ataqueGenerico: "./audios/guerrero_2/ataque_generico.wav",
-        herido: "./audios/guerrero_2/herido.wav",
-        concentrandose: "./audios/seiya/concentrandose.wav",
-        defendiendose: "./audios/seiya/defendiendose.wav"
+        ataqueGenerico: "/audios/guerrero_2/ataque_generico.wav",
+        herido: "/audios/guerrero_2/herido.wav",
+        concentrandose: "/audios/seiya/concentrandose.wav",
+        defendiendose: "/audios/seiya/defendiendose.wav"
         },
 
         ataquesAprendidosNum: [1, 2],
@@ -1645,11 +1645,23 @@ function precargarAudios(rutas, callback) {
     });
 }
 
+// Normalizar rutas para Github:
+function normalizarRutaAudio(src) {
+    if (!src) return null;
+
+    // Si ya es absoluta, no tocar
+    if (src.startsWith("/")) return src;
+
+    // Quitar ./ o ../ y forzar raíz
+    return "/" + src.replace(/^(\.\/|\.\.\/)+/, "");
+}
+
 function obtenerRutasAudiosBatalla() {
     const rutas = new Set();
 
     function agregarAudio(src) {
-        if (src) rutas.add(src);
+        const ruta = normalizarRutaAudio(src);
+        if (ruta) rutas.add(ruta);
     }
 
     function procesarEntidad(entidad) {
