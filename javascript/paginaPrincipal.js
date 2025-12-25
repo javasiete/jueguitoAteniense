@@ -1,17 +1,40 @@
-const sonidoTurnoJugador = new Audio("./sonidos/turnoJugador.wav");
+const BASE_PATH = window.location.pathname.split("/")[1]
+    ? "/" + window.location.pathname.split("/")[1]
+: "";
+
+const sonidoTurnoJugador = new Audio(
+    normalizarRutaAudio("/sonidos/turnoJugador.wav")
+);
 sonidoTurnoJugador.volume = 0.6;
 
-const sonidoClick = new Audio("./sonidos/click.wav");
-const sonidoClickPersonaje = new Audio("./sonidos/clickPersonaje.wav");
+const sonidoClick = new Audio(
+    normalizarRutaAudio("/sonidos/click.wav")
+);
+
+const sonidoClickPersonaje = new Audio(
+    normalizarRutaAudio("/sonidos/clickPersonaje.wav")
+);
 
 // Audios para los Ataques:
-function reproducirAudio(ruta) {
-    if (!ruta) return;
+function reproducirAudio(ruta, volumen = 1) {
+    const src = normalizarRutaAudio(ruta);
+    if (!src) return;
 
-    const audio = new Audio(ruta);
-    audio.volume = 1;
-    audio.play().catch(() => {});
+    const audio = new Audio(src);
+    audio.volume = volumen;
+
+    audio.onerror = () => {
+        console.warn("❌ Error cargando audio:", src);
+    };
+
+    audio.play().catch(err => {
+        console.warn("🚫 No se pudo reproducir:", src, err);
+    });
+
+    return audio;
 }
+
+
 
 //---------------------------------------------------------------
 function recalcularPosicionesEntidades() {
@@ -668,9 +691,9 @@ const caballerosBronce = [
 
         audio: {
         ataqueGenerico: "/audios/seiya/ataque_generico.wav",
-        herido: "../audios/seiya/herido.wav",
-        concentrandose: ".../audios/seiya/concentrandose.wav",
-        defendiendose: "./audios/seiya/defendiendose.wav",
+        herido: "/audios/seiya/herido.wav",
+        concentrandose: "/audios/seiya/concentrandose.wav",
+        defendiendose: "/audios/seiya/defendiendose.wav",
         },
     
         ataquesDisponibles: ataquesSeiya,
@@ -877,8 +900,8 @@ const caballerosPlata = [
         audio: {
         ataqueGenerico: "./audios/shaina/ataque_generico.wav",
         herido: "./audios/shaina/herido.wav",
-        concentrandose: "./audios/seiya/concentrandose.wav",
-        defendiendose: "./audios/seiya/defendiendose.wav"
+        concentrandose: "./audios/shaina/concentrandose.wav",
+        defendiendose: "./audios/shaina/defendiendose.wav"
         },
 
         ataquesDisponibles: ataquesShaina,
@@ -912,8 +935,8 @@ const enemigos = [
         audio: {
         ataqueGenerico: "/audios/guerrero_1/ataque_generico.wav",
         herido: "/audios/guerrero_1/herido.wav",
-        concentrandose: "/audios/seiya/concentrandose.wav",
-        defendiendose: "/audios/seiya/defendiendose.wav"
+        concentrandose: "/audios/guerrero_1/concentrandose.wav",
+        defendiendose: "/audios/guerrero_1/defendiendose.wav"
         },
 
         ataquesDisponibles: ataquesGuerrero1,
@@ -944,8 +967,8 @@ const enemigos = [
         audio: {
         ataqueGenerico: "/audios/guerrero_2/ataque_generico.wav",
         herido: "/audios/guerrero_2/herido.wav",
-        concentrandose: "/audios/seiya/concentrandose.wav",
-        defendiendose: "/audios/seiya/defendiendose.wav"
+        concentrandose: "/audios/guerrero_2/concentrandose.wav",
+        defendiendose: "/audios/guerrero_2/defendiendose.wav"
         },
 
         ataquesAprendidosNum: [1, 2],
@@ -1067,6 +1090,11 @@ btnIrALaBatalla.addEventListener("click", () => {
             // 3️⃣ Entrar a batalla solo cuando TODO está listo
             ocultarPantallaCarga();
             paginaTablero.style.display = "flex";
+
+            console.log(
+                "🔊 Audio test:",
+                normalizarRutaAudio("/audios/seiya/puño_rodante.wav")
+            );
 
             crearTablero();
 
@@ -1634,7 +1662,7 @@ function precargarAudios(rutas, callback) {
 
     rutas.forEach(src => {
         const audio = new Audio();
-        audio.src = src;
+        audio.src = normalizarRutaAudio(src);
 
         audio.oncanplaythrough = audio.onerror = () => {
             cargados++;
@@ -1649,11 +1677,14 @@ function precargarAudios(rutas, callback) {
 function normalizarRutaAudio(src) {
     if (!src) return null;
 
-    // Si ya es absoluta, no tocar
-    if (src.startsWith("/")) return src;
+    // Si ya es absoluta con repo, no tocar
+    if (src.startsWith(BASE_PATH + "/")) return src;
 
-    // Quitar ./ o ../ y forzar raíz
-    return "/" + src.replace(/^(\.\/|\.\.\/)+/, "");
+    // Si empieza con /audios → anteponer repo
+    if (src.startsWith("/")) return BASE_PATH + src;
+
+    // Rutas relativas
+    return BASE_PATH + "/" + src.replace(/^(\.\/|\.\.\/)+/, "");
 }
 
 function obtenerRutasAudiosBatalla() {
@@ -2871,7 +2902,10 @@ function aplicarLogicaAtaque(atacante, objetivo, ataque) {
     actualizarBarrasPersonaje(atacante);
 }
 
-
+//-------------------------------------------------------------------------------------------------------
+// ==========================================================
+// >ESTADOS >EFECTOS
+// ==========================================================
 
 // Los ESTADOS aca se APLICAN:
 function intentarAplicarEstado(objetivo, estadoDef) {
@@ -2922,7 +2956,6 @@ function aplicarEstadosPasivos(entidad) {
 
     if (entidad.pv <= 0) derrotarEntidad(entidad);
 }
-
 
 // Cuando el jugador/enemigo se defiende se le aplica el Buff de defensa:
 function aplicarBuffDefensaTemporal(entidad, porcentajeDefensa, porcentajeDefensaMagica) {
@@ -2985,6 +3018,11 @@ function derrotarEntidad(entidad) {
     construirColaTurnos();
 }
 
+//-------------------------------------------------------------------------------------------------------
+// ==========================================================
+// >AUDIO
+// ==========================================================
+
 function ejecutarAudioAtaque(atacante, ataque) {
 
     let audioSrc = null;
@@ -2997,7 +3035,8 @@ function ejecutarAudioAtaque(atacante, ataque) {
         audioSrc = "/audios/genericos/ataque.wav";
     }
 
-    const audio = new Audio(audioSrc);
+    const audio = new Audio(normalizarRutaAudio(audioSrc));
+    audio.play().catch(() => {});
     audio.play();
 
     return audio.duration || 0;
@@ -3010,7 +3049,10 @@ function ejecutarAtaqueConAudioSeguro(atacante, objetivo, ataque) {
     // Reproduce audio
     try {
         const audioSrc = ataque.audio || atacante.audio?.ataqueGenerico || "/audios/genericos/ataque.wav";
-        const audio = new Audio(audioSrc);
+        const audio = new Audio(normalizarRutaAudio(audioSrc));
+        audio.play().catch(err =>
+            console.warn("🚫 Audio bloqueado:", audioSrc, err)
+        );
         audio.play().catch(err => console.warn(`No se pudo reproducir audio: ${audioSrc}`, err));
     } catch (err) {
         console.warn("Error creando objeto Audio:", err);
@@ -3025,7 +3067,8 @@ function ejecutarAtaqueConDelayAudio(atacante, objetivo, ataque, onFinish) {
         atacante.audio?.ataqueGenerico ||
         "/audios/genericos/ataque.wav";
 
-    const audio = new Audio(audioSrc);
+    const audio = new Audio(normalizarRutaAudio(audioSrc));
+    audio.play().catch(() => {});
     audio.play().catch(() => {});
 
     // 2. Duración configurable
@@ -3042,6 +3085,11 @@ function ejecutarAtaqueConDelayAudio(atacante, objetivo, ataque, onFinish) {
 
     }, delay);
 }
+
+//-------------------------------------------------------------------------------------------------------
+// ==========================================================
+// >SPRITES >EFECTOS
+// ==========================================================
 
 // Efectos_Daño > Cuando golpeamos al rival:
 function mostrarEfectoDaño(objetivo) {
