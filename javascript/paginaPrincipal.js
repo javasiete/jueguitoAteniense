@@ -1,39 +1,22 @@
-const BASE_PATH = window.location.pathname.split("/")[1]
-    ? "/" + window.location.pathname.split("/")[1]
-: "";
+const BASE_AUDIO_PATH = "./audios/";
 
-const sonidoTurnoJugador = new Audio(
-    normalizarRutaAudio("/sonidos/turnoJugador.wav")
-);
+const sonidoTurnoJugador = new Audio("./sonidos/turnoJugador.wav");
 sonidoTurnoJugador.volume = 0.6;
 
-const sonidoClick = new Audio(
-    normalizarRutaAudio("/sonidos/click.wav")
-);
-
-const sonidoClickPersonaje = new Audio(
-    normalizarRutaAudio("/sonidos/clickPersonaje.wav")
-);
+const sonidoClick = new Audio("./sonidos/click.wav");
+const sonidoClickPersonaje = new Audio("./sonidos/clickPersonaje.wav");
 
 // Audios para los Ataques:
-function reproducirAudio(ruta, volumen = 1) {
-    const src = normalizarRutaAudio(ruta);
-    if (!src) return;
+function reproducirAudio(ruta) {
+    if (!ruta) return;
 
-    const audio = new Audio(src);
-    audio.volume = volumen;
-
-    audio.onerror = () => {
-        console.warn("❌ Error cargando audio:", src);
-    };
+    const audio = new Audio(ruta);
+    audio.volume = 1;
 
     audio.play().catch(err => {
-        console.warn("🚫 No se pudo reproducir:", src, err);
+        console.warn("Audio bloqueado o ruta inválida:", ruta, err);
     });
-
-    return audio;
 }
-
 
 
 //---------------------------------------------------------------
@@ -106,7 +89,7 @@ const ataquesSeiya = [
         rangoMax: 1,
         detalle: "Un golpe giratorio capaz de aturdir al enemigo.",
         target: "Rival",
-        audio: "/audios/seiya/puño_rodante.wav",
+        audio: BASE_AUDIO_PATH + "seiya/puño_rodante.wav",
         duracionAudio: 3000,
         efecto: {
             tipo: "Daño",
@@ -132,7 +115,7 @@ const ataquesSeiya = [
         rangoMax: 2,
         detalle: "Un golpe impulsado por el cosmos que viaja a distancia.",
         target: "Rival",
-        audio: "/audios/seiya/puño_meteorico.wav",
+        audio: BASE_AUDIO_PATH + "seiya/puño_meteorico.wav",
         duracionAudio: 1800,
         efecto: {
             tipo: "Daño",
@@ -153,7 +136,7 @@ const ataquesSeiya = [
         rangoMax: 1,
         detalle: "Un golpe devastador concentrado en un solo punto.",
         target: "Rival",
-        audio: "/audios/seiya/cometa_pegaso.wav",
+        audio: BASE_AUDIO_PATH + "seiya/cometa_pegaso.wav",
         duracionAudio: 2500,
         efecto: {
             tipo: "Daño",
@@ -175,7 +158,7 @@ const ataquesSeiya = [
         rangoMax: 3,
         detalle: "Una lluvia imparable de golpes impulsados por el cosmos.",
         target: "Rival",
-        audio: "/audios/seiya/meteoro_pegaso.wav",
+        audio: BASE_AUDIO_PATH + "seiya/meteoro_pegaso.wav",
         duracionAudio: 1800,
         efecto: {
             tipo: "Daño",
@@ -242,8 +225,8 @@ const ataquesShiryu = [
         rangoMax: 2,
         detalle: "Shiryu impulsa su cosmos y avanza como un dragón en pleno vuelo.",
         target: "Rival",
-        audio: "/audios/shiryu/vuelo_del_dragon.wav",
-        duracionAudio: 2700,
+        audio: "../audios/shiryu/vuelo_del_dragon.wav",
+        duracionMs: 1200,
         efecto: {
             tipo: "Daño",
             escala: "mixto",
@@ -264,8 +247,8 @@ const ataquesShiryu = [
         rangoMax: 1,
         detalle: "Un ataque ascendente devastador que deja a Shiryu expuesto.",
         target: "Rival",
-        audio: "/audios/shiryu/ascenso_del_dragon.wav",
-        duracionAudio: 3000,
+        audio: "../audios/shiryu/ascenso_del_dragon.wav",
+        duracionMs: 1200,
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
@@ -291,8 +274,8 @@ const ataquesShiryu = [
         rangoMax: 1,
         detalle: "Shiryu libera todo su cosmos en un ascenso final, poniendo su vida en riesgo.",
         target: "Rival",
-        audio: "/audios/shiryu/ascenso_del_dragon_supremo.wav",
-        duracionAudio: 3000,
+        audio: "../audios/shiryu/ascenso_del_dragon_supremo.wav",
+        duracionMs: 1200,
         efecto: {
             tipo: "Daño",
             escala: "mixto",
@@ -690,10 +673,10 @@ const caballerosBronce = [
         },
 
         audio: {
-        ataqueGenerico: "/audios/seiya/ataque_generico.wav",
-        herido: "/audios/seiya/herido.wav",
-        concentrandose: "/audios/seiya/concentrandose.wav",
-        defendiendose: "/audios/seiya/defendiendose.wav",
+            ataqueGenerico: BASE_AUDIO_PATH + "seiya/ataque_generico.wav",
+            herido: BASE_AUDIO_PATH + "seiya/herido.wav",
+            concentrandose: BASE_AUDIO_PATH + "seiya/concentrandose.wav",
+            defendiendose: BASE_AUDIO_PATH + "seiya/defendiendose.wav",
         },
     
         ataquesDisponibles: ataquesSeiya,
@@ -900,8 +883,8 @@ const caballerosPlata = [
         audio: {
         ataqueGenerico: "./audios/shaina/ataque_generico.wav",
         herido: "./audios/shaina/herido.wav",
-        concentrandose: "./audios/shaina/concentrandose.wav",
-        defendiendose: "./audios/shaina/defendiendose.wav"
+        concentrandose: "./audios/seiya/concentrandose.wav",
+        defendiendose: "./audios/seiya/defendiendose.wav"
         },
 
         ataquesDisponibles: ataquesShaina,
@@ -933,10 +916,10 @@ const enemigos = [
         velocidad: 2,
 
         audio: {
-        ataqueGenerico: "/audios/guerrero_1/ataque_generico.wav",
-        herido: "/audios/guerrero_1/herido.wav",
-        concentrandose: "/audios/guerrero_1/concentrandose.wav",
-        defendiendose: "/audios/guerrero_1/defendiendose.wav"
+        ataqueGenerico: "./audios/guerrero_1/ataque_generico.wav",
+        herido: "./audios/guerrero_1/herido.wav",
+        concentrandose: "./audios/seiya/concentrandose.wav",
+        defendiendose: "./audios/seiya/defendiendose.wav"
         },
 
         ataquesDisponibles: ataquesGuerrero1,
@@ -965,10 +948,10 @@ const enemigos = [
         velocidad: 1,
 
         audio: {
-        ataqueGenerico: "/audios/guerrero_2/ataque_generico.wav",
-        herido: "/audios/guerrero_2/herido.wav",
-        concentrandose: "/audios/guerrero_2/concentrandose.wav",
-        defendiendose: "/audios/guerrero_2/defendiendose.wav"
+        ataqueGenerico: "./audios/guerrero_2/ataque_generico.wav",
+        herido: "./audios/guerrero_2/herido.wav",
+        concentrandose: "./audios/seiya/concentrandose.wav",
+        defendiendose: "./audios/seiya/defendiendose.wav"
         },
 
         ataquesAprendidosNum: [1, 2],
@@ -1078,36 +1061,24 @@ btnIrALaBatalla.addEventListener("click", () => {
     sonidoClick.play().catch(() => {});
     mostrarPantallaCarga();
 
-    const rutasImagenes = obtenerRutasImagenesBatalla();
-    const rutasAudios = obtenerRutasAudiosBatalla();
+    const rutas = obtenerRutasImagenesBatalla();
 
-    // 1️⃣ Precargar imágenes
-    precargarImagenes(rutasImagenes, () => {
+    precargarImagenes(rutas, () => {
 
-        // 2️⃣ Precargar audios
-        precargarAudios(rutasAudios, () => {
+        ocultarPantallaCarga();
+        paginaTablero.style.display = "flex";
 
-            // 3️⃣ Entrar a batalla solo cuando TODO está listo
-            ocultarPantallaCarga();
-            paginaTablero.style.display = "flex";
+        crearTablero();
 
-            console.log(
-                "🔊 Audio test:",
-                normalizarRutaAudio("/audios/seiya/puño_rodante.wav")
-            );
+        recalcularFormacionDesdeSlots();
+        crearFormacionCopiaParaBatalla();
 
-            crearTablero();
+        guardarInfoBackUp(); // BACKUP BASE
 
-            recalcularFormacionDesdeSlots();
-            crearFormacionCopiaParaBatalla();
+        actualizarUIBatalla();
 
-            guardarInfoBackUp(); // BACKUP BASE
-
-            actualizarUIBatalla();
-
-            construirColaTurnos();
-            iniciarTurno();
-        });
+        construirColaTurnos();
+        iniciarTurno();
     });
 });
 
@@ -1618,116 +1589,32 @@ function precargarImagenes(rutas, callback) {
 function obtenerRutasImagenesBatalla() {
     const rutas = [];
 
-    function agregarSprites(entidad) {
-        if (!entidad) return;
-
-        if (entidad.imgBatalla) rutas.push(entidad.imgBatalla);
-        if (entidad.imgBatallaDefendiendose) rutas.push(entidad.imgBatallaDefendiendose);
-        if (entidad.imgBatallaDerrotado) rutas.push(entidad.imgBatallaDerrotado);
-    }
-
     // ==========================
     // Caballeros activos
     // ==========================
     obtenerCaballerosUsados().forEach(id => {
-        const cab =
-            caballerosBronce.find(c => c.id === id) ||
-            caballerosPlata?.find(c => c.id === id) ||
-            caballerosOro?.find(c => c.id === id);
-
-        agregarSprites(cab);
+        const cab = caballerosBronce.find(c => c.id === id);
+        if (cab?.imgBatalla) rutas.push(cab.imgBatalla);
     });
 
     // ==========================
     // Enemigos del nivel actual
     // ==========================
     const nivel = nivelesHistoria[nivelActual];
-    if (nivel?.enemigos) {
-        nivel.enemigos.forEach(data => {
-            const enemigo = enemigos.find(e => e.id === data.id);
-            agregarSprites(enemigo);
+    if (nivel && nivel.enemigos) {
+        nivel.enemigos.forEach(dataEnemigo => {
+            const enemigo = enemigos.find(e => e.id === dataEnemigo.id);
+            if (enemigo?.imgBatalla) rutas.push(enemigo.imgBatalla);
         });
     }
+
+    // ==========================
+    // Fondo del tablero (futuro)
+    // ==========================
+    // rutas.push("./imgs/tablero/fondoTablero.png");
 
     return rutas;
 }
-
-function precargarAudios(rutas, callback) {
-    let cargados = 0;
-
-    if (!rutas.length) {
-        callback?.();
-        return;
-    }
-
-    rutas.forEach(src => {
-        const audio = new Audio();
-        audio.src = normalizarRutaAudio(src);
-
-        audio.oncanplaythrough = audio.onerror = () => {
-            cargados++;
-            if (cargados === rutas.length && callback) {
-                callback();
-            }
-        };
-    });
-}
-
-// Normalizar rutas para Github:
-function normalizarRutaAudio(src) {
-    if (!src) return null;
-
-    // Si ya es absoluta con repo, no tocar
-    if (src.startsWith(BASE_PATH + "/")) return src;
-
-    // Si empieza con /audios → anteponer repo
-    if (src.startsWith("/")) return BASE_PATH + src;
-
-    // Rutas relativas
-    return BASE_PATH + "/" + src.replace(/^(\.\/|\.\.\/)+/, "");
-}
-
-function obtenerRutasAudiosBatalla() {
-    const rutas = new Set();
-
-    function agregarAudio(src) {
-        const ruta = normalizarRutaAudio(src);
-        if (ruta) rutas.add(ruta);
-    }
-
-    function procesarEntidad(entidad) {
-        if (!entidad) return;
-
-        agregarAudio(entidad.audio?.ataqueGenerico);
-        agregarAudio(entidad.audio?.herido);
-
-        entidad.ataquesDisponibles?.forEach(a => {
-            agregarAudio(a.audio);
-        });
-    }
-
-    // Caballeros
-    obtenerCaballerosUsados().forEach(id => {
-        const cab =
-            caballerosBronce.find(c => c.id === id) ||
-            caballerosPlata?.find(c => c.id === id) ||
-            caballerosOro?.find(c => c.id === id);
-
-        procesarEntidad(cab);
-    });
-
-    // Enemigos
-    const nivel = nivelesHistoria[nivelActual];
-    if (nivel?.enemigos) {
-        nivel.enemigos.forEach(data => {
-            const enemigo = enemigos.find(e => e.id === data.id);
-            procesarEntidad(enemigo);
-        });
-    }
-
-    return [...rutas];
-}
-
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // ==========================================================
@@ -2902,10 +2789,7 @@ function aplicarLogicaAtaque(atacante, objetivo, ataque) {
     actualizarBarrasPersonaje(atacante);
 }
 
-//-------------------------------------------------------------------------------------------------------
-// ==========================================================
-// >ESTADOS >EFECTOS
-// ==========================================================
+
 
 // Los ESTADOS aca se APLICAN:
 function intentarAplicarEstado(objetivo, estadoDef) {
@@ -2956,6 +2840,7 @@ function aplicarEstadosPasivos(entidad) {
 
     if (entidad.pv <= 0) derrotarEntidad(entidad);
 }
+
 
 // Cuando el jugador/enemigo se defiende se le aplica el Buff de defensa:
 function aplicarBuffDefensaTemporal(entidad, porcentajeDefensa, porcentajeDefensaMagica) {
@@ -3018,11 +2903,6 @@ function derrotarEntidad(entidad) {
     construirColaTurnos();
 }
 
-//-------------------------------------------------------------------------------------------------------
-// ==========================================================
-// >AUDIO
-// ==========================================================
-
 function ejecutarAudioAtaque(atacante, ataque) {
 
     let audioSrc = null;
@@ -3032,11 +2912,10 @@ function ejecutarAudioAtaque(atacante, ataque) {
     } else if (atacante.audio?.ataqueGenerico) {
         audioSrc = atacante.audio.ataqueGenerico;
     } else {
-        audioSrc = "/audios/genericos/ataque.wav";
+        audioSrc = BASE_AUDIO_PATH + "genericos/ataque.wav";
     }
 
-    const audio = new Audio(normalizarRutaAudio(audioSrc));
-    audio.play().catch(() => {});
+    const audio = new Audio(audioSrc);
     audio.play();
 
     return audio.duration || 0;
@@ -3048,11 +2927,8 @@ function ejecutarAtaqueConAudioSeguro(atacante, objetivo, ataque) {
 
     // Reproduce audio
     try {
-        const audioSrc = ataque.audio || atacante.audio?.ataqueGenerico || "/audios/genericos/ataque.wav";
-        const audio = new Audio(normalizarRutaAudio(audioSrc));
-        audio.play().catch(err =>
-            console.warn("🚫 Audio bloqueado:", audioSrc, err)
-        );
+        const audioSrc = ataque.audio || atacante.audio?.ataqueGenerico || BASE_AUDIO_PATH + "genericos/ataque.wav";
+        const audio = new Audio(audioSrc);
         audio.play().catch(err => console.warn(`No se pudo reproducir audio: ${audioSrc}`, err));
     } catch (err) {
         console.warn("Error creando objeto Audio:", err);
@@ -3061,18 +2937,30 @@ function ejecutarAtaqueConAudioSeguro(atacante, objetivo, ataque) {
 
 function ejecutarAtaqueConDelayAudio(atacante, objetivo, ataque, onFinish) {
 
-    // 1. Reproducir audio
+    // 1. Resolver audio final
     let audioSrc =
         ataque.audio ||
         atacante.audio?.ataqueGenerico ||
-        "/audios/genericos/ataque.wav";
+        BASE_AUDIO_PATH + "genericos/ataque.wav";
 
-    const audio = new Audio(normalizarRutaAudio(audioSrc));
-    audio.play().catch(() => {});
-    audio.play().catch(() => {});
+    // 🔍 DEBUG CLAVE
+    console.log("🔊 Audio ataque resuelto:", {
+        atacante: atacante.nombre,
+        ataque: ataque.nombre,
+        ruta: audioSrc
+    });
+
+    const audio = new Audio(audioSrc);
+
+    audio.play().catch(err => {
+        console.warn("❌ Error reproduciendo audio:", audioSrc, err);
+    });
 
     // 2. Duración configurable
     const delay = ataque.duracionAudio ?? 800;
+
+    // 🔍 DEBUG DELAY
+    console.log("⏱ Delay ataque (ms):", delay);
 
     // 3. Esperar y aplicar lógica
     setTimeout(() => {
@@ -3085,11 +2973,6 @@ function ejecutarAtaqueConDelayAudio(atacante, objetivo, ataque, onFinish) {
 
     }, delay);
 }
-
-//-------------------------------------------------------------------------------------------------------
-// ==========================================================
-// >SPRITES >EFECTOS
-// ==========================================================
 
 // Efectos_Daño > Cuando golpeamos al rival:
 function mostrarEfectoDaño(objetivo) {
