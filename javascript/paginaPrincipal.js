@@ -1,5 +1,3 @@
-const BASE_AUDIO_PATH = "./audios/";
-
 const sonidoTurnoJugador = new Audio("./sonidos/turnoJugador.wav");
 sonidoTurnoJugador.volume = 0.6;
 
@@ -12,12 +10,8 @@ function reproducirAudio(ruta) {
 
     const audio = new Audio(ruta);
     audio.volume = 1;
-
-    audio.play().catch(err => {
-        console.warn("Audio bloqueado o ruta inválida:", ruta, err);
-    });
+    audio.play().catch(() => {});
 }
-
 
 //---------------------------------------------------------------
 function recalcularPosicionesEntidades() {
@@ -89,7 +83,7 @@ const ataquesSeiya = [
         rangoMax: 1,
         detalle: "Un golpe giratorio capaz de aturdir al enemigo.",
         target: "Rival",
-        audio: BASE_AUDIO_PATH + "seiya/puño_rodante.wav",
+        audio: "./audios/seiya/puño_rodante.wav",
         duracionAudio: 3000,
         efecto: {
             tipo: "Daño",
@@ -115,7 +109,7 @@ const ataquesSeiya = [
         rangoMax: 2,
         detalle: "Un golpe impulsado por el cosmos que viaja a distancia.",
         target: "Rival",
-        audio: BASE_AUDIO_PATH + "seiya/puño_meteorico.wav",
+        audio: "./audios/seiya/puño_meteorico.wav",
         duracionAudio: 1800,
         efecto: {
             tipo: "Daño",
@@ -136,7 +130,7 @@ const ataquesSeiya = [
         rangoMax: 1,
         detalle: "Un golpe devastador concentrado en un solo punto.",
         target: "Rival",
-        audio: BASE_AUDIO_PATH + "seiya/cometa_pegaso.wav",
+        audio: "./audios/seiya/cometa_pegaso.wav",
         duracionAudio: 2500,
         efecto: {
             tipo: "Daño",
@@ -158,7 +152,7 @@ const ataquesSeiya = [
         rangoMax: 3,
         detalle: "Una lluvia imparable de golpes impulsados por el cosmos.",
         target: "Rival",
-        audio: BASE_AUDIO_PATH + "seiya/meteoro_pegaso.wav",
+        audio: "./audios/seiya/meteoro_pegaso.wav",
         duracionAudio: 1800,
         efecto: {
             tipo: "Daño",
@@ -225,7 +219,7 @@ const ataquesShiryu = [
         rangoMax: 2,
         detalle: "Shiryu impulsa su cosmos y avanza como un dragón en pleno vuelo.",
         target: "Rival",
-        audio: "../audios/shiryu/vuelo_del_dragon.wav",
+        audio: "./audios/shiryu/vuelo_del_dragon.wav",
         duracionMs: 1200,
         efecto: {
             tipo: "Daño",
@@ -247,7 +241,7 @@ const ataquesShiryu = [
         rangoMax: 1,
         detalle: "Un ataque ascendente devastador que deja a Shiryu expuesto.",
         target: "Rival",
-        audio: "../audios/shiryu/ascenso_del_dragon.wav",
+        audio: "./audios/shiryu/ascenso_del_dragon.wav",
         duracionMs: 1200,
         efecto: {
             tipo: "Daño",
@@ -274,7 +268,7 @@ const ataquesShiryu = [
         rangoMax: 1,
         detalle: "Shiryu libera todo su cosmos en un ascenso final, poniendo su vida en riesgo.",
         target: "Rival",
-        audio: "../audios/shiryu/ascenso_del_dragon_supremo.wav",
+        audio: "./audios/shiryu/ascenso_del_dragon_supremo.wav",
         duracionMs: 1200,
         efecto: {
             tipo: "Daño",
@@ -654,7 +648,7 @@ const caballerosBronce = [
         imgIcono: "./imgs/iconos/seiya.png",
         imgBatalla: "./imgs/batalla/seiya.png",
         imgBatallaDefendiendose: "./imgs/batalla/seiya_defendiendose.png",
-        imgBatallaDerrotado: "../imgs/batalla/seiya_derrotado.png",
+        imgBatallaDerrotado: "./imgs/batalla/seiya_derrotado.png",
         imgFormacion: "./imgs/formacion/seiya.png",
     
         pv: 35,
@@ -673,10 +667,10 @@ const caballerosBronce = [
         },
 
         audio: {
-            ataqueGenerico: BASE_AUDIO_PATH + "seiya/ataque_generico.wav",
-            herido: BASE_AUDIO_PATH + "seiya/herido.wav",
-            concentrandose: BASE_AUDIO_PATH + "seiya/concentrandose.wav",
-            defendiendose: BASE_AUDIO_PATH + "seiya/defendiendose.wav",
+        ataqueGenerico: "./audios/seiya/ataque_generico.wav",
+        herido: "./audios/seiya/herido.wav",
+        concentrandose: "./audios/seiya/concentrandose.wav",
+        defendiendose: "./audios/seiya/defendiendose.wav",
         },
     
         ataquesDisponibles: ataquesSeiya,
@@ -2912,7 +2906,7 @@ function ejecutarAudioAtaque(atacante, ataque) {
     } else if (atacante.audio?.ataqueGenerico) {
         audioSrc = atacante.audio.ataqueGenerico;
     } else {
-        audioSrc = BASE_AUDIO_PATH + "genericos/ataque.wav";
+        audioSrc = "/audios/genericos/ataque.wav";
     }
 
     const audio = new Audio(audioSrc);
@@ -2927,7 +2921,7 @@ function ejecutarAtaqueConAudioSeguro(atacante, objetivo, ataque) {
 
     // Reproduce audio
     try {
-        const audioSrc = ataque.audio || atacante.audio?.ataqueGenerico || BASE_AUDIO_PATH + "genericos/ataque.wav";
+        const audioSrc = ataque.audio || atacante.audio?.ataqueGenerico || "/audios/genericos/ataque.wav";
         const audio = new Audio(audioSrc);
         audio.play().catch(err => console.warn(`No se pudo reproducir audio: ${audioSrc}`, err));
     } catch (err) {
@@ -2937,30 +2931,17 @@ function ejecutarAtaqueConAudioSeguro(atacante, objetivo, ataque) {
 
 function ejecutarAtaqueConDelayAudio(atacante, objetivo, ataque, onFinish) {
 
-    // 1. Resolver audio final
+    // 1. Reproducir audio
     let audioSrc =
         ataque.audio ||
         atacante.audio?.ataqueGenerico ||
-        BASE_AUDIO_PATH + "genericos/ataque.wav";
-
-    // 🔍 DEBUG CLAVE
-    console.log("🔊 Audio ataque resuelto:", {
-        atacante: atacante.nombre,
-        ataque: ataque.nombre,
-        ruta: audioSrc
-    });
+        "/audios/genericos/ataque.wav";
 
     const audio = new Audio(audioSrc);
-
-    audio.play().catch(err => {
-        console.warn("❌ Error reproduciendo audio:", audioSrc, err);
-    });
+    audio.play().catch(() => {});
 
     // 2. Duración configurable
     const delay = ataque.duracionAudio ?? 800;
-
-    // 🔍 DEBUG DELAY
-    console.log("⏱ Delay ataque (ms):", delay);
 
     // 3. Esperar y aplicar lógica
     setTimeout(() => {
@@ -3021,7 +3002,6 @@ function restaurarSpriteNormal(entidad) {
     img.src = entidad.imgBatalla;
 }
 
-
 //-------------------------------------------------------------------------------------------------------
 // ==========================================================
 // LA IA ATACA:
@@ -3061,7 +3041,6 @@ function enemigoDefenderse(enemigo) {
     ganarCosmosPorAccion(enemigo, "defender");
     actualizarUIBatalla();
 }
-
 
 //-----------------------------------------------------------------------------------------------------------
 // ==========================================================
@@ -3175,8 +3154,6 @@ function cerrarPopupOtras() {
     mostrarOtras.innerHTML = "";
 }
 
-
-
 //----------------------------------------------------------------------------------------------------------------------------------
 // ==========================================================
 // Funciones de bloquear y desbloquear los botones del tablero de abajo:
@@ -3253,12 +3230,6 @@ btnSlot4.addEventListener("click", () => {
 btnSlot5.addEventListener("click", () => {
     setCantidadGuerreros(5);
 });
-
-
-
-
-
-
 
 
 
