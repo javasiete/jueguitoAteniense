@@ -90,7 +90,6 @@ document.addEventListener(
     { once: true }
 );
 
-
 //----------------------------------------------------------
 
 // Audios para los Ataques:
@@ -136,7 +135,7 @@ window.addEventListener("resize", () => {
 });
 
 // ==========================================================
-// ATAQUES QUE EXISTEN EN TOTAL
+// >ATAQUES QUE EXISTEN EN TOTAL
 // ==========================================================
 
 const ataquesSeiya = [
@@ -639,7 +638,7 @@ const ataquesGuerrero1 = [
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // ======================================================================
-// CREAR PERSONAJE / CABALLERO
+// >PERSONAJE / >CABALLERO
 // ======================================================================
 
 function crearPersonaje(datos) {
@@ -982,6 +981,11 @@ const caballerosPlata = [
     })
 ];
 
+//------------------------------------------------------------------------------------------------------------------------------------
+// ======================================================================
+// >ENEMIGOS
+// ======================================================================
+
 const enemigos = [
 
     crearPersonaje({
@@ -995,6 +999,7 @@ const enemigos = [
 
         imgBatalla: "./imgs/batalla/enemigo1.png",
         imgBatallaDerrotado: "./imgs/batalla/enemigo1_derrotado.png",
+        imgBatallaDefendiendose: "./imgs/batalla/enemigo1_defendiendose.png",
 
         pv: 30,
         pm: 10,
@@ -1027,6 +1032,7 @@ const enemigos = [
 
         imgBatalla: "./imgs/batalla/enemigo2.png",
         imgBatallaDerrotado: "./imgs/batalla/enemigo2_derrotado.png",
+        imgBatallaDefendiendose: "./imgs/batalla/enemigo2_defendiendose.png",
 
         pv: 45,
         pm: 12,
@@ -1061,7 +1067,6 @@ function obtenerAtaquesDelPersonaje(personaje) {
 
     return [];
 }
-
 
 // -------------------------------------------------------------------------------------------------------------------------------------
 // ======================================================================
@@ -1709,7 +1714,9 @@ function obtenerRutasImagenesBatalla() {
     // ==========================
     obtenerCaballerosUsados().forEach(id => {
         const cab = caballerosBronce.find(c => c.id === id);
-        if (cab?.imgBatalla) rutas.push(cab.imgBatalla);
+        if (cab?.imgBatallaDefendiendose) {
+        rutas.push(cab.imgBatallaDefendiendose);
+    }
     });
 
     // ==========================
@@ -2220,8 +2227,7 @@ function construirColaTurnos() {
 // Iniciar Turno:
 function iniciarTurno() {
 
-    if (batallaFinalizada) return; // Finaliza el iniciar turno porque la Batalla ya no tiene RIVALES a los cuales enfrentar.
-
+    if (batallaFinalizada) return;
     if (!colaTurnos.length) return;
 
     entidadTurnoActual = colaTurnos[indiceTurno];
@@ -2231,26 +2237,45 @@ function iniciarTurno() {
         return;
     }
 
-    restaurarSpriteNormal(entidadTurnoActual);
+    // =========================
+    // 1. Aplicar estados pasivos
+    // =========================
     aplicarEstadosPasivos(entidadTurnoActual);
 
+    // Si murió por DOT u otro efecto
     if (entidadTurnoActual.estado !== 1) {
         finalizarTurno();
         return;
     }
 
+    // =========================
+    // 2. Restaurar sprite SOLO
+    // si ya no está defendiendo
+    // =========================
+    const sigueDefendiendo =
+        entidadTurnoActual.estadosAlterados?.some(e => e.tipo === "buffDefensa");
+
+    if (!sigueDefendiendo) {
+        restaurarSpriteNormal(entidadTurnoActual);
+    }
+
+    // =========================
+    // 3. ¿Puede actuar?
+    // =========================
     if (!entidadPuedeActuar(entidadTurnoActual)) {
         finalizarTurno();
         return;
     }
 
+    // =========================
+    // 4. Ejecutar turno
+    // =========================
     if (entidadTurnoActual.tipo === "jugador") {
         iniciarTurnoJugador(entidadTurnoActual);
     } else {
         iniciarTurnoEnemigo(entidadTurnoActual);
     }
 }
-
 
 // Turno del jugador (Se habilitan los botones):
 function iniciarTurnoJugador(jugador) {
@@ -2655,7 +2680,6 @@ async function ejecutarTurnoEnemigo(enemigo) {
     finalizarTurno();
 }
 
-
 //-------------------------------------------------------------------------------------------------------
 // ==========================================================
 // GANAR COSMO POR ACCION:
@@ -3033,7 +3057,14 @@ function aplicarLogicaAtaque(atacante, objetivo, ataque) {
     actualizarBarrasPersonaje(atacante);
 }
 
+//------------------------------------------------------------------------
 // >ESTADOS
+//------------------------------------------------------------------------
+
+function entidadTieneBuffDefensa(entidad) {
+    return entidad.estadosAlterados?.some(e => e.tipo === "buffDefensa");
+}
+
 // Los ESTADOS aca se APLICAN:
 function intentarAplicarEstado(objetivo, estadoDef) {
     if (objetivo.estado !== 1) return;
@@ -3056,34 +3087,50 @@ function aplicarEstadosPasivos(entidad) {
 
     entidad.estadosAlterados = entidad.estadosAlterados.filter(e => {
 
-        // Daños por turno
+        // =========================
+        // Daño por turno (DOT)
+        // =========================
         if (e.tipo === 3 || e.tipo === 6) {
             entidad.pv -= e.danio;
         }
 
-        // Buff defensa
+        // =========================
+        // Buff de defensa
+        // =========================
         if (e.tipo === "buffDefensa") {
 
-            if (e.aplicadoEsteTurno) {
+            // ⛔ NO se consume el mismo turno que se aplica
+            // ✅ Se consume cuando vuelve a tocarle
+            if (!e.aplicadoEsteTurno) {
                 e.turnos--;
             }
 
-            // Cuando se termina el buff, restaurar sprite
             if (e.turnos <= 0) {
-                restaurarSpriteNormal(entidad);
                 return false;
             }
+
         } else {
-            if (!e.aplicadoEsteTurno) e.turnos--;
+            // =========================
+            // Otros estados
+            // =========================
+            if (!e.aplicadoEsteTurno) {
+                e.turnos--;
+            }
         }
 
+        // Reset del flag para el próximo turno
         e.aplicadoEsteTurno = false;
+
         return e.turnos > 0;
     });
 
-    if (entidad.pv <= 0) derrotarEntidad(entidad);
+    // =========================
+    // Muerte por efectos
+    // =========================
+    if (entidad.pv <= 0) {
+        derrotarEntidad(entidad);
+    }
 }
-
 
 // Cuando el jugador/enemigo se defiende se le aplica el Buff de defensa:
 function aplicarBuffDefensaTemporal(entidad, porcentajeDefensa, porcentajeDefensaMagica) {
@@ -3147,7 +3194,6 @@ function derrotarEntidad(entidad) {
     // Si no quedan enemigos o jugadores, verifica si la partida terminó:
     if (verificarFinBatalla()) return;
 }
-
 
 // >AUDIOS:
 function ejecutarAudioAtaque(atacante, ataque) {
@@ -3347,8 +3393,6 @@ function reproducirAnimacionAtaque(atacante, ataque) {
     avanzarFrame();
 }
 
-
-
 //-------------------------------------------------------------------------------------------------------
 // ==========================================================
 // LA IA ATACA:
@@ -3386,8 +3430,10 @@ function enemigoDefenderse(enemigo) {
     cambiarSpriteEntidad(enemigo, "defensa");
 
     ganarCosmosPorAccion(enemigo, "defender");
-    actualizarUIBatalla();
+
+    actualizarBarrasPersonaje(enemigo);
 }
+
 
 //-----------------------------------------------------------------------------------------------------------
 // ==========================================================
