@@ -996,6 +996,41 @@ function obtenerEstadoPorId(id) {
 const ESTADOS_INCAPACITANTES = [4, 5, 7]; 
 // aturdido, congelado, dormido
 
+// ==========================================================
+// ENEMIGOS_NIVELES
+// ==========================================================
+
+const nivelesHistoria = {
+    1: {
+        nombre: "Casa Inicial",
+        enemigos: [
+            {
+                id: 901,
+                fila: 2,
+                columna: 5
+            }
+        ]
+    },
+
+    2: {
+        nombre: "Sendero Oscuro",
+        enemigos: [
+            {
+                id: 901,
+                fila: 2,
+                columna: 5
+            },
+            {
+                id: 901,
+                fila: 3,
+                columna: 6
+            }
+        ]
+    }
+
+    // después agregás más sin tocar lógica
+};
+
 // -------------------------------------------------------------------------------------------------------------------------------------
 // ==========================================================
 // BOTONES ENTRE PAGINAS
@@ -1155,41 +1190,6 @@ function añadirCaballeroDisponible(idCaballero) {
 }
 // Ejemplo de como añadir a un Caballero al listado de disponibles y jugables:
 // añadirCaballeroDisponible(106); // Se coloca el Nº ID del caballero.
-
-// ==========================================================
-// ENEMIGOS_NIVELES
-// ==========================================================
-
-const nivelesHistoria = {
-    1: {
-        nombre: "Casa Inicial",
-        enemigos: [
-            {
-                id: 901,
-                fila: 2,
-                columna: 5
-            }
-        ]
-    },
-
-    2: {
-        nombre: "Sendero Oscuro",
-        enemigos: [
-            {
-                id: 901,
-                fila: 2,
-                columna: 5
-            },
-            {
-                id: 901,
-                fila: 3,
-                columna: 6
-            }
-        ]
-    }
-
-    // después agregás más sin tocar lógica
-};
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // ==========================================================
