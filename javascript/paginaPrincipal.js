@@ -64,6 +64,13 @@ const ataquesSeiya = [
         detalle: "Un golpe rápido y directo.",
         target: "Rival",
         duracionAudio: 1200,
+        animacion: {
+            sprite: "./imgs/batalla/seiya_ataque_1.png",
+            frames: 7,
+            frameWidth: 1600,   // ancho de UN frame
+            frameHeight: 1000, // alto real
+            frameDurations: [120, 120, 120, 150, 120, 120, 120],
+        },
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
@@ -488,7 +495,7 @@ const ataquesGuerrero1 = [
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
-            multiplicador: 1.2
+            multiplicador: 3.2
         }
     },
 
@@ -1006,10 +1013,11 @@ const btnConfirmarSeleccion = document.getElementById("btnConfirmarSeleccion");
 const btnPaginaFormacion = document.getElementById("btnPaginaFormacion");
 const btnSalirFormacion = document.getElementById("btnSalirFormacion");
 
-
-
 const btnIrALaBatalla = document.getElementById("btnIrALaBatalla");
 const btnSalirBatalla = document.getElementById("btnSalirBatalla");
+
+const btnFinBatalla = document.getElementById("btnFinBatalla");
+const overlayPopupFinBatalla = document.getElementById("overlayPopupFinBatalla");
 
 const btnPaginaTestear = document.getElementById("btnPaginaTestear");
 const btnSalirTestear = document.getElementById("btnSalirTestear");
@@ -1085,6 +1093,23 @@ btnSalirBatalla.addEventListener("click", () => {
 
     formacionCopiaEnBatalla = [];
 });
+
+btnFinBatalla.addEventListener("click", () => {
+
+    batallaFinalizada = false; // Resetea este condicionante para que la proxima batalla sea como una nueva.
+
+    cargarInfoBackUp();
+
+    overlayPopupFinBatalla.style.display = "none";
+
+    paginaTablero.style.display = "none";
+    paginaPrincipal.style.display = "flex";
+
+    paginaTablero.style.pointerEvents = "auto";
+
+    formacionCopiaEnBatalla = [];
+});
+
 
 
 // Me lleva a la Pagina de Testeos:
@@ -1554,6 +1579,13 @@ btnSalirFormacion.addEventListener("click", () => {
     paginaPrincipal.style.display = "flex";
 });
 
+//----------------------------------------------------------------------------------------------------------
+// ==========================================================
+// BACK DEL JUEGO
+// ==========================================================
+
+
+
 //------------------------------------------------------------------------------------------------------------------------------------
 // ==========================================================
 // PAGINA_PRE_CARGA
@@ -1853,6 +1885,9 @@ function actualizarUIBatalla() {
 // BACK de la Batalla
 // ==========================================================
 
+// Flag cuando finaliza la batalla:
+let batallaFinalizada = false;
+
 //Funcion que almacena la informacion de los Caballeros y Enemigos y sus respectivas UBICACIONES que estaran en la batalla:
 function crearFormacionCopiaParaBatalla() {
     formacionCopiaEnBatalla = [];
@@ -1964,6 +1999,96 @@ function cargarInfoBackUp() {
     };
 }
 
+// Funcion que cuenta cuantos caballeros y enemigos hay:
+function logCantidadEntidadesEnTablero() {
+
+    let cantidadCaballeros = 0;
+    let cantidadEnemigos = 0;
+
+    formacionCopiaEnBatalla.forEach(item => {
+
+        let entidad;
+
+        if (item.tipo === "jugador") {
+            entidad =
+                caballerosBronce.find(c => c.id === item.id) ||
+                caballerosPlata?.find(c => c.id === item.id) ||
+                caballerosOro?.find(c => c.id === item.id);
+        } else {
+            entidad = enemigos.find(e => e.id === item.id);
+        }
+
+        // Solo contar vivos
+        if (!entidad || entidad.estado !== 1) return;
+
+        if (item.tipo === "jugador") {
+            cantidadCaballeros++;
+        } else {
+            cantidadEnemigos++;
+        }
+    });
+
+    console.log(
+        `>> Hay ${cantidadCaballeros} Caballeros y ${cantidadEnemigos} Enemigos <<`
+    );
+}
+
+// Verifica si ya no quedan enemigos para declarar a un ganador:
+function verificarFinBatalla() {
+
+    if (batallaFinalizada) return true;
+
+    let caballerosVivos = 0;
+    let enemigosVivos = 0;
+
+    formacionCopiaEnBatalla.forEach(item => {
+        const entidad = obtenerPersonajePorId(item.id);
+        if (!entidad || entidad.estado !== 1) return;
+
+        if (item.tipo === "jugador") caballerosVivos++;
+        else enemigosVivos++;
+    });
+
+    if (enemigosVivos === 0 || caballerosVivos === 0) {
+
+        batallaFinalizada = true; // 🔥 ACA SE CIERRA TODO
+
+        const ganoJugador = enemigosVivos === 0;
+
+        bloquearBotonesJugador();
+        paginaTablero.style.pointerEvents = "none";
+
+        setTimeout(() => {
+            mostrarPopupFinBatalla(ganoJugador);
+        }, 2000);
+
+        return true;
+    }
+
+    return false;
+}
+
+
+
+// Muestra el PopUp al terminar la batalla:
+function mostrarPopupFinBatalla(ganoJugador) {
+
+    const overlay = document.getElementById("overlayPopupFinBatalla");
+    const titulo = document.getElementById("h3FinBatalla");
+    const mensaje = document.getElementById("mensajeFinBatalla");
+
+    titulo.textContent = ganoJugador ? "Ganaste" : "Perdiste";
+    mensaje.textContent = ganoJugador
+        ? "Haz pasado el Nivel."
+        : "Vuelvelo a intentar...";
+
+    overlay.style.display = "flex";
+
+    // 🔒 bloquear interacción del tablero
+    paginaTablero.style.pointerEvents = "none";
+}
+
+
 //------------------------------------------------------------------------------------------------------------
 // ==========================================================
 // SISTEMA DE TURNOS
@@ -2005,18 +2130,19 @@ function construirColaTurnos() {
 
 // Iniciar Turno:
 function iniciarTurno() {
+
+    if (batallaFinalizada) return; // Finaliza el iniciar turno porque la Batalla ya no tiene RIVALES a los cuales enfrentar.
+
     if (!colaTurnos.length) return;
 
     entidadTurnoActual = colaTurnos[indiceTurno];
 
-    if (entidadTurnoActual.estado !== 1) {
+    if (!entidadTurnoActual || entidadTurnoActual.estado !== 1) {
         finalizarTurno();
         return;
     }
 
-    // 🔑 ACÁ: al comenzar su turno vuelve a sprite normal
     restaurarSpriteNormal(entidadTurnoActual);
-
     aplicarEstadosPasivos(entidadTurnoActual);
 
     if (entidadTurnoActual.estado !== 1) {
@@ -2025,8 +2151,7 @@ function iniciarTurno() {
     }
 
     if (!entidadPuedeActuar(entidadTurnoActual)) {
-        console.log(`${entidadTurnoActual.nombre} no puede actuar este turno.`);
-        finalizarTurno();  // ⚠️ Importante: avanzar el turno
+        finalizarTurno();
         return;
     }
 
@@ -2036,6 +2161,7 @@ function iniciarTurno() {
         iniciarTurnoEnemigo(entidadTurnoActual);
     }
 }
+
 
 // Turno del jugador (Se habilitan los botones):
 function iniciarTurnoJugador(jugador) {
@@ -2054,23 +2180,29 @@ function iniciarTurnoJugador(jugador) {
 // Turno del enemigo (Espera 2 segundos y luego juega):
 function iniciarTurnoEnemigo(enemigo) {
 
+    if (batallaFinalizada) return;
+
     limpiarTarjetaActiva();
 
-    btnMoverse.disabled = true;
-    btnHabilidades.disabled = true;
+    bloquearBotonesJugador();
 
-    if (enemigo.estado !== 1) { // Si ya murió, terminar turno
+    if (enemigo.estado !== 1) {
         finalizarTurno();
         return;
     }
 
     setTimeout(() => {
+        if (batallaFinalizada) return; // No inicia el turno del enemigo, si es que la batalla está finalizada.
         ejecutarTurnoEnemigo(enemigo);
     }, 3000);
 }
 
+
 // Finaliza el turno y pasa al que sigue:
 function finalizarTurno() {
+
+    if (batallaFinalizada) return; // Si la batalla esta terminada, no avanza mas.
+
     limpiarCasillasMovimiento();
     bloquearBotonesJugador();
 
@@ -2081,6 +2213,7 @@ function finalizarTurno() {
 
     iniciarTurno();
 }
+
 
 // Las tarjetas de turnos se despintan:
 function limpiarTarjetaActiva() {
@@ -2345,6 +2478,9 @@ function moverEnemigo(enemigo, destino) {
 
 // El enemigo termina decidiendo ACA todo lo que hace:
 async function ejecutarTurnoEnemigo(enemigo) {
+
+    if (batallaFinalizada) return;
+
     console.log(`\n=== Turno de ${enemigo.nombre} ===`);
 
     if (enemigo.estado !== 1) {
@@ -2354,17 +2490,24 @@ async function ejecutarTurnoEnemigo(enemigo) {
     }
 
     if (!entidadPuedeActuar(enemigo)) {
+
+        if (batallaFinalizada) return;
+
         console.log(`${enemigo.nombre} no puede actuar este turno.`);
-        // ⚠️ Reducimos los turnos de estados bloqueantes al final
+
+        // Reducir estados incapacitantes
         enemigo.estadosAlterados.forEach(e => {
             if (ESTADOS_INCAPACITANTES.includes(e.tipo)) {
                 e.turnos--;
             }
         });
         enemigo.estadosAlterados = enemigo.estadosAlterados.filter(e => e.turnos > 0);
+
         finalizarTurno();
         return;
     }
+
+    if (batallaFinalizada) return;
 
     const objetivo = obtenerObjetivoMasCercano(enemigo);
     if (!objetivo) {
@@ -2373,38 +2516,56 @@ async function ejecutarTurnoEnemigo(enemigo) {
         return;
     }
 
+    if (batallaFinalizada) return;
+
     console.log(`${enemigo.nombre} apunta a ${objetivo.nombre}`);
 
     let ataque = obtenerAtaqueUsable(enemigo, objetivo);
+
     if (!ataque) {
         const movimiento = calcularMovimientoHacia(enemigo, objetivo);
         if (movimiento) {
             moverEnemigo(enemigo, movimiento);
             await esperar(1500);
+
+            if (batallaFinalizada) return;
         }
         ataque = obtenerAtaqueUsable(enemigo, objetivo);
     }
+
+    if (batallaFinalizada) return;
 
     if (ataque) {
         await new Promise(resolve => {
             ejecutarAtaqueConDelayAudio(enemigo, objetivo, ataque, resolve);
         });
 
+        if (batallaFinalizada) return;
+
         await esperar(2000);
+
+        if (batallaFinalizada) return;
 
     } else {
         enemigoDefenderse(enemigo);
         await esperar(1500);
+
+        if (batallaFinalizada) return;
     }
 
-    // ⚠️ Reducir turnos de estados incapacitantes al final
+    // Reducir estados incapacitantes al final del turno
     enemigo.estadosAlterados.forEach(e => {
-        if (ESTADOS_INCAPACITANTES.includes(e.tipo)) e.turnos--;
+        if (ESTADOS_INCAPACITANTES.includes(e.tipo)) {
+            e.turnos--;
+        }
     });
     enemigo.estadosAlterados = enemigo.estadosAlterados.filter(e => e.turnos > 0);
 
+    if (batallaFinalizada) return;
+
     finalizarTurno();
 }
+
 
 //-------------------------------------------------------------------------------------------------------
 // ==========================================================
@@ -2467,7 +2628,7 @@ function obtenerBonusDañoPorCosmo(personaje) {
 
 //-------------------------------------------------------------------------------------------------------
 // ==========================================================
-// ATACAR AL ENEMIGO:
+// >ATACAR AL ENEMIGO:
 // ==========================================================
 
 let ataqueSeleccionado = null;
@@ -2783,8 +2944,7 @@ function aplicarLogicaAtaque(atacante, objetivo, ataque) {
     actualizarBarrasPersonaje(atacante);
 }
 
-
-
+// >ESTADOS
 // Los ESTADOS aca se APLICAN:
 function intentarAplicarEstado(objetivo, estadoDef) {
     if (objetivo.estado !== 1) return;
@@ -2872,10 +3032,11 @@ function obtenerDefensaConBuff(entidad, tipo) {
     return base;
 }
 
+// >MATAMOS AL ENEMIGO: 
 // Cuando vencemos al enemigo:
 function derrotarEntidad(entidad) {
 
-    if (entidad.estado === 2) return; // evitar doble ejecución
+    if (entidad.estado === 2) return;
 
     entidad.estado = 2;
     entidad.pv = 0;
@@ -2883,7 +3044,6 @@ function derrotarEntidad(entidad) {
 
     console.log(`${entidad.nombre} fue derrotado`);
 
-    // Cambiar imagen en batalla (si existe)
     const img = document.querySelector(
         `.imgEntidadBatalla[data-id="${entidad.id}"]`
     );
@@ -2893,10 +3053,14 @@ function derrotarEntidad(entidad) {
         img.classList.add("derrotado");
     }
 
-    // (Opcional pero recomendado)
     construirColaTurnos();
+
+    // Si no quedan enemigos o jugadores, verifica si la partida terminó:
+    if (verificarFinBatalla()) return;
 }
 
+
+// >AUDIOS:
 function ejecutarAudioAtaque(atacante, ataque) {
 
     let audioSrc = null;
@@ -2931,7 +3095,7 @@ function ejecutarAtaqueConAudioSeguro(atacante, objetivo, ataque) {
 
 function ejecutarAtaqueConDelayAudio(atacante, objetivo, ataque, onFinish) {
 
-    // 1. Reproducir audio
+    // 1. Audio (queda igual)
     let audioSrc =
         ataque.audio ||
         atacante.audio?.ataqueGenerico ||
@@ -2940,10 +3104,14 @@ function ejecutarAtaqueConDelayAudio(atacante, objetivo, ataque, onFinish) {
     const audio = new Audio(audioSrc);
     audio.play().catch(() => {});
 
-    // 2. Duración configurable
+    // 2. Animación visual (si existe)
+    if (ataque.animacion) {
+        reproducirAnimacionAtaque(atacante, ataque);
+    }
+
+    // 3. Delay configurable
     const delay = ataque.duracionAudio ?? 800;
 
-    // 3. Esperar y aplicar lógica
     setTimeout(() => {
 
         aplicarLogicaAtaque(atacante, objetivo, ataque);
@@ -2954,6 +3122,9 @@ function ejecutarAtaqueConDelayAudio(atacante, objetivo, ataque, onFinish) {
 
     }, delay);
 }
+
+
+// >ANIMACION:
 
 // Efectos_Daño > Cuando golpeamos al rival:
 function mostrarEfectoDaño(objetivo) {
@@ -3001,6 +3172,93 @@ function restaurarSpriteNormal(entidad) {
 
     img.src = entidad.imgBatalla;
 }
+
+function reproducirAnimacionAtaque(atacante, ataque) {
+
+    if (!ataque.animacion) return;
+
+    const imgBase = document.querySelector(
+        `.imgEntidadBatalla[data-id="${atacante.id}"]`
+    );
+    if (!imgBase) return;
+
+    const capa = document.getElementById("capaEfectos");
+    if (!capa) return;
+
+    const {
+        sprite,
+        frames,
+        frameWidth,
+        frameHeight,
+        frameDurations
+    } = ataque.animacion;
+
+    // ===============================
+    // Geometría real (CSS manda)
+    // ===============================
+    const rectEntidad = imgBase.getBoundingClientRect();
+    const rectCapa = capa.getBoundingClientRect();
+
+    // ===============================
+    // Ocultar idle
+    // ===============================
+    imgBase.style.visibility = "hidden";
+
+    // ===============================
+    // Crear animación
+    // ===============================
+    const anim = document.createElement("div");
+    anim.classList.add("animacionAtaque");
+
+    // MISMO tamaño que el idle (desktop / mobile)
+    anim.style.width  = rectEntidad.width  + "px";
+    anim.style.height = rectEntidad.height + "px";
+
+    // MISMA posición final
+    anim.style.left = (rectEntidad.left - rectCapa.left) + "px";
+    anim.style.top  = (rectEntidad.top  - rectCapa.top)  + "px";
+
+    // NO usar transform
+    anim.style.transform = "none";
+
+    // ===============================
+    // Sprite-sheet SIN ESCALA
+    // ===============================
+    anim.style.backgroundImage = `url(${sprite})`;
+    anim.style.backgroundRepeat = "no-repeat";
+
+    // Cada frame mide exactamente lo mismo que el idle
+    anim.style.backgroundSize =
+        `${rectEntidad.width * frames}px ${rectEntidad.height}px`;
+
+    anim.style.backgroundPosition = "0px 0px";
+
+    capa.appendChild(anim);
+
+    // ===============================
+    // Animación
+    // ===============================
+    let frameActual = 0;
+
+    function avanzarFrame() {
+        const x = frameActual * rectEntidad.width;
+        anim.style.backgroundPosition = `-${x}px 0px`;
+
+        const duracion = frameDurations?.[frameActual] ?? 120;
+        frameActual++;
+
+        if (frameActual < frames) {
+            setTimeout(avanzarFrame, duracion);
+        } else {
+            anim.remove();
+            imgBase.style.visibility = "visible";
+        }
+    }
+
+    avanzarFrame();
+}
+
+
 
 //-------------------------------------------------------------------------------------------------------
 // ==========================================================
