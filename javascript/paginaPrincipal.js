@@ -4,6 +4,95 @@ sonidoTurnoJugador.volume = 0.6;
 const sonidoClick = new Audio("./sonidos/click.wav");
 const sonidoClickPersonaje = new Audio("./sonidos/clickPersonaje.wav");
 
+//----------------------------------------------------------
+// Musica Opening en Home:
+// =======================
+// MUSICA PRINCIPAL
+// =======================
+
+const musicaOpening = new Audio("./sonidos/opening.wav");
+musicaOpening.volume = 0.5;
+musicaOpening.loop = true;
+
+// Estado persistente
+const MUSICA_KEY = "musica_habilitada";
+
+// Botones
+const btnPlayMusica = document.getElementById("btnPlayMusica");
+const btnStopMusica = document.getElementById("btnStopMusica");
+
+// =======================
+// UI INICIAL
+// =======================
+
+function actualizarBotonesMusica() {
+    const musicaHabilitada = localStorage.getItem(MUSICA_KEY) === "true";
+
+    if (musicaHabilitada) {
+        btnPlayMusica.style.display = "none";
+        btnStopMusica.style.display = "block";
+    } else {
+        btnPlayMusica.style.display = "block";
+        btnStopMusica.style.display = "none";
+    }
+}
+
+actualizarBotonesMusica();
+
+// =======================
+// REPRODUCCION SEGURA
+// =======================
+
+function intentarReproducirMusica() {
+    musicaOpening.play()
+        .then(() => {
+            localStorage.setItem(MUSICA_KEY, "true");
+            actualizarBotonesMusica();
+        })
+        .catch(() => {
+            // El navegador todavía no permite reproducir
+        });
+}
+
+// =======================
+// BOTON PLAY
+// =======================
+
+btnPlayMusica.addEventListener("click", () => {
+    intentarReproducirMusica();
+});
+
+// =======================
+// BOTON STOP
+// =======================
+
+btnStopMusica.addEventListener("click", () => {
+    musicaOpening.pause();
+    musicaOpening.currentTime = 0;
+
+    localStorage.setItem(MUSICA_KEY, "false");
+    actualizarBotonesMusica();
+});
+
+// =======================
+// AUTO-ARRANQUE UX (pro)
+// =======================
+// Si el usuario ya habilitó música antes,
+// la arrancamos en el PRIMER gesto real del juego
+
+document.addEventListener(
+    "click",
+    () => {
+        if (localStorage.getItem(MUSICA_KEY) === "true") {
+            intentarReproducirMusica();
+        }
+    },
+    { once: true }
+);
+
+
+//----------------------------------------------------------
+
 // Audios para los Ataques:
 function reproducirAudio(ruta) {
     if (!ruta) return;
