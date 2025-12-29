@@ -186,7 +186,7 @@ const ataquesSeiya = [
             multiplicador: 1.3,
             estado: {
                 tipo: 4, // Aturdido
-                probabilidad: 90,
+                probabilidad: 40,
                 duracion: 1
             }
         }
@@ -580,10 +580,17 @@ const ataquesGuerrero1 = [
         detalle: "Un golpe fuerte pero poco refinado.",
         target: "Rival",
         duracionAudio: 1200,
+        animacion: {
+            sprite: "./imgs/batalla/guerrero1_ataque_1.png",
+            frames: 8,
+            frameWidth: 1600,   // ancho de UN frame
+            frameHeight: 1000, // alto real
+            frameDurations: [110, 110, 110, 110, 110, 150, 110,110],
+        },
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
-            multiplicador: 3.2
+            multiplicador: 1.5
         }
     },
 
@@ -600,10 +607,17 @@ const ataquesGuerrero1 = [
         detalle: "Se lanza contra el rival usando todo su peso.",
         target: "Rival",
         duracionAudio: 1200,
+        animacion: {
+            sprite: "./imgs/batalla/guerrero1_ataque_1.png",
+            frames: 8,
+            frameWidth: 1600,   // ancho de UN frame
+            frameHeight: 1000, // alto real
+            frameDurations: [110, 110, 110, 110, 110, 150, 110,110],
+        },
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
-            multiplicador: 1.5
+            multiplicador: 1.7
         }
     },
 
@@ -620,10 +634,22 @@ const ataquesGuerrero1 = [
         detalle: "Un golpe poderoso que deja al rival vulnerable.",
         target: "Rival",
         duracionAudio: 1200,
+        animacion: {
+            sprite: "./imgs/batalla/guerrero1_ataque_1.png",
+            frames: 8,
+            frameWidth: 1600,   // ancho de UN frame
+            frameHeight: 1000, // alto real
+            frameDurations: [110, 110, 110, 110, 110, 150, 110,110],
+        },
         efecto: {
             tipo: "Daño",
             escala: "fuerza",
-            multiplicador: 1.8,
+            multiplicador: 2.0,
+            estado: {
+                tipo: 4, // Aturdido
+                probabilidad: 40,
+                duracion: 1
+            },
             efectoSecundario: {
                 tipo: "Debuff",
                 stat: "defensa",
@@ -1001,14 +1027,14 @@ const enemigos = [
         imgBatallaDerrotado: "./imgs/batalla/enemigo1_derrotado.png",
         imgBatallaDefendiendose: "./imgs/batalla/enemigo1_defendiendose.png",
 
-        pv: 30,
+        pv: 38,
         pm: 10,
 
-        fuerza: 3,
+        fuerza: 4,
         poderMagico: 1,
-        defensa: 2,
+        defensa: 3,
         defensaMagica: 1,
-        velocidad: 2,
+        velocidad: 3,
 
         audio: {
         ataqueGenerico: "./audios/guerrero_1/ataque_generico.wav",
@@ -2164,8 +2190,6 @@ function verificarFinBatalla() {
     return false;
 }
 
-
-
 // Muestra el PopUp al terminar la batalla:
 function mostrarPopupFinBatalla(ganoJugador) {
 
@@ -2180,20 +2204,29 @@ function mostrarPopupFinBatalla(ganoJugador) {
 
     overlay.style.display = "flex";
 
-    // 🔒 bloquear interacción del tablero
+    // Bloquear interacción del tablero
     paginaTablero.style.pointerEvents = "none";
 }
 
-
 //------------------------------------------------------------------------------------------------------------
 // ==========================================================
-// SISTEMA DE TURNOS
+// >TURNOS
 // ==========================================================
 
 let colaTurnos = [];
 let indiceTurno = 0;
 let entidadTurnoActual = null;
 let movimientoUsado = false;
+
+// Preparamos a las entidades por si tienen buffeos, debuffeos o estadosAlterados:
+function prepararEntidadParaBatalla(entidad) {
+    entidad.buffs ??= [];
+    entidad.debuffs ??= [];
+    entidad.estadosAlterados ??= [];
+
+    entidad.defensa = Number(entidad.defensa) || 0;
+    entidad.defensaMagica = Number(entidad.defensaMagica) || 0;
+}
 
 // Se construye la cola de turnos segun la velocidad:
 function construirColaTurnos() {
@@ -2203,6 +2236,10 @@ function construirColaTurnos() {
     obtenerCaballerosUsados().forEach(id => {
         const cab = caballerosBronce.find(c => c.id === id);
         if (cab && cab.estado === 1) {
+
+            // Preparar entidad para batalla
+            prepararEntidadParaBatalla(cab);
+
             colaTurnos.push(cab);
         }
     });
@@ -2213,6 +2250,10 @@ function construirColaTurnos() {
         nivel.enemigos.forEach(data => {
             const enemigo = enemigos.find(e => e.id === data.id);
             if (enemigo && enemigo.estado === 1) {
+
+                // Preparar entidad para batalla
+                prepararEntidadParaBatalla(enemigo);
+
                 colaTurnos.push(enemigo);
             }
         });
@@ -2223,6 +2264,7 @@ function construirColaTurnos() {
 
     indiceTurno = 0;
 }
+
 
 // Iniciar Turno:
 function iniciarTurno() {
@@ -2236,6 +2278,9 @@ function iniciarTurno() {
         finalizarTurno();
         return;
     }
+
+    limpiarEfectosAlIniciarTurno(entidadTurnoActual);
+    recuperarPMInicioTurno(entidadTurnoActual);
 
     // =========================
     // 1. Aplicar estados pasivos
@@ -2253,7 +2298,7 @@ function iniciarTurno() {
     // si ya no está defendiendo
     // =========================
     const sigueDefendiendo =
-        entidadTurnoActual.estadosAlterados?.some(e => e.tipo === "buffDefensa");
+        entidadTurnoActual.buffs?.some(b => b.tipo === "defensa");
 
     if (!sigueDefendiendo) {
         restaurarSpriteNormal(entidadTurnoActual);
@@ -2315,7 +2360,7 @@ function iniciarTurnoEnemigo(enemigo) {
 // Finaliza el turno y pasa al que sigue:
 function finalizarTurno() {
 
-    if (batallaFinalizada) return; // Si la batalla esta terminada, no avanza mas.
+    if (batallaFinalizada) return;
 
     limpiarCasillasMovimiento();
     bloquearBotonesJugador();
@@ -2329,6 +2374,7 @@ function finalizarTurno() {
 }
 
 
+
 // Las tarjetas de turnos se despintan:
 function limpiarTarjetaActiva() {
     document.querySelectorAll(".tarjetaPersonaje").forEach(t => {
@@ -2338,7 +2384,7 @@ function limpiarTarjetaActiva() {
 
 //------------------------------------------------------------------------------------------------------------
 // ==========================================================
-// MOVERSE
+// >MOVERSE
 // ==========================================================
 
 let modoMovimientoActivo = false; // Flag del estado del movimiento
@@ -2595,34 +2641,36 @@ async function ejecutarTurnoEnemigo(enemigo) {
 
     if (batallaFinalizada) return;
 
-    console.log(`\n=== Turno de ${enemigo.nombre} ===`);
-
     if (enemigo.estado !== 1) {
         console.log(`${enemigo.nombre} está muerto. Fin de turno.`);
         finalizarTurno();
         return;
     }
 
+    // =========================
+    // ¿Puede actuar?
+    // =========================
     if (!entidadPuedeActuar(enemigo)) {
-
-        if (batallaFinalizada) return;
 
         console.log(`${enemigo.nombre} no puede actuar este turno.`);
 
         // Reducir estados incapacitantes
-        enemigo.estadosAlterados.forEach(e => {
+        enemigo.estadosAlterados?.forEach(e => {
             if (ESTADOS_INCAPACITANTES.includes(e.tipo)) {
                 e.turnos--;
             }
         });
-        enemigo.estadosAlterados = enemigo.estadosAlterados.filter(e => e.turnos > 0);
+
+        enemigo.estadosAlterados =
+            enemigo.estadosAlterados?.filter(e => e.turnos > 0) ?? [];
 
         finalizarTurno();
         return;
     }
 
-    if (batallaFinalizada) return;
-
+    // =========================
+    // Buscar objetivo
+    // =========================
     const objetivo = obtenerObjetivoMasCercano(enemigo);
     if (!objetivo) {
         console.log(`${enemigo.nombre} no tiene objetivo. Fin de turno.`);
@@ -2630,10 +2678,11 @@ async function ejecutarTurnoEnemigo(enemigo) {
         return;
     }
 
-    if (batallaFinalizada) return;
-
     console.log(`${enemigo.nombre} apunta a ${objetivo.nombre}`);
 
+    // =========================
+    // Intentar atacar
+    // =========================
     let ataque = obtenerAtaqueUsable(enemigo, objetivo);
 
     if (!ataque) {
@@ -2647,9 +2696,11 @@ async function ejecutarTurnoEnemigo(enemigo) {
         ataque = obtenerAtaqueUsable(enemigo, objetivo);
     }
 
-    if (batallaFinalizada) return;
-
+    // =========================
+    // Ejecutar acción
+    // =========================
     if (ataque) {
+
         await new Promise(resolve => {
             ejecutarAtaqueConDelayAudio(enemigo, objetivo, ataque, resolve);
         });
@@ -2658,22 +2709,42 @@ async function ejecutarTurnoEnemigo(enemigo) {
 
         await esperar(2000);
 
-        if (batallaFinalizada) return;
-
     } else {
-        enemigoDefenderse(enemigo);
-        await esperar(1500);
 
-        if (batallaFinalizada) return;
+        const vidaPorcentaje = enemigo.pv / enemigo.pvMax;
+
+        const ataques =
+            enemigo.ataquesDisponibles ?? obtenerAtaquesDelPersonaje(enemigo);
+
+        const ataqueMasBarato = ataques
+            ?.slice() // evitar mutar el array original
+            .sort((a, b) => a.cosmosNecesario - b.cosmosNecesario)[0];
+
+        const leFaltaCosmos =
+            ataqueMasBarato &&
+            enemigo.cosmosActual < ataqueMasBarato.cosmosNecesario;
+
+        // 🧠 Decisión IA
+        if (leFaltaCosmos && vidaPorcentaje > 0.3) {
+            enemigoConcentrarse(enemigo);
+        } else {
+            enemigoDefenderse(enemigo);
+        }
+
+        await esperar(1500);
     }
 
+    // =========================
     // Reducir estados incapacitantes al final del turno
-    enemigo.estadosAlterados.forEach(e => {
+    // =========================
+    enemigo.estadosAlterados?.forEach(e => {
         if (ESTADOS_INCAPACITANTES.includes(e.tipo)) {
             e.turnos--;
         }
     });
-    enemigo.estadosAlterados = enemigo.estadosAlterados.filter(e => e.turnos > 0);
+
+    enemigo.estadosAlterados =
+        enemigo.estadosAlterados?.filter(e => e.turnos > 0) ?? [];
 
     if (batallaFinalizada) return;
 
@@ -2682,7 +2753,7 @@ async function ejecutarTurnoEnemigo(enemigo) {
 
 //-------------------------------------------------------------------------------------------------------
 // ==========================================================
-// GANAR COSMO POR ACCION:
+// >GANAR COSMO POR ACCION:
 // ==========================================================
 function ganarCosmosPorAccion(personaje, accion) {
 
@@ -2737,6 +2808,33 @@ function obtenerBonusDañoPorCosmo(personaje) {
     }
 
     return bonus;
+}
+
+//-------------------------------------------------------------------------------------------------------
+// ==========================================================
+// >GANAR MANA EN NUEVO TURNO:
+// ==========================================================
+
+function recuperarPMInicioTurno(personaje) {
+
+    if (!personaje || personaje.estado !== 1) return;
+
+    // Porcentaje base de recuperación
+    const PORCENTAJE_PM = 0.10; // 10%
+    const MIN_PM = 1;
+    const MAX_PM = 2;
+
+    let cantidad = Math.floor(personaje.pmMax * PORCENTAJE_PM);
+
+    // Clamp
+    cantidad = Math.max(MIN_PM, Math.min(MAX_PM, cantidad));
+
+    personaje.pm = Math.min(
+        personaje.pm + cantidad,
+        personaje.pmMax
+    );
+
+    actualizarBarrasPersonaje(personaje);
 }
 
 //-------------------------------------------------------------------------------------------------------
@@ -2851,7 +2949,7 @@ document.getElementById("overlayPopupAtaques").addEventListener("click", (e) => 
     }
 });
 
-//Marca
+// Funcion que marca a los enemigos si estan al alcance o no:
 function marcarEnemigosPorRango(atacante, ataque) {
     limpiarMarcadoCeldas();
     modoSeleccionObjetivo = true;
@@ -2914,7 +3012,7 @@ function finalizarSeleccionAtaque() {
     finalizarTurno();
 }
 
-// Funcion que si clickeo afuera se cancela y no ataca.
+// Funcion que si clickeo afuera se cancela el ataque y despinta las celdas:
 document.addEventListener("click", (e) => {
 
     if (!modoSeleccionObjetivo) return;
@@ -2933,7 +3031,7 @@ document.addEventListener("click", (e) => {
     cancelarSeleccionObjetivo();
 });
 
-// Limpia las celdas que estan de color verde o rojo:
+// Despinta las celdas que estan de color verde o rojo:
 function limpiarMarcadoCeldas() {
     document.querySelectorAll(".celdaGuerra").forEach(celda => {
         celda.classList.remove("celda-atacable", "celda-no-atacable");
@@ -2974,11 +3072,13 @@ function calcularDistancia(entidadA, entidadB) {
 
 // Calcula el daño que hace al enemigo:
 function calcularDaño(atacante, defensor, ataque) {
-    const efecto = ataque.efecto;
+
+    const efecto = ataque.efecto ?? {};
+
     let ataqueBase = 0;
     let defensaBase = 0;
 
-    // Determinar ataque base según escala
+    // Ataque base según escala
     switch (efecto.escala) {
         case "fuerza":
             ataqueBase = atacante.fuerza;
@@ -2993,53 +3093,90 @@ function calcularDaño(atacante, defensor, ataque) {
             ataqueBase = atacante.fuerza;
     }
 
-    const bonusCosmo = obtenerBonusDañoPorCosmo(atacante);
-    ataqueBase += bonusCosmo;
+    ataqueBase = Number(ataqueBase) || 0;
 
-    // Calcular defensa considerando buff temporal
+    // Bonus por cosmos
+    ataqueBase += Number(obtenerBonusDañoPorCosmo(atacante)) || 0;
+
+    const multiplicador = Number(efecto.multiplicador) || 1;
+
+    // Daño SIN defensa (referencia)
+    const dañoSinDefensa = Math.floor(ataqueBase * multiplicador);
+
+    // Defensa (con buffs)
     if (ataque.tipoDaño === "Fisico") {
         defensaBase = obtenerDefensaConBuff(defensor, "fisico");
     } else if (ataque.tipoDaño === "Magico") {
         defensaBase = obtenerDefensaConBuff(defensor, "magico");
     }
 
+    defensaBase = Number(defensaBase) || 0;
+
+    // Ignorar defensa (%)
     if (efecto.ignoraDefensa) {
-        defensaBase *= (1 - efecto.ignoraDefensa);
+        const porcentaje = Math.min(Math.max(efecto.ignoraDefensa, 0), 1);
+        defensaBase *= (1 - porcentaje);
     }
 
-    return Math.max(
-        1,
-        Math.floor((ataqueBase * efecto.multiplicador) - defensaBase)
+    // Daño CON defensa
+    let dañoFinal = Math.floor(
+        dañoSinDefensa - defensaBase
     );
+
+    // 🛡️ Regla clave: defenderse SIEMPRE reduce al menos 1
+    const tieneBuffDefensa = defensor.buffs?.some(b => b.tipo === "defensa");
+
+    if (tieneBuffDefensa) {
+        dañoFinal = Math.min(dañoFinal, dañoSinDefensa - 1);
+    }
+
+    // Nunca menos de 1
+    return Math.max(1, dañoFinal);
 }
 
 function aplicarLogicaAtaque(atacante, objetivo, ataque) {
     if (!objetivo || objetivo.estado !== 1) return;
 
     // Consumo de recursos
-    if (ataque.pmNecesaria > 0) atacante.pm = Math.max(0, atacante.pm - ataque.pmNecesaria);
-    if (ataque.cosmosNecesario > 0) atacante.cosmosActual = Math.max(0, atacante.cosmosActual - ataque.cosmosNecesario);
+    if (ataque.pmNecesaria > 0) {
+        atacante.pm = Math.max(0, atacante.pm - ataque.pmNecesaria);
+    }
+
+    if (ataque.cosmosNecesario > 0) {
+        atacante.cosmosActual = Math.max(0, atacante.cosmosActual - ataque.cosmosNecesario);
+    }
 
     // Precisión
     const tirada = Math.random() * 100;
     if (tirada > ataque.precision) {
+
+        console.log(
+            `${atacante.nombre} usó ${ataque.nombre} y falló.`
+        );
+
         ganarCosmosPorAccion(atacante, "atacar-fallido");
-        actualizarBarrasPersonaje(atacante); // <-- solo actualizamos barras
+        actualizarBarrasPersonaje(atacante);
         return;
     }
 
     // Daño
-    const daño = calcularDaño(atacante, objetivo, ataque);
-    objetivo.pv = Math.max(0, objetivo.pv - daño);
+    const dañoFinal = calcularDaño(atacante, objetivo, ataque);
+    objetivo.pv = Math.max(0, objetivo.pv - dañoFinal);
+
+    console.log(
+        `${atacante.nombre} usó ${ataque.nombre}, hizo ${dañoFinal} de daño a ${objetivo.nombre}.`
+    );
 
     // Efecto visual de daño
-    if (daño > 0) {
+    if (dañoFinal > 0) {
         limpiarMarcadoCeldas();
-        mostrarEfectoDaño(objetivo); // <-- animación en el sprite existente
+        mostrarEfectoDaño(objetivo);
     }
 
     // Estados
-    if (ataque.efecto?.estado) intentarAplicarEstado(objetivo, ataque.efecto.estado);
+    if (ataque.efecto?.estado) {
+        intentarAplicarEstado(objetivo, ataque.efecto.estado);
+    }
 
     // Sonido herido
     if (objetivo.audio?.herido) {
@@ -3047,23 +3184,22 @@ function aplicarLogicaAtaque(atacante, objetivo, ataque) {
     }
 
     // Muerte
-    if (objetivo.pv <= 0) derrotarEntidad(objetivo);
+    if (objetivo.pv <= 0) {
+        derrotarEntidad(objetivo);
+    }
 
     // Cosmos
     ganarCosmosPorAccion(atacante, "atacar");
 
-    // Solo actualizar barras
+    // Actualizar barras
     actualizarBarrasPersonaje(objetivo);
     actualizarBarrasPersonaje(atacante);
 }
 
-//------------------------------------------------------------------------
-// >ESTADOS
-//------------------------------------------------------------------------
 
-function entidadTieneBuffDefensa(entidad) {
-    return entidad.estadosAlterados?.some(e => e.tipo === "buffDefensa");
-}
+//------------------------------------------------------------------------
+// >ESTADOS o >BUFF
+//------------------------------------------------------------------------
 
 // Los ESTADOS aca se APLICAN:
 function intentarAplicarEstado(objetivo, estadoDef) {
@@ -3097,26 +3233,11 @@ function aplicarEstadosPasivos(entidad) {
         // =========================
         // Buff de defensa
         // =========================
-        if (e.tipo === "buffDefensa") {
-
-            // ⛔ NO se consume el mismo turno que se aplica
-            // ✅ Se consume cuando vuelve a tocarle
-            if (!e.aplicadoEsteTurno) {
-                e.turnos--;
-            }
-
-            if (e.turnos <= 0) {
-                return false;
-            }
-
-        } else {
-            // =========================
-            // Otros estados
-            // =========================
-            if (!e.aplicadoEsteTurno) {
-                e.turnos--;
-            }
+        // Estados pasivos reales (DOT, stun, etc)
+        if (!e.aplicadoEsteTurno) {
+            e.turnos--;
         }
+
 
         // Reset del flag para el próximo turno
         e.aplicadoEsteTurno = false;
@@ -3132,41 +3253,83 @@ function aplicarEstadosPasivos(entidad) {
     }
 }
 
-// Cuando el jugador/enemigo se defiende se le aplica el Buff de defensa:
-function aplicarBuffDefensaTemporal(entidad, porcentajeDefensa, porcentajeDefensaMagica) {
-    if (!entidad.estadosAlterados) entidad.estadosAlterados = [];
+function aplicarBuffDefensa(entidad, porcentaje) {
+    entidad.buffs.push({
+        tipo: "defensa",
+        porcentaje,
+        expiraAlIniciarTurno: true
+    });
+}
 
-    // Evitar duplicados
-    const yaTiene = entidad.estadosAlterados.find(e => e.tipo === "buffDefensa");
-    if (yaTiene) {
-        yaTiene.turnos = 1; // refrescar duración
-        yaTiene.defensa = porcentajeDefensa;
-        yaTiene.defensaMagica = porcentajeDefensaMagica;
-        return;
-    }
-
-    entidad.estadosAlterados.push({
-        tipo: "buffDefensa",
-        turnos: 1, // dura hasta su próximo turno
-        defensa: porcentajeDefensa,
-        defensaMagica: porcentajeDefensaMagica,
-        aplicadoEsteTurno: false
+function aplicarDebuffDefensa(entidad, porcentaje) {
+    entidad.debuffs.push({
+        tipo: "defensa",
+        porcentaje,
+        expiraAlIniciarTurno: true
     });
 }
 
 // Funcion que esta dentro de Funcion calcularDaño:
 function obtenerDefensaConBuff(entidad, tipo) {
-    let base = tipo === "fisico" ? entidad.defensa : entidad.defensaMagica;
-    if (!entidad.estadosAlterados) return base;
 
-    const buff = entidad.estadosAlterados.find(e => e.tipo === "buffDefensa");
-    if (buff) {
-        if (tipo === "fisico") base = Math.floor(base * (1 + buff.defensa / 100));
-        else base = Math.floor(base * (1 + buff.defensaMagica / 100));
-    }
+    let defensa =
+        tipo === "fisico"
+            ? entidad.defensa          // 👈 CORRECTO
+            : entidad.defensaMagica;
 
-    return base;
+    defensa = Number(defensa) || 0;
+
+    entidad.buffs
+        ?.filter(b => b.tipo === "defensa")
+        .forEach(b => {
+            defensa += defensa * (b.porcentaje / 100);
+        });
+
+    entidad.debuffs
+        ?.filter(d => d.tipo === "defensa")
+        .forEach(d => {
+            defensa -= defensa * (d.porcentaje / 100);
+        });
+
+    return Math.max(0, Math.floor(defensa));
 }
+
+
+function limpiarEfectosAlIniciarTurno(entidad) {
+
+    // ===== BUFFS =====
+    entidad.buffs = entidad.buffs.filter(b => {
+        if (b.expiraAlIniciarTurno) {
+
+            console.log(
+                `${entidad.nombre} ya no tiene buff de ${b.tipo}`
+            );
+
+            console.log(
+                `La defensa volvió a ser de ${entidad.defensa} (física) y ${entidad.defensaMagica} (mágica).`
+            );
+
+            return false;
+        }
+        return true;
+    });
+
+    // ===== DEBUFFS =====
+    entidad.debuffs = entidad.debuffs.filter(d => {
+        if (d.expiraAlIniciarTurno) {
+            console.log(
+                `${entidad.nombre} ya no tiene debuff de ${d.tipo}`
+            );
+            return false;
+        }
+        return true;
+    });
+}
+
+
+//========================================================================================================
+// >MUERTE >VENCE
+//========================================================================================================
 
 // >MATAMOS AL ENEMIGO: 
 // Cuando vencemos al enemigo:
@@ -3194,6 +3357,10 @@ function derrotarEntidad(entidad) {
     // Si no quedan enemigos o jugadores, verifica si la partida terminó:
     if (verificarFinBatalla()) return;
 }
+
+//==================================================================
+// AUDIOS Y ANIMACIONES:
+//==================================================================
 
 // >AUDIOS:
 function ejecutarAudioAtaque(atacante, ataque) {
@@ -3259,7 +3426,7 @@ function ejecutarAtaqueConDelayAudio(atacante, objetivo, ataque, onFinish) {
 }
 
 
-// >ANIMACION:
+// >ANIMACIONES:
 
 // Efectos_Daño > Cuando golpeamos al rival:
 function mostrarEfectoDaño(objetivo) {
@@ -3395,7 +3562,7 @@ function reproducirAnimacionAtaque(atacante, ataque) {
 
 //-------------------------------------------------------------------------------------------------------
 // ==========================================================
-// LA IA ATACA:
+// >IA ATACA:
 // ==========================================================
 
 // Se fija que ataques puede usar segun su constitucion:
@@ -3422,18 +3589,27 @@ function obtenerAtaqueUsable(enemigo, objetivo) {
     return posibles[0];
 }
 
-// Cuando la IA Se defiende:
+// Cuando la IA se Defiende:
 function enemigoDefenderse(enemigo) {
     console.log(`${enemigo.nombre} se está defendiendo`);
 
-    aplicarBuffDefensaTemporal(enemigo, 15, 15);
+    aplicarBuffDefensa(enemigo, 15);
+
     cambiarSpriteEntidad(enemigo, "defensa");
-
     ganarCosmosPorAccion(enemigo, "defender");
-
     actualizarBarrasPersonaje(enemigo);
 }
 
+// Cuando la IA se Concentra:
+function enemigoConcentrarse(enemigo) {
+    console.log(`${enemigo.nombre} se concentra`);
+
+    aplicarDebuffDefensa(enemigo, 20);
+
+    cambiarSpriteEntidad(enemigo, "concentrar");
+    ganarCosmosPorAccion(enemigo, "concentrar");
+    actualizarBarrasPersonaje(enemigo);
+}
 
 //-----------------------------------------------------------------------------------------------------------
 // ==========================================================
@@ -3458,20 +3634,24 @@ btnOtras.addEventListener("click", (e) => {
 
     // ----------------- CONCENTRARSE -----------------
     crearOpcionOtras(
-        "Concentrarse",
-        ["Otorga COSMO +15"],
+    "Concentrarse",
+    ["Otorga COSMO +15"],
         () => {
-            console.log(`El ${entidadTurnoActual.nombre} se está concentrando`);
+            console.log(`El ${entidadTurnoActual.nombre} se está concentrando.`);
 
-            // Cierra el popup inmediatamente
+            // Debuff por concentrarse (vulnerable hasta su próximo turno)
+            aplicarDebuffDefensa(entidadTurnoActual, 20);
+
+            cambiarSpriteEntidad(entidadTurnoActual, "concentrar");
+
             cerrarPopupOtras();
 
-            // Reproducir audio de concentrarse
             if (entidadTurnoActual.audio?.concentrandose) {
-                new Audio(entidadTurnoActual.audio.concentrandose).play().catch(() => {});
+                new Audio(entidadTurnoActual.audio.concentrandose)
+                    .play()
+                    .catch(() => {});
             }
 
-            // Aplicar lógica después del delay
             setTimeout(() => {
                 ganarCosmosPorAccion(entidadTurnoActual, "concentrar");
                 actualizarBarrasPersonaje(entidadTurnoActual);
@@ -3480,22 +3660,31 @@ btnOtras.addEventListener("click", (e) => {
         }
     );
 
+
     // ----------------- DEFENDERSE -----------------
-    crearOpcionOtras(
-        "Defenderse",
-        ["Otorga DEF +15%", "Otorga COSMO +5"],
+ crearOpcionOtras(
+    "Defenderse",
+    ["Otorga DEF +15%", "Otorga COSMO +5"],
         () => {
             cerrarPopupOtras();
 
             if (entidadTurnoActual.audio?.defendiendose) {
-                new Audio(entidadTurnoActual.audio.defendiendose).play().catch(() => {});
+                new Audio(entidadTurnoActual.audio.defendiendose)
+                    .play()
+                    .catch(() => {});
             }
 
-            // Aplica buff temporal de defensa
-            aplicarBuffDefensaTemporal(entidadTurnoActual, 15, 15);
+            console.log(`El ${entidadTurnoActual.nombre} se está defendiendo.`);
+
             cambiarSpriteEntidad(entidadTurnoActual, "defensa");
 
-            // Gana cosmos
+            // Buff correcto por defenderse
+            aplicarBuffDefensa(entidadTurnoActual, 40); // Se buffea un 40% de defensa
+
+            const defFis = obtenerDefensaConBuff(entidadTurnoActual, "fisico");
+            const defMag = obtenerDefensaConBuff(entidadTurnoActual, "magico");
+            console.log(`La defensa ahora es de ${defFis} (física) y ${defMag} (mágica).`);
+
             ganarCosmosPorAccion(entidadTurnoActual, "defender");
             actualizarBarrasPersonaje(entidadTurnoActual);
 
@@ -3505,7 +3694,6 @@ btnOtras.addEventListener("click", (e) => {
 
     overlayOtras.style.display = "flex";
 });
-
 
 // Frases Clickeables:
 function crearOpcionOtras(titulo, descripciones, accion) {
